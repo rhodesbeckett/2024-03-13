@@ -4,7 +4,7 @@ fe = FootballEditor()
 while(True):
     n = int(input(">>>"))
     if(n==1):
-        fe.getPutanja("E:\\Projekat2\\projekat2-nrs\\Liverpool_-_Bournemouth.mkv")
+        fe.getPutanja("")
     elif(n==2):
         fe.provera_fajla("")
     elif(n==3):
