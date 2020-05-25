@@ -16,5 +16,10 @@ root.bind("f",root.keypress)
 root.bind("F",root.keypress)
 
 root.grid()
-root.geometry("1003x347")
+root.geometry("589x189")
 root.mainloop()
+
+# from editor.Seconds import *
+# sekundeObj = Seconds()
+# primer = sekundeObj.convertToSeconds("09","sekunda")
+# print(primer)

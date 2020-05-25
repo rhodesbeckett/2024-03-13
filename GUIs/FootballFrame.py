@@ -5,10 +5,9 @@ from editor.FootballEditor import FootballEditor
 
 
 class FootballFrame(Frame):
-	def __init__(self, parent, controller,fe,checker):
+	def __init__(self, parent, controller,fe):
 		Frame.__init__(self, parent)
 		self.footballEditor = fe
-		self.checker = checker
 		self.controller = controller
 		self.grid(row=0, column=0, sticky=W)
 		self.create_widgets()
@@ -46,7 +45,7 @@ class FootballFrame(Frame):
 		self.testBtn = Button(self, text="TEST",command=lambda var="TestFrame":self.controller.prebaci_frejm(var))
 		self.testBtn.grid(row=1, column=0, padx=15, pady=5, sticky=W)
 
-		self.runBtn = Button(self, text="RUN",command = self.runTry)
+		self.runBtn = Button(self, text="RUN",command = self.runRender)
 		self.runBtn.grid(row=1, column=1, padx=15, pady=5, sticky=W)
 
 		self.entryPrvoPolMin.insert(0, "05")
@@ -55,18 +54,21 @@ class FootballFrame(Frame):
 		self.entryDrugoPolMin.insert(0, "59")
 		self.entryDrugoPolSec.insert(0, "40")
 
-
-	def getPrvoPol(self):
-		prvoPolStart = self.footballEditor.setPrvoPol(self.entryPrvoPolMin.get()+":"+self.entryPrvoPolSec.get())
-		return prvoPolStart
-	def getDrugoPol(self):
-		drugoPolStart = self.footballEditor.setDrugoPol(self.entryDrugoPolMin.get() + ":" + self.entryDrugoPolSec.get())
-		return drugoPolStart
-	def runTry(self):
-		video = self.footballEditor.checker.vremenaUSekundama
-		print(len(video))
-		if (str(type(video)) == "<class 'list'>"):
-			for i in range(len(video)):
-				pocetak = video[i][0]
-				kraj = video[i][1]
-				self.footballEditor.seckanje(i, pocetak, kraj)
+	def get1st(self):
+		recnik = {"minut":self.entryPrvoPolMin.get(),"sekunda":self.entryPrvoPolSec.get()}
+		return recnik
+	def get2nd (self):
+		recnik = {"minut":self.entryDrugoPolMin.get(),"sekunda":self.entryDrugoPolSec.get()}
+		return recnik
+	def runRender(self):
+		if(self.footballEditor.canRun()):
+			if(self.footballEditor.putanja!= ""):
+				video = self.footballEditor.vremenaUSekundama
+				for i in range(len(video)):
+					pocetak = video[i][0]
+					kraj = video[i][1]
+					self.footballEditor.seckanje(i, pocetak, kraj)
+				self.footballEditor.vremenaUSekundama = []
+				print("renderovano")
+		else:
+			print("render ne radi")

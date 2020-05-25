@@ -3,7 +3,6 @@ from GUIs.FootballFrame import FootballFrame
 from GUIs.HighlightsFrame import HighlightsFrame
 from GUIs.TestFrame import TestFrame
 from editor.FootballEditor import FootballEditor
-from editor.Checker import Checker
 
 
 class Root(Tk):
@@ -16,11 +15,10 @@ class Root(Tk):
 
 		self.prozori = {}
 		self.footballEditor = FootballEditor()
-		self.checker = Checker()
 
 		for frejm in (FootballFrame, HighlightsFrame, TestFrame):
 			page_name = frejm.__name__
-			frame = frejm(container, controller=self, fe=self.footballEditor, checker=self.checker)
+			frame = frejm(container, controller=self, fe=self.footballEditor)
 			self.prozori[page_name] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
 		self.prebaci_frejm("FootballFrame")
@@ -30,14 +28,13 @@ class Root(Tk):
 		prozor.tkraise()
 
 		if (page_name == "TestFrame"):
-			print("jednom")
-			listEntries = self.prozori["HighlightsFrame"].getAllElements()
-			stringVars = self.prozori["HighlightsFrame"].stringVars
-
-			prvoPol = self.prozori["FootballFrame"].getPrvoPol()
-			drugoPol = self.prozori["FootballFrame"].getDrugoPol()
-
-			prozor.proveraEntries(listEntries, stringVars, prvoPol, drugoPol)
+			self.runTest(prozor)
+		elif(page_name=="FootballFrame"):
+			self.geometry("589x189")
+			self.update()
+		elif(page_name=="HighlightsFrame"):
+			self.geometry("940x379")
+			self.update()
 
 	def keypress(self, event):
 		if (event.char == "\t"):
@@ -48,3 +45,12 @@ class Root(Tk):
 		elif (event.char == "f" or event.char == "F"):
 			self.prozori["HighlightsFrame"].addRow()
 			self.prozori["HighlightsFrame"].removeG(event.char)
+	def runTest(self,prozor):
+		prvo = self.prozori["FootballFrame"].get1st()
+		drugo = self.prozori["FootballFrame"].get2nd()
+		stringVars = self.prozori["HighlightsFrame"].stringVars
+		prozor.checkMatch()
+		prozor.checkPoluvreme(prvo, drugo)
+		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
+		self.geometry("1232x442")
+		self.update()
