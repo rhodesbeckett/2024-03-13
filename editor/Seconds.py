@@ -15,7 +15,10 @@ class Seconds(object):
 						zero = True
 					if(tip == "minut"):
 						if(zero == True):
-							sekunde = int(entry[1])*60
+							if(len(entry)==1):
+								sekunde = int(entry[0])
+							elif(len(entry)==2):
+								sekunde = int(entry[1])*60
 						else:
 							sekunde = int(entry)*60
 						return sekunde
@@ -24,7 +27,10 @@ class Seconds(object):
 							print("greska")
 							break
 						if(zero == True):
-							sekunde =  int(entry[0])
+							if(len(entry)==2):
+								sekunde = int(entry[1])
+							else:
+								sekunde =  int(entry[0])
 						else:
 							if(int(entry)>60):
 								print("greska")

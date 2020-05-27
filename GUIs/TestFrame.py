@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 from editor.Seconds import *
 import os
 import cv2
+import warnings
+warnings.filterwarnings("ignore")
 class TestFrame(Frame):
 	def __init__(self, parent, controller,fe):
 		Frame.__init__(self, parent)
@@ -70,7 +72,7 @@ class TestFrame(Frame):
 
 	def addTestPhoto(self):
 
-		self.testImg = ImageTk.PhotoImage(Image.open("nesto.png"))
+		self.testImg = ImageTk.PhotoImage(Image.open("slika.png"))
 		self.slikaLabel = Label(self, image=self.testImg)
 		# slikaLabel = Label(self,text="NESTO")
 		self.slikaLabel.grid(row = 0,column = 6,rowspan = 7,padx = 10 , pady = 10,sticky=NW)
@@ -105,7 +107,7 @@ class TestFrame(Frame):
 		brojac = 0
 		vremeUSekundama = []
 		self.footballEditor.highlightsCounter = 0
-		#time stamp sadrzi entries svaki put po 4
+		#time stamp sadrzi entries svaki put po 3
 		timeStamp = []
 		forAdd = True
 		for i in lista:
@@ -160,8 +162,10 @@ class TestFrame(Frame):
 							timeStamp = []
 							self.footballEditor.tested = True
 
+
 					else:
 						timeStamp = []
+
 
 		self.footballEditor.vremenaUSekundama = vremeUSekundama
 
@@ -169,6 +173,7 @@ class TestFrame(Frame):
 			self.labelHighlights["text"] = "OK"
 			self.footballEditor.tested = True
 		else:
+			print("iz nekog razloga ne radi")
 			self.labelHighlights["text"] = "NOT OK"
 
 	def proveriFajl(self):
@@ -191,24 +196,34 @@ class TestFrame(Frame):
 					sekunde = self.footballEditor.prvo_pol + minut + sekunda
 				elif(poluvreme == "drugo"):
 					sekunde = self.footballEditor.drugo_pol + (minut + sekunda)-2700
-					print(self.footballEditor.drugo_pol)
-					print(minut)
-					print(sekunda)
-				frame_per_second = ceoMec.get(cv2.CAP_PROP_FPS)
-				frejm = int(frame_per_second * sekunde)
+				frame_per_second = 1
+				try:
+					frame_per_second = ceoMec.get(cv2.CAP_PROP_FPS)
+				except RuntimeWarning:
+					print("greskaaaaa")
 
-				ceoMec.set(1, frejm)
 
-				ret, frame = ceoMec.read()
-				cv2.imwrite(name, frame)
-				ceoMec.release()
-				cv2.destroyAllWindows()
-				print("slikano")
+				if(frame_per_second!=0.0):
 
-				slika = Image.open("./slike/frame.jpg")
-				slika = slika.resize((651,305),Image.ANTIALIAS)
-				self.testImg = ImageTk.PhotoImage(slika)
-				self.slikaLabel["image"] = self.testImg
+
+					frejm = int(frame_per_second * sekunde)
+					ukupnoFrejmova = int(ceoMec.get(cv2.CAP_PROP_FRAME_COUNT))
+					self.footballEditor.ceoMecSekunde =  int(ukupnoFrejmova/frame_per_second)
+					if(not frejm>ukupnoFrejmova):
+						ceoMec.set(1, frejm)
+
+						ret, frame = ceoMec.read()
+						cv2.imwrite(name, frame)
+						ceoMec.release()
+						cv2.destroyAllWindows()
+						print("slikano")
+
+						slika = Image.open("./slike/frame.jpg")
+						slika = slika.resize((651,305),Image.ANTIALIAS)
+						self.testImg = ImageTk.PhotoImage(slika)
+						self.slikaLabel["image"] = self.testImg
+				else:
+					print("pogresan file format")
 			else:
 				print("greska u formatu vremena ili poluvreme nije postavljeno")
 		else:

@@ -12,25 +12,29 @@ class Root(Tk):
 		container.pack(side="top", fill="both", expand=True)
 		container.grid_rowconfigure(0, weight=1)
 		container.grid_columnconfigure(0, weight=1)
-
+		self.page_name = ""
 		self.prozori = {}
 		self.footballEditor = FootballEditor()
-
+		self.resizable(False, False)
 		for frejm in (FootballFrame, HighlightsFrame, TestFrame):
-			page_name = frejm.__name__
+			self.page_name = frejm.__name__
 			frame = frejm(container, controller=self, fe=self.footballEditor)
-			self.prozori[page_name] = frame
+			self.prozori[self.page_name] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
 		self.prebaci_frejm("FootballFrame")
 
 	def prebaci_frejm(self, page_name):
+		self.page_name = page_name
 		prozor = self.prozori[page_name]
 		prozor.tkraise()
 
 		if (page_name == "TestFrame"):
+			self.geometry("1232x442")
+			self.update()
+			self.page_name = page_name
 			self.runTest(prozor)
 		elif(page_name=="FootballFrame"):
-			self.geometry("589x189")
+			self.geometry("882x285")
 			self.update()
 		elif(page_name=="HighlightsFrame"):
 			self.geometry("940x379")
@@ -45,6 +49,8 @@ class Root(Tk):
 		elif (event.char == "f" or event.char == "F"):
 			self.prozori["HighlightsFrame"].addRow()
 			self.prozori["HighlightsFrame"].removeG(event.char)
+		elif (event.char == '\x13'):
+				self.prozori["HighlightsFrame"].saveToFile()
 	def runTest(self,prozor):
 		prvo = self.prozori["FootballFrame"].get1st()
 		drugo = self.prozori["FootballFrame"].get2nd()
@@ -52,5 +58,4 @@ class Root(Tk):
 		prozor.checkMatch()
 		prozor.checkPoluvreme(prvo, drugo)
 		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
-		self.geometry("1232x442")
-		self.update()
+

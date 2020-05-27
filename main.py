@@ -14,12 +14,14 @@ root.bind("g",root.keypress)
 root.bind("G",root.keypress)
 root.bind("f",root.keypress)
 root.bind("F",root.keypress)
-
+root.bind('<Control-Key-s>', root.keypress)
+root.bind('<Control-Key-S>', root.keypress)
 root.grid()
-root.geometry("589x189")
+root.geometry("882x285")
 root.mainloop()
 
 # from editor.Seconds import *
 # sekundeObj = Seconds()
 # primer = sekundeObj.convertToSeconds("09","sekunda")
 # print(primer)
+

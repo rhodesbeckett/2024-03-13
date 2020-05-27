@@ -39,6 +39,11 @@ class HighlightsFrame(Frame):
 		self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
 	def create_widgets(self):
+
+		self.addMenu()
+
+		self.addBackButton()
+
 		self.addRow()
 
 	def addRow(self):
@@ -106,11 +111,18 @@ class HighlightsFrame(Frame):
 			elif(str(type(i)) == "<class 'tkinter.Radiobutton'>"):
 				radioBtns.append(i)
 
+		lastRadio = -1
 		if (brojac == 3):
-			vrednost = self.stringVars[-1].get()
-			self.defaultVar = vrednost
-			self.addRow()
-			self.getLista()[6].focus()
+			while(True):
+				try:
+					vrednost = self.stringVars[lastRadio].get()
+					self.defaultVar = vrednost
+					self.addRow()
+					self.getLista()[6].focus()
+					break
+				except:
+					lastRadio-=1
+					continue
 
 
 	def setTabKeyPress(self, event):
@@ -158,4 +170,111 @@ class HighlightsFrame(Frame):
 		# br = int(lastRadioBtn.split(".!")[5].split("radiobutton")[1])
 		# return br
 		return lastRadioBtn
+	def addBackButton(self):
+		self.backButton = Button(self.frame, text="<", font=("Courier", 20),command=self.goBack)
+		self.backButton.grid(row=0, column=0, padx=(5, 2), pady=5, sticky=W)
+	def addMenu(self):
+		menubar = Menu(self.frame)
+		filemenu = Menu(menubar, tearoff=0)
+		filemenu.add_command(label="Open",command = self.checkFileEntries)
+		filemenu.add_command(label="Save",command = self.saveToFile)
+		filemenu.add_separator()
+		filemenu.add_command(label="Exit")
+		menubar.add_cascade(label="File", menu=filemenu)
+		self.controller.config(menu=menubar)
+	def goBack(self):
+		self.controller.prebaci_frejm("FootballFrame")
+	def saveToFile(self):
+		if(self.controller.page_name=="HighlightsFrame"):
+			fajl = open("highlights1.txt","w",encoding="utf-8")
+			templista = self.getAllElements()[:]
+			brojac = 0
+			row = []
+			for i in templista:
+				if (str(type(i)) == "<class 'tkinter.Entry'>"):
+					brojac+=1
+					row.append(i)
+					if(brojac==3):
+						rbtnIndex = templista.index(i) + 2
+						varIndex = str(templista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
+						varIndex = int((int(varIndex) / 2) - 1)
+						poluvreme = self.stringVars[varIndex].get()
+
+						minut = row[0].get()
+						sekunda = row[1].get()
+						end = row[2].get()
+
+						if(minut==""):
+							minut = "0"
+						if(sekunda == ""):
+							sekunda = "0"
+						if(end == ""):
+							end = "0"
+
+						rowFile = minut + " " + sekunda + " " + end + " " + poluvreme + "\n"
+						fajl.write(rowFile)
+						brojac = 0
+						row = []
+			fajl.close()
+			print("saved in file")
+	def removeAllEntries(self):
+		lista = self.getAllElements()
+		exceptions = [".!frame.!highlightsframe.!canvas.!frame.!menu",".!frame.!highlightsframe.!canvas.!frame.!button"]
+		for i in lista:
+			if(str(i) not in exceptions):
+				i.destroy()
+	def checkFileEntries(self):
+		if(self.controller.page_name=="HighlightsFrame"):
+			sablon = re.compile(r'(.*\s.*\s.*(\sprvo|drugo))')
+			fajl = open("highlights1.txt","r",encoding="utf-8")
+			linija = fajl.readline()
+			redovi = []
+			while(linija!=""):
+				pretraga = sablon.findall(linija)
+				if(len(pretraga[0])>0):
+					forEntries = pretraga[0][0].split(" ")
+					redovi.append([forEntries[0],forEntries[1],forEntries[2],forEntries[3].split("\n")[0]])
+					linija = fajl.readline()
+				else:
+					print("wrong format of file")
+					fajl.close()
+					break
+
+			if(not pretraga == []):
+				self.removeAllEntries()
+				for i in range(len(redovi)):
+					self.addRow()
+
+				lista = self.getAllElements()
+				red = -1
+				brojac = 0
+				entries = []
+
+				for i in range(len(lista)):
+					if (str(type(lista[i])) == "<class 'tkinter.Entry'>"):
+						brojac+=1
+						entries.append(lista[i])
+						if(brojac==3):
+							red+=1
+							entries[0].insert(0,redovi[red][0])
+							entries[1].insert(0,redovi[red][1])
+							entries[2].insert(0,redovi[red][2])
+
+							rbtnIndex = lista.index(lista[i]) + 2
+							varIndex = str(lista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
+							varIndex = int((int(varIndex) / 2) - 1)
+
+							self.stringVars[varIndex].set(redovi[red][3].split("\n")[0])
+							# print(self.stringVars[varIndex])
+
+							entries = []
+							brojac = 0
+
+
+
+
+
+
+
+
 
