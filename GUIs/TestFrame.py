@@ -6,6 +6,7 @@ import os
 import cv2
 import warnings
 warnings.filterwarnings("ignore")
+from tkinter import messagebox
 class TestFrame(Frame):
 	def __init__(self, parent, controller,fe):
 		Frame.__init__(self, parent)
@@ -35,7 +36,7 @@ class TestFrame(Frame):
 		self.addEntriesTestFrame()
 
 		seperator = Separator(self,orient = VERTICAL)
-		seperator.grid(row = 0 ,column = 5 , rowspan = 7 , sticky = NS)
+		seperator.grid(row = 0 ,column = 5 , rowspan = 9 , sticky = NS)
 
 		self.addTestPhoto()
 
@@ -72,25 +73,28 @@ class TestFrame(Frame):
 
 	def addTestPhoto(self):
 
-		self.testImg = ImageTk.PhotoImage(Image.open("slika.png"))
-		self.slikaLabel = Label(self, image=self.testImg)
+		self.slikaLabel = Label(self)
 		# slikaLabel = Label(self,text="NESTO")
 		self.slikaLabel.grid(row = 0,column = 6,rowspan = 7,padx = 10 , pady = 10,sticky=NW)
 	def checkMatch(self):
 		putanja = self.footballEditor.putanja
 		if(os.path.exists(putanja)):
 			self.labelUtakmica["text"] = "OK"
+			self.labelUtakmica.bind("<Button-1>", lambda e: self.doNothing())
 		else:
 			self.labelUtakmica["text"] = "NOT OK"
+			self.labelUtakmica.bind("<Button-1>", lambda e: self.controller.prebaci_frejm("FootballFrame"))
 	def checkPoluvreme(self,first,second):
 		#prvo
 		prvoMinut = self.sekundeObj.convertToSeconds(first["minut"],"minut")
 		prvoSekunda = self.sekundeObj.convertToSeconds(first["sekunda"],"sekunda")
 		if(prvoMinut!= None and prvoSekunda != None):
 			self.labelPrvoPoluvreme["text"] = "OK"
+			self.labelPrvoPoluvreme.bind("<Button-1>", lambda e: self.doNothing())
 			self.footballEditor.prvo_pol = prvoMinut+prvoSekunda
 		else:
 			self.labelPrvoPoluvreme["text"] = "NOT OK"
+			self.labelPrvoPoluvreme.bind("<Button-1>", lambda e: self.controller.prebaci_frejm("FootballFrame"))
 
 		#drugo
 		drugoMinut = self.sekundeObj.convertToSeconds(second["minut"],"minut")
@@ -99,10 +103,11 @@ class TestFrame(Frame):
 		if (drugoMinut != None and drugoSekunda != None):
 			self.labelDrugoPoluvreme["text"] = "OK"
 			self.footballEditor.drugo_pol = drugoMinut + drugoSekunda
-
+			self.labelPrvoPoluvreme.bind("<Button-1>", lambda e: self.doNothing())
 
 		else:
 			self.labelDrugoPoluvreme["text"] = "NOT OK"
+			self.labelPrvoPoluvreme.bind("<Button-1>", lambda e: self.controller.prebaci_frejm("FootballFrame"))
 	def checkHighlights(self,lista,stringVars):
 		brojac = 0
 		vremeUSekundama = []
@@ -172,9 +177,12 @@ class TestFrame(Frame):
 		if(self.footballEditor.canRun()):
 			self.labelHighlights["text"] = "OK"
 			self.footballEditor.tested = True
+			self.labelHighlights.bind("<Button-1>", lambda e: self.doNothing())
+
+
 		else:
-			print("iz nekog razloga ne radi")
 			self.labelHighlights["text"] = "NOT OK"
+			self.labelHighlights.bind("<Button-1>", lambda e: self.controller.prebaci_frejm("HighlightsFrame"))
 
 	def proveriFajl(self):
 		if(self.footballEditor.putanja!= ""):
@@ -216,16 +224,16 @@ class TestFrame(Frame):
 						cv2.imwrite(name, frame)
 						ceoMec.release()
 						cv2.destroyAllWindows()
-						print("slikano")
 
 						slika = Image.open("./slike/frame.jpg")
 						slika = slika.resize((651,305),Image.ANTIALIAS)
 						self.testImg = ImageTk.PhotoImage(slika)
 						self.slikaLabel["image"] = self.testImg
 				else:
-					print("pogresan file format")
+					messagebox.showinfo('Test', 'Pogresan file format.')
 			else:
-				print("greska u formatu vremena ili poluvreme nije postavljeno")
+				messagebox.showinfo('Test', 'Pogresan time format ili poluvreme nije postavljeno.')
 		else:
-			print("niste dodali fajl.")
-
+			messagebox.showinfo('Test', 'Niste dodali fajl.')
+	def doNothing(self):
+		return None

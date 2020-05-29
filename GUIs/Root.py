@@ -3,9 +3,11 @@ from GUIs.FootballFrame import FootballFrame
 from GUIs.HighlightsFrame import HighlightsFrame
 from GUIs.TestFrame import TestFrame
 from editor.FootballEditor import FootballEditor
+from tkinter import messagebox
 
-
+import os
 class Root(Tk):
+	licenca = False
 	def __init__(self, *args, **kwargs):
 		Tk.__init__(self, *args, **kwargs)
 		container = Frame(self)
@@ -23,6 +25,7 @@ class Root(Tk):
 			frame.grid(row=0, column=0, sticky="nsew")
 		self.prebaci_frejm("FootballFrame")
 
+
 	def prebaci_frejm(self, page_name):
 		self.page_name = page_name
 		prozor = self.prozori[page_name]
@@ -33,12 +36,15 @@ class Root(Tk):
 			self.update()
 			self.page_name = page_name
 			self.runTest(prozor)
+			self.closeIfNeeded()
 		elif(page_name=="FootballFrame"):
 			self.geometry("882x285")
 			self.update()
+			self.closeIfNeeded()
 		elif(page_name=="HighlightsFrame"):
 			self.geometry("940x379")
 			self.update()
+			self.closeIfNeeded()
 
 	def keypress(self, event):
 		if (event.char == "\t"):
@@ -58,4 +64,19 @@ class Root(Tk):
 		prozor.checkMatch()
 		prozor.checkPoluvreme(prvo, drugo)
 		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
+
+	def proveraLicence(self):
+		if (not os.path.exists("LICENCA798132745345132465.txt")):
+			self.licenca = False
+			return False
+		else:
+			self.licenca = True
+			return True
+	def closeIfNeeded(self):
+		if(self.proveraLicence()==True):
+			return None
+		else:
+			messagebox.showinfo('Licenca', 'Licenca nije aktivirana.')
+			self.destroy()
+			self.quit()
 

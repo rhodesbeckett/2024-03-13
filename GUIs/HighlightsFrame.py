@@ -1,7 +1,9 @@
 from tkinter import *
-from editor import FootballEditor
+from tkinter import filedialog as fileDialog
 import re
-
+import os
+from tkinter import messagebox
+import random
 
 class HighlightsFrame(Frame):
 	def __init__(self, parent, controller,fe):
@@ -97,7 +99,7 @@ class HighlightsFrame(Frame):
 		self.columnH = 0
 
 	def getLista(self):
-		return self.frame.winfo_children()[:-10:-1]
+		return self.frame.winfo_children()[:-12:-1]
 
 	def clickOnTab(self):
 		lista = self.getLista()
@@ -118,7 +120,7 @@ class HighlightsFrame(Frame):
 					vrednost = self.stringVars[lastRadio].get()
 					self.defaultVar = vrednost
 					self.addRow()
-					self.getLista()[6].focus()
+					self.getLista()[7].focus()
 					break
 				except:
 					lastRadio-=1
@@ -174,19 +176,22 @@ class HighlightsFrame(Frame):
 		self.backButton = Button(self.frame, text="<", font=("Courier", 20),command=self.goBack)
 		self.backButton.grid(row=0, column=0, padx=(5, 2), pady=5, sticky=W)
 	def addMenu(self):
+
 		menubar = Menu(self.frame)
 		filemenu = Menu(menubar, tearoff=0)
 		filemenu.add_command(label="Open",command = self.checkFileEntries)
 		filemenu.add_command(label="Save",command = self.saveToFile)
 		filemenu.add_separator()
-		filemenu.add_command(label="Exit")
+		filemenu.add_command(label="Exit",command = self.closeApp)
 		menubar.add_cascade(label="File", menu=filemenu)
 		self.controller.config(menu=menubar)
 	def goBack(self):
 		self.controller.prebaci_frejm("FootballFrame")
 	def saveToFile(self):
 		if(self.controller.page_name=="HighlightsFrame"):
-			fajl = open("highlights1.txt","w",encoding="utf-8")
+			#ovde ce trebati metoda za otvaranje foldera za upload
+			imeTempFajla = "highlights"+str(random.randint(1,1000))+".txt"
+			fajl = open(imeTempFajla,"w",encoding="utf-8")
 			templista = self.getAllElements()[:]
 			brojac = 0
 			row = []
@@ -216,7 +221,6 @@ class HighlightsFrame(Frame):
 						brojac = 0
 						row = []
 			fajl.close()
-			print("saved in file")
 	def removeAllEntries(self):
 		lista = self.getAllElements()
 		exceptions = [".!frame.!highlightsframe.!canvas.!frame.!menu",".!frame.!highlightsframe.!canvas.!frame.!button"]
@@ -225,56 +229,78 @@ class HighlightsFrame(Frame):
 				i.destroy()
 	def checkFileEntries(self):
 		if(self.controller.page_name=="HighlightsFrame"):
-			sablon = re.compile(r'(.*\s.*\s.*(\sprvo|drugo))')
-			fajl = open("highlights1.txt","r",encoding="utf-8")
-			linija = fajl.readline()
-			redovi = []
-			while(linija!=""):
-				pretraga = sablon.findall(linija)
-				if(len(pretraga[0])>0):
-					forEntries = pretraga[0][0].split(" ")
-					redovi.append([forEntries[0],forEntries[1],forEntries[2],forEntries[3].split("\n")[0]])
-					linija = fajl.readline()
+			highlightsPutanja = ""
+			extt = ""
+			try:
+				if (str(type(fileDialog)) == "<class 'module'>"):
+					rep = fileDialog.askopenfilename(
+						parent=self.frame,
+						initialdir='/',
+						initialfile='tmp',
+						filetypes=[
+							("All files", "*")])
+					highlightsPutanja = rep
+					extt = os.path.splitext(str(highlightsPutanja))[1]
+			except Exception as e:
+				print("greska: " + str(e))
+
+
+			if(highlightsPutanja != "" and extt == ".txt"):
+				sablon = re.compile(r'(.*\s.*\s.*(\sprvo|drugo))')
+				fajl = open(highlightsPutanja,"r",encoding="utf-8")
+				linija = fajl.readline()
+				redovi = []
+				while(linija!=""):
+					pretraga = sablon.findall(linija)
+					if(len(pretraga)>0):
+						if(len(pretraga[0])>0):
+							forEntries = pretraga[0][0].split(" ")
+							redovi.append([forEntries[0],forEntries[1],forEntries[2],forEntries[3].split("\n")[0]])
+							linija = fajl.readline()
+						else:
+							messagebox.showinfo('Highlights load', 'Pogresan format za highlights.')
+							fajl.close()
+							break
+					else:
+						messagebox.showinfo('Highlights load', 'Pogresan format za highlights.')
+						fajl.close()
+						pretraga = []
+						break
+
+
+				if(not pretraga == []):
+					self.removeAllEntries()
+					for i in range(len(redovi)):
+						self.addRow()
+
+					lista = self.getAllElements()
+					red = -1
+					brojac = 0
+					entries = []
+
+					for i in range(len(lista)):
+						if (str(type(lista[i])) == "<class 'tkinter.Entry'>"):
+							brojac+=1
+							entries.append(lista[i])
+							if(brojac==3):
+								red+=1
+								entries[0].insert(0,redovi[red][0])
+								entries[1].insert(0,redovi[red][1])
+								entries[2].insert(0,redovi[red][2])
+
+								rbtnIndex = lista.index(lista[i]) + 2
+								varIndex = str(lista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
+								varIndex = int((int(varIndex) / 2) - 1)
+
+								self.stringVars[varIndex].set(redovi[red][3].split("\n")[0])
+								# print(self.stringVars[varIndex])
+
+								entries = []
+								brojac = 0
 				else:
-					print("wrong format of file")
-					fajl.close()
-					break
-
-			if(not pretraga == []):
-				self.removeAllEntries()
-				for i in range(len(redovi)):
-					self.addRow()
-
-				lista = self.getAllElements()
-				red = -1
-				brojac = 0
-				entries = []
-
-				for i in range(len(lista)):
-					if (str(type(lista[i])) == "<class 'tkinter.Entry'>"):
-						brojac+=1
-						entries.append(lista[i])
-						if(brojac==3):
-							red+=1
-							entries[0].insert(0,redovi[red][0])
-							entries[1].insert(0,redovi[red][1])
-							entries[2].insert(0,redovi[red][2])
-
-							rbtnIndex = lista.index(lista[i]) + 2
-							varIndex = str(lista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
-							varIndex = int((int(varIndex) / 2) - 1)
-
-							self.stringVars[varIndex].set(redovi[red][3].split("\n")[0])
-							# print(self.stringVars[varIndex])
-
-							entries = []
-							brojac = 0
-
-
-
-
-
-
-
-
-
+					messagebox.showinfo('Highlights load', 'Ispravite greske u highlights txt da bi ste uspesno ucitali.')
+			else:
+				messagebox.showinfo('Highlights load', 'txt fajl format je neophodan.')
+	def closeApp(self):
+		self.saveToFile()
+		self.controller.quit()

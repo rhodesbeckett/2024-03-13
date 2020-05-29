@@ -3,6 +3,8 @@ import os
 import os.path
 import re
 import subprocess
+import threading
+import shutil
 
 # prvi str je source drugi je naziv iscek
 class FootballEditor(object):
@@ -20,9 +22,6 @@ class FootballEditor(object):
 	tested = False
 	imeFoldera = ""
 
-
-	def __init__(self):
-		print("open")
 
 	# sablonZaHighlights = re.compile("(\d{1,2}):(\d{1,2}) (\d{1,2}|\n")
 
@@ -43,7 +42,7 @@ class FootballEditor(object):
 
 	def seckanje(self, br, pocetak, kraj):
 		self.napraviFolder()
-		naziv = self.imeFoldera+"/video" + str(br) + self.extt
+		naziv = self.imeFoldera+"/video" + str(br) + str(pocetak) + self.extt
 		ffmpeg_extract_subclip(self.putanja, pocetak, kraj, targetname=naziv)
 
 	def canRun(self):
@@ -61,18 +60,25 @@ class FootballEditor(object):
 		self.imeFoldera = self.putanja.split("/")[-1].split(".")[0]
 		if(not os.path.exists(self.imeFoldera)):
 			os.mkdir(self.imeFoldera)
+		# else:
+		# 	shutil.rmtree(self.imeFoldera)
+		# 	os.mkdir(self.imeFoldera)
 
 	def mergeAll(self):
 		matchDir = os.listdir(self.imeFoldera)
 		imetxtFajl = str(self.imeFoldera+"\\"+"mylist.txt")
 		txtFajl = open(imetxtFajl,"w")
 		for i in range(len(matchDir)):
+			if(matchDir[i].endswith("txt")):
+				continue
 			imeFajla = matchDir[i]
 			line = "file '{}\{}'\n".format(self.imeFoldera,imeFajla)
 			txtFajl.write(str(line))
 		txtFajl.close()
+		
+		if(os.path.exists("output"+self.extt)):
+			shutil.os.unlink("output"+self.extt)
 		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}\{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
-		print(command)
 		subprocess.call(command,shell=True)
 
 

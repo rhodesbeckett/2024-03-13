@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import filedialog
 import os
-from editor.FootballEditor import FootballEditor
+from tkinter import messagebox
+import threading
 
 
 class FootballFrame(Frame):
+
 	def __init__(self, parent, controller,fe):
 		Frame.__init__(self, parent)
 		self.footballEditor = fe
@@ -12,6 +14,12 @@ class FootballFrame(Frame):
 		self.grid(row=0, column=0, sticky=W)
 		self.create_widgets()
 		self.fajlDialog = filedialog
+
+	def startTRender(self):
+		self.t_render = threading.Thread(target=self.runRender)
+		self.t_render.start()
+	def getTRender(self):
+		return self.t_render.is_alive()
 
 	def create_widgets(self):
 		self.mecBtn = Button(self, text="MEC",font=("Courier", 15), command=lambda var=filedialog,frame=self: self.footballEditor.getPutanja(var,frame))
@@ -45,14 +53,9 @@ class FootballFrame(Frame):
 		self.testBtn = Button(self, text="TEST",font=("Courier", 15),command=lambda var="TestFrame":self.controller.prebaci_frejm(var))
 		self.testBtn.grid(row=1, column=0, padx=15, pady=5, sticky=W)
 
-		self.runBtn = Button(self, text="RUN",font=("Courier", 15),command = self.runRender)
+		self.runBtn = Button(self, text="RUN",font=("Courier", 15),command = self.startTRender)
 		self.runBtn.grid(row=1, column=1, padx=15, pady=5, sticky=W)
 
-		self.entryPrvoPolMin.insert(0, "05")
-		self.entryPrvoPolSec.insert(0, "09")
-
-		self.entryDrugoPolMin.insert(0, "59")
-		self.entryDrugoPolSec.insert(0, "40")
 
 	def get1st(self):
 		recnik = {"minut":self.entryPrvoPolMin.get(),"sekunda":self.entryPrvoPolSec.get()}
@@ -72,6 +75,12 @@ class FootballFrame(Frame):
 					self.footballEditor.mergeAll()
 					self.footballEditor.vremenaUSekundama = []
 					self.footballEditor.tested = False
-					print("renderovano")
+					messagebox.showinfo('Renderovanje', 'Renderovanje zavrseno.')
+					os.startfile(self.footballEditor.imeFoldera)
+				else:
+					messagebox.showinfo('Renderovanje', 'Ispravite highlights.')
+			else:
+				messagebox.showinfo('Renderovanje', 'Niste dodali fajl.')
+
 		else:
-			print("render ne radi")
+			messagebox.showinfo('Renderovanje', 'Program i dalje nije spreman za render.')
