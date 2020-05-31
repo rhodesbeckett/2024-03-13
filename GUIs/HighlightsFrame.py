@@ -16,6 +16,7 @@ class HighlightsFrame(Frame):
 		self.tabKey = Event
 		self.stringVars = []
 		self.defaultVar = "prvo"
+		self.trenutnoVreme = "regular"
 		self.scrollbar_setup()
 		self.create_widgets()
 
@@ -48,7 +49,12 @@ class HighlightsFrame(Frame):
 
 		self.addRow()
 
-	def addRow(self):
+	def addRow(self,trenutnoVreme="regular"):
+		if(trenutnoVreme!=self.trenutnoVreme):
+			if(trenutnoVreme == "regular"):
+				trenutnoVreme = "extra"
+			else:
+				trenutnoVreme = "regular"
 		self.rowH += 1
 
 		labelPocetak = Label(self.frame, text="Pocetak", font=("Courier", 20))
@@ -85,9 +91,12 @@ class HighlightsFrame(Frame):
 			row=self.rowH, column=self.columnH, sticky=W
 		)
 		self.columnH += 1
-		Radiobutton(self.frame, text='Drugo poluvreme', font=("Courier", 15), value='drugo', variable=self.stringVars[-1], command=lambda var=self.stringVars[-1]: self.getPoluvreme(var)).grid(
+
+		rBtn2 = Radiobutton(self.frame, text='Drugo poluvreme', font=("Courier", 15), value='drugo', variable=self.stringVars[-1], command=lambda var=self.stringVars[-1]: self.getPoluvreme(var))
+		rBtn2.grid(
 			row=self.rowH, column=self.columnH, sticky=W
 		)
+		rBtn2.trenutnoVreme = trenutnoVreme
 
 		self.columnH += 1
 
@@ -96,6 +105,8 @@ class HighlightsFrame(Frame):
 		self.deleteBtn = Button(self.frame,text="Obrisi",font=("Courier", 20))
 		self.deleteBtn["command"] = lambda var1=self.getLastRadioBtn(),var2=self.stringVars.index(self.stringVars[-1]):self.deleteRow(var1,var2)
 		self.deleteBtn.grid(row=self.rowH,column = self.columnH,sticky = W)
+		if(trenutnoVreme == "extra"):
+			self.deleteBtn["bg"] = "#e0b7b4"
 		self.columnH = 0
 
 	def getLista(self):
@@ -135,6 +146,8 @@ class HighlightsFrame(Frame):
 		except:
 			self.tabKey = event
 			print("postavljeno2")
+	def setTrenutnoVreme(self,trenutnoVreme):
+		self.trenutnoVreme = trenutnoVreme
 
 	def getAllElements(self):
 		return self.frame.winfo_children()
@@ -167,6 +180,28 @@ class HighlightsFrame(Frame):
 
 		# self.stringVars[stringVarIndex] = None
 		self.stringVars[stringVarIndex] = None
+		if(self.trenutnoVreme == "extra"):
+			counter = self.getSizeOfCheckRows()
+			if(counter == 0):
+				self.setTrenutnoVreme("regular")
+				self.controller.prozori["FootballFrame"].showOrHideExtraFrame(False)
+
+	def getSizeOfCheckRows(self):
+		#dobij listu
+		niz = self.getAllElements()
+		counter = 0
+		for i in range(len(niz)):
+			if(str(type(niz[i])) == "<class 'tkinter.Radiobutton'>"):
+				try:
+					if(niz[i].trenutnoVreme == "extra"):
+						counter+=1
+				except:
+					continue
+		return counter
+
+		# dobijrb
+		# dodaj u counter
+		# vrati counter
 	def getLastRadioBtn(self):
 		lastRadioBtn = self.getAllElements()[-2]
 		# br = int(lastRadioBtn.split(".!")[5].split("radiobutton")[1])
@@ -204,6 +239,12 @@ class HighlightsFrame(Frame):
 						varIndex = str(templista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
 						varIndex = int((int(varIndex) / 2) - 1)
 						poluvreme = self.stringVars[varIndex].get()
+						try:
+							trenutnoVreme = templista[rbtnIndex].trenutnoVreme
+							if(trenutnoVreme == "extra"):
+								poluvreme = poluvreme+"Extra"
+						except:
+							print("greska")
 
 						minut = row[0].get()
 						sekunda = row[1].get()
@@ -235,7 +276,7 @@ class HighlightsFrame(Frame):
 				if (str(type(fileDialog)) == "<class 'module'>"):
 					rep = fileDialog.askopenfilename(
 						parent=self.frame,
-						initialdir='/',
+						initialdir='/adffgdfg',
 						initialfile='tmp',
 						filetypes=[
 							("All files", "*")])
@@ -246,7 +287,7 @@ class HighlightsFrame(Frame):
 
 
 			if(highlightsPutanja != "" and extt == ".txt"):
-				sablon = re.compile(r'(.*\s.*\s.*(\sprvo|drugo))')
+				sablon = re.compile(r'(.*\s.*\s.*(\sprvoextra|drugoextra|prvo|drugo|))')
 				fajl = open(highlightsPutanja,"r",encoding="utf-8")
 				linija = fajl.readline()
 				redovi = []
@@ -270,33 +311,50 @@ class HighlightsFrame(Frame):
 
 				if(not pretraga == []):
 					self.removeAllEntries()
-					for i in range(len(redovi)):
-						self.addRow()
 
-					lista = self.getAllElements()
 					red = -1
 					brojac = 0
 					entries = []
 
-					for i in range(len(lista)):
-						if (str(type(lista[i])) == "<class 'tkinter.Entry'>"):
-							brojac+=1
-							entries.append(lista[i])
-							if(brojac==3):
-								red+=1
-								entries[0].insert(0,redovi[red][0])
-								entries[1].insert(0,redovi[red][1])
-								entries[2].insert(0,redovi[red][2])
+					for i in range(len(redovi)):
 
-								rbtnIndex = lista.index(lista[i]) + 2
-								varIndex = str(lista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
-								varIndex = int((int(varIndex) / 2) - 1)
 
-								self.stringVars[varIndex].set(redovi[red][3].split("\n")[0])
-								# print(self.stringVars[varIndex])
+						if(redovi[i][3].endswith("extra")):
+							self.setTrenutnoVreme("extra")
+							self.addRow("extra")
+							self.controller.prozori["FootballFrame"].showOrHideExtraFrame(True)
+						else:
+							self.setTrenutnoVreme("regular")
+							self.addRow("regular")
+							self.controller.prozori["FootballFrame"].showOrHideExtraFrame(False)
+						lista = self.getLista()
+						for j in range(len(lista)):
+							if (str(type(lista[j])) == "<class 'tkinter.Entry'>"):
+								brojac+=1
+								entries.append(lista[j])
+								if(brojac==3):
+									red+=1
 
-								entries = []
-								brojac = 0
+									entries[2].insert(0,redovi[red][0])
+									entries[1].insert(0,redovi[red][1])
+									entries[0].insert(0,redovi[red][2])
+
+									if(len(str(redovi[red][0])) == 3):
+										entries[2]["width"] = 3
+
+
+									rBtn = lista[1]
+									varIndex = str(lista[lista.index(rBtn)]).split(".!")[5].split("radiobutton")[1]
+									varIndex = int((int(varIndex) / 2) - 1)
+
+									self.stringVars[varIndex].set(redovi[red][3].split("\n")[0].split("extra")[0])
+									# print(self.stringVars[varIndex])
+
+									#dodaj u row
+
+									entries = []
+									brojac = 0
+
 				else:
 					messagebox.showinfo('Highlights load', 'Ispravite greske u highlights txt da bi ste uspesno ucitali.')
 			else:

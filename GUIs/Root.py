@@ -38,7 +38,7 @@ class Root(Tk):
 			self.runTest(prozor)
 			self.closeIfNeeded()
 		elif(page_name=="FootballFrame"):
-			self.geometry("882x285")
+			self.geometry("1001x285")
 			self.update()
 			self.closeIfNeeded()
 		elif(page_name=="HighlightsFrame"):
@@ -48,21 +48,35 @@ class Root(Tk):
 
 	def keypress(self, event):
 		if (event.char == "\t"):
-			self.prozori["HighlightsFrame"].clickOnTab()
+			if(self.page_name == "HighlightsFrame"):
+				self.prozori["HighlightsFrame"].clickOnTab()
 		elif (event.char == "g" or event.char == "G"):
 			self.prebaci_frejm("FootballFrame")
 			self.prozori["HighlightsFrame"].removeG(event.char)
 		elif (event.char == "f" or event.char == "F"):
-			self.prozori["HighlightsFrame"].addRow()
+			if (self.page_name == "HighlightsFrame"):
+				self.prozori["HighlightsFrame"].addRow()
+				self.prozori["HighlightsFrame"].removeG(event.char)
+		elif (event.char == "e" or event.char == "E"):
+			self.prozori["HighlightsFrame"].setTrenutnoVreme("extra")
+			self.prozori["HighlightsFrame"].addRow("extra")
 			self.prozori["HighlightsFrame"].removeG(event.char)
+			if(self.prozori["FootballFrame"].visibleExtraFrame == False):
+				self.prozori["FootballFrame"].showOrHideExtraFrame(True)
 		elif (event.char == '\x13'):
 				self.prozori["HighlightsFrame"].saveToFile()
 	def runTest(self,prozor):
 		prvo = self.prozori["FootballFrame"].get1st()
 		drugo = self.prozori["FootballFrame"].get2nd()
+
+		extraProvera = self.prozori["FootballFrame"].visibleExtraFrame
+		prvoExtra = self.prozori["FootballFrame"].get1stExtra()
+		drugoExtra = self.prozori["FootballFrame"].get2ndExtra()
+
 		stringVars = self.prozori["HighlightsFrame"].stringVars
 		prozor.checkMatch()
 		prozor.checkPoluvreme(prvo, drugo)
+		prozor.checkExtra(extraProvera,prvoExtra,drugoExtra)
 		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
 
 	def proveraLicence(self):
@@ -76,7 +90,8 @@ class Root(Tk):
 		if(self.proveraLicence()==True):
 			return None
 		else:
-			messagebox.showinfo('Licenca', 'Licenca nije aktivirana.')
+			messagebox.showinfo('Activation', 'Activation code not working.')
 			self.destroy()
 			self.quit()
+
 

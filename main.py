@@ -7,10 +7,12 @@ try:
 	root.bind("G",root.keypress)
 	root.bind("f",root.keypress)
 	root.bind("F",root.keypress)
+	root.bind("e", root.keypress)
+	root.bind("E", root.keypress)
 	root.bind('<Control-Key-s>', root.keypress)
 	root.bind('<Control-Key-S>', root.keypress)
 	root.grid()
-	root.geometry("882x285")
+	root.geometry("1001x285")
 	root.mainloop()
 except:
 	print("")

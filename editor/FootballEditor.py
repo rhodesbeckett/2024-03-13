@@ -3,8 +3,7 @@ import os
 import os.path
 import re
 import subprocess
-import threading
-import shutil
+
 
 # prvi str je source drugi je naziv iscek
 class FootballEditor(object):
@@ -14,6 +13,8 @@ class FootballEditor(object):
 	highlightsCounter = 0
 	prvo_pol = 0
 	drugo_pol = 0
+	prvo_pol_extra = 0
+	drugo_pol_extra = 0
 	sablon1 = "(\d{1,3}):(\d{1,3})"
 	sablon2 = re.compile(sablon1 + "\s" + sablon1)
 	sablon3 = re.compile(sablon1 + "\s(\d{1,3})")
@@ -29,14 +30,14 @@ class FootballEditor(object):
 		try:
 			if (str(type(fileDialog)) == "<class 'module'>"):
 				rep = fileDialog.askopenfilename(
+					title="Load file",
 					parent=frame,
-					initialdir='/',
+					initialdir='/adffgdfg',
 					initialfile='tmp',
 					filetypes=[
 						("All files", "*")])
 				self.putanja = rep
 				self.extt = os.path.splitext(str(self.putanja))[1]
-				print(self.extt)
 		except Exception as e:
 			print("greska: " + str(e))
 
@@ -52,6 +53,8 @@ class FootballEditor(object):
 		else:
 			return False
 	def checkVremenaUSekundama(self):
+		if(self.ceoMecSekunde == 0):
+			return None
 		for i in range(len(self.vremenaUSekundama)):
 			if(self.vremenaUSekundama[i][0]>self.ceoMecSekunde or self.vremenaUSekundama[i][1]>self.ceoMecSekunde):
 				return False
@@ -71,14 +74,18 @@ class FootballEditor(object):
 		for i in range(len(matchDir)):
 			if(matchDir[i].endswith("txt")):
 				continue
+			elif (matchDir[i].endswith("output.mkv")):
+				continue
 			imeFajla = matchDir[i]
 			line = "file '{}\{}'\n".format(self.imeFoldera,imeFajla)
 			txtFajl.write(str(line))
 		txtFajl.close()
-		
-		if(os.path.exists("output"+self.extt)):
-			shutil.os.unlink("output"+self.extt)
-		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}\{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
+
+		outputName = self.imeFoldera+"\\output"+self.extt
+		if(os.path.exists(outputName)):
+			os.unlink(outputName)
+
+		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}/{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
 		subprocess.call(command,shell=True)
 
 
