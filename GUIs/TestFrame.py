@@ -202,7 +202,7 @@ class TestFrame(Frame):
 										timeStamp = []
 										continue
 								else:
-									pocetak = self.footballEditor.drugo_pol + (pocetakMin + pocetakSek)
+									pocetak = self.footballEditor.drugo_pol + (pocetakMin + pocetakSek) - 2700
 									kraj = pocetak + krajSekunde
 									del timeStamp
 									timeStamp = []

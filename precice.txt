@@ -1,0 +1,6 @@
+CTRL + S za èuvanje highlights
+Uz otvoren highlights frame:
+F ili f za dodavanje reda(regularni tok meca)
+E ili e za dodavanje reda(produžeci)
+
+G za vracanje na glavni frame.

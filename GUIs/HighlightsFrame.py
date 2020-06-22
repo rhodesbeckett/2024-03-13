@@ -17,6 +17,7 @@ class HighlightsFrame(Frame):
 		self.stringVars = []
 		self.defaultVar = "prvo"
 		self.trenutnoVreme = "regular"
+		self.imeTxtFajla = ""
 		self.scrollbar_setup()
 		self.create_widgets()
 
@@ -219,14 +220,27 @@ class HighlightsFrame(Frame):
 		filemenu.add_separator()
 		filemenu.add_command(label="Exit",command = self.closeApp)
 		menubar.add_cascade(label="File", menu=filemenu)
+
+		# za meceve
+		matchesmenu = Menu(menubar,tearoff=0)
+		matchesmenu.add_command(label="Only first regular")
+		matchesmenu.add_command(label="Only second regular")
+		matchesmenu.add_command(label="Regular two parts")
+		matchesmenu.add_command(label="Regular one part")
+		menubar.add_cascade(label="Matches",menu=matchesmenu)
+
 		self.controller.config(menu=menubar)
 	def goBack(self):
 		self.controller.prebaci_frejm("FootballFrame")
 	def saveToFile(self):
+
 		if(self.controller.page_name=="HighlightsFrame"):
 			#ovde ce trebati metoda za otvaranje foldera za upload
-			imeTempFajla = "highlights"+str(random.randint(1,1000))+".txt"
-			fajl = open(imeTempFajla,"w",encoding="utf-8")
+			if(self.imeTxtFajla==""):
+				imeTempFajla = "highlights"+str(random.randint(1,1000))+".txt"
+				fajl = open(imeTempFajla, "w", encoding="utf-8")
+			else:
+				fajl = open(self.imeTxtFajla,"w",encoding="utf-8")
 			templista = self.getAllElements()[:]
 			brojac = 0
 			row = []
@@ -261,6 +275,8 @@ class HighlightsFrame(Frame):
 						fajl.write(rowFile)
 						brojac = 0
 						row = []
+			if(self.imeTxtFajla == ""):
+				self.imeTxtFajla  = imeTempFajla
 			fajl.close()
 	def removeAllEntries(self):
 		lista = self.getAllElements()

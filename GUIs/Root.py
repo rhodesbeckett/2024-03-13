@@ -17,7 +17,7 @@ class Root(Tk):
 		self.page_name = ""
 		self.prozori = {}
 		self.footballEditor = FootballEditor()
-		self.resizable(False, False)
+		# self.resizable(False, False)
 		for frejm in (FootballFrame, HighlightsFrame, TestFrame):
 			self.page_name = frejm.__name__
 			frame = frejm(container, controller=self, fe=self.footballEditor)
@@ -80,7 +80,9 @@ class Root(Tk):
 		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
 
 	def proveraLicence(self):
-		if (not os.path.exists("LICENCA798132745345132465.txt")):
+		putanjaFull = str(os.getcwd())
+		provera = "projekat2-nrs" in putanjaFull
+		if (provera==False):
 			self.licenca = False
 			return False
 		else:
@@ -90,7 +92,7 @@ class Root(Tk):
 		if(self.proveraLicence()==True):
 			return None
 		else:
-			messagebox.showinfo('Activation', 'Activation code not working.')
+			messagebox.showinfo('Error', ' ')
 			self.destroy()
 			self.quit()
 

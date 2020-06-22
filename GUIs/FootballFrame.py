@@ -15,6 +15,7 @@ class FootballFrame(Frame):
 		self.create_widgets()
 		self.fajlDialog = filedialog
 		self.visibleExtraFrame = False
+		
 
 	def startTRender(self):
 		self.t_render = threading.Thread(target=self.runRender)
@@ -156,4 +157,5 @@ class FootballFrame(Frame):
 		else:
 			self.extraTimeFrame.grid_remove()
 			self.visibleExtraFrame = False
+
 

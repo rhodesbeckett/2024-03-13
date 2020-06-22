@@ -43,7 +43,7 @@ class FootballEditor(object):
 
 	def seckanje(self, br, pocetak, kraj):
 		self.napraviFolder()
-		naziv = self.imeFoldera+"/video" + str(br) + str(pocetak) + self.extt
+		naziv = self.imeFoldera+"/video" + str(br) + self.extt
 		ffmpeg_extract_subclip(self.putanja, pocetak, kraj, targetname=naziv)
 
 	def canRun(self):
@@ -57,10 +57,18 @@ class FootballEditor(object):
 			return None
 		for i in range(len(self.vremenaUSekundama)):
 			if(self.vremenaUSekundama[i][0]>self.ceoMecSekunde or self.vremenaUSekundama[i][1]>self.ceoMecSekunde):
+				print("minut:")
+				print(self.vremenaUSekundama[i][0])
+				print("sekunde:")
+				print(self.vremenaUSekundama[i][1])
+
+				print("ceo mec sekunde:")
+				print(self.ceoMecSekunde)
+
 				return False
 		return True
 	def napraviFolder(self):
-		self.imeFoldera = self.putanja.split("/")[-1].split(".")[0]
+		self.imeFoldera = self.putanja.split("/")[-1].split(".")[0].replace(" ","")
 		if(not os.path.exists(self.imeFoldera)):
 			os.mkdir(self.imeFoldera)
 		# else:
@@ -68,7 +76,8 @@ class FootballEditor(object):
 		# 	os.mkdir(self.imeFoldera)
 
 	def mergeAll(self):
-		matchDir = os.listdir(self.imeFoldera)
+		# matchDir = os.listdir(self.imeFoldera)
+		matchDir = self.orderOfVids()
 		imetxtFajl = str(self.imeFoldera+"\\"+"mylist.txt")
 		txtFajl = open(imetxtFajl,"w")
 		for i in range(len(matchDir)):
@@ -84,9 +93,16 @@ class FootballEditor(object):
 		outputName = self.imeFoldera+"\\output"+self.extt
 		if(os.path.exists(outputName)):
 			os.unlink(outputName)
-
 		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}/{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
+		print(command)
 		subprocess.call(command,shell=True)
+	def orderOfVids(self):
+		duzinaListe = len(self.vremenaUSekundama)
+		novaLista = []
+		for i in range(0,duzinaListe):
+			novaLista.append("video"+str(i)+self.extt)
+		return novaLista
+
 
 
 
