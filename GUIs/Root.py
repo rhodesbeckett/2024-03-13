@@ -18,6 +18,7 @@ class Root(Tk):
 		self.prozori = {}
 		self.footballEditor = FootballEditor()
 		# self.resizable(False, False)
+
 		for frejm in (FootballFrame, HighlightsFrame, TestFrame):
 			self.page_name = frejm.__name__
 			frame = frejm(container, controller=self, fe=self.footballEditor)
@@ -57,31 +58,28 @@ class Root(Tk):
 			if (self.page_name == "HighlightsFrame"):
 				self.prozori["HighlightsFrame"].addRow()
 				self.prozori["HighlightsFrame"].removeG(event.char)
-		elif (event.char == "e" or event.char == "E"):
-			self.prozori["HighlightsFrame"].setTrenutnoVreme("extra")
-			self.prozori["HighlightsFrame"].addRow("extra")
-			self.prozori["HighlightsFrame"].removeG(event.char)
-			if(self.prozori["FootballFrame"].visibleExtraFrame == False):
-				self.prozori["FootballFrame"].showOrHideExtraFrame(True)
 		elif (event.char == '\x13'):
 				self.prozori["HighlightsFrame"].saveToFile()
 	def runTest(self,prozor):
+
 		prvo = self.prozori["FootballFrame"].get1st()
 		drugo = self.prozori["FootballFrame"].get2nd()
 
-		extraProvera = self.prozori["FootballFrame"].visibleExtraFrame
-		prvoExtra = self.prozori["FootballFrame"].get1stExtra()
-		drugoExtra = self.prozori["FootballFrame"].get2ndExtra()
 
 		stringVars = self.prozori["HighlightsFrame"].stringVars
 		prozor.checkMatch()
 		prozor.checkPoluvreme(prvo, drugo)
-		prozor.checkExtra(extraProvera,prvoExtra,drugoExtra)
 		prozor.checkHighlights(self.prozori["HighlightsFrame"].getAllElements(), stringVars)
 
+		if(self.prozori["FootballFrame"].footballEditor.tipHighlightsa == "firstRegular"):
+			prozor.hidePoluvremeWidgets("prvo")
+		elif (self.prozori["FootballFrame"].footballEditor.tipHighlightsa == "secondRegular"):
+			prozor.hidePoluvremeWidgets("drugo")
+		elif (self.prozori["FootballFrame"].footballEditor.tipHighlightsa == "regularFull"):
+			prozor.hidePoluvremeWidgets("full")
 	def proveraLicence(self):
 		putanjaFull = str(os.getcwd())
-		provera = "projekat2-nrs" in putanjaFull
+		provera = "footballEditor" in putanjaFull
 		if (provera==False):
 			self.licenca = False
 			return False
@@ -95,5 +93,34 @@ class Root(Tk):
 			messagebox.showinfo('Error', ' ')
 			self.destroy()
 			self.quit()
+	def promeniTextZaMecLabel(self,poluvreme):
+		if(poluvreme=="prvo"):
+			self.prozori["FootballFrame"].mecBtn["text"] = "FIRST HALF"
+			self.prozori["FootballFrame"].footballEditor.tipHighlightsa = "firstRegular"
+
+			self.prozori["FootballFrame"].entryPrvoPolMin["state"] = "normal"
+			self.prozori["FootballFrame"].entryPrvoPolSec["state"] = "normal"
+
+			self.prozori["FootballFrame"].entryDrugoPolMin["state"] = "disabled"
+			self.prozori["FootballFrame"].entryDrugoPolSec["state"] = "disabled"
+		elif(poluvreme=="drugo"):
+			self.prozori["FootballFrame"].mecBtn["text"] = "SECOND HALF"
+			self.prozori["FootballFrame"].footballEditor.tipHighlightsa = "secondRegular"
+
+			self.prozori["FootballFrame"].entryDrugoPolMin["state"] = "normal"
+			self.prozori["FootballFrame"].entryDrugoPolSec["state"] = "normal"
+
+			self.prozori["FootballFrame"].entryPrvoPolMin["state"] = "disabled"
+			self.prozori["FootballFrame"].entryPrvoPolSec["state"] = "disabled"
+		elif (poluvreme == "full"):
+			self.prozori["FootballFrame"].mecBtn["text"] = "MEC"
+			self.prozori["FootballFrame"].footballEditor.tipHighlightsa = "regularFull"
+
+			self.prozori["FootballFrame"].entryPrvoPolMin["state"] = "normal"
+			self.prozori["FootballFrame"].entryPrvoPolSec["state"] = "normal"
+
+			self.prozori["FootballFrame"].entryDrugoPolMin["state"] = "normal"
+			self.prozori["FootballFrame"].entryDrugoPolSec["state"] = "normal"
+
 
 

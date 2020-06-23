@@ -8,6 +8,8 @@ import subprocess
 # prvi str je source drugi je naziv iscek
 class FootballEditor(object):
 	putanja = ""
+	prvoPolPutanja = ""
+	drugoPolPutanja = ""
 	extt = ""
 	vremenaUSekundama = []
 	highlightsCounter = 0
@@ -22,6 +24,7 @@ class FootballEditor(object):
 	ceoMecSekunde = 0
 	tested = False
 	imeFoldera = ""
+	tipHighlightsa = ""
 
 
 	# sablonZaHighlights = re.compile("(\d{1,2}):(\d{1,2}) (\d{1,2}|\n")
@@ -36,15 +39,28 @@ class FootballEditor(object):
 					initialfile='tmp',
 					filetypes=[
 						("All files", "*")])
-				self.putanja = rep
-				self.extt = os.path.splitext(str(self.putanja))[1]
+				if (self.tipHighlightsa=="firstRegular"):
+					self.prvoPolPutanja = rep
+					self.extt = os.path.splitext(str(self.prvoPolPutanja))[1]
+				elif (self.tipHighlightsa == "secondRegular"):
+					self.drugoPolPutanja = rep
+					self.extt = os.path.splitext(str(self.drugoPolPutanja))[1]
+				elif (self.tipHighlightsa == "regularFull"):
+					self.putanja = rep
+					self.extt = os.path.splitext(str(self.putanja))[1]
 		except Exception as e:
 			print("greska: " + str(e))
 
 	def seckanje(self, br, pocetak, kraj):
-		self.napraviFolder()
-		naziv = self.imeFoldera+"/video" + str(br) + self.extt
-		ffmpeg_extract_subclip(self.putanja, pocetak, kraj, targetname=naziv)
+		drugiDeo = "_"+str(pocetak) + str(kraj) + self.extt
+		naziv = self.imeFoldera+"/video" + str(br) + drugiDeo
+		print(naziv)
+		#fajl ne postoji dakle moze da se secka
+		if(self.checkForFile(drugiDeo) == False):
+			print("ne postoji dakle kreiram video")
+			ffmpeg_extract_subclip(self.getCurrentPutanja(), pocetak, kraj, targetname=naziv)
+		else:
+			return True
 
 	def canRun(self):
 		if (len(self.vremenaUSekundama) == self.highlightsCounter and self.tested == True):
@@ -67,41 +83,95 @@ class FootballEditor(object):
 
 				return False
 		return True
-	def napraviFolder(self):
-		self.imeFoldera = self.putanja.split("/")[-1].split(".")[0].replace(" ","")
-		if(not os.path.exists(self.imeFoldera)):
-			os.mkdir(self.imeFoldera)
+	def napraviFolder(self,par1):
+		if(par1 == ""):
+
+			self.imeFoldera = self.putanja.split("/")[-1].split(".")[0].replace(" ","")
+			if(not os.path.exists(self.imeFoldera)):
+				os.mkdir(self.imeFoldera)
+		else:
+			self.imeFoldera = par1
+			if (not os.path.exists(self.imeFoldera)):
+				os.mkdir(self.imeFoldera)
 		# else:
 		# 	shutil.rmtree(self.imeFoldera)
 		# 	os.mkdir(self.imeFoldera)
 
 	def mergeAll(self):
 		# matchDir = os.listdir(self.imeFoldera)
-		matchDir = self.orderOfVids()
+		# matchDir = self.orderOfVids()
+		matchDir = self.getInfoAboutVideos("list2")[:]
+		listWithNumbers = self.getInfoAboutVideos("list")[:]
+
 		imetxtFajl = str(self.imeFoldera+"\\"+"mylist.txt")
 		txtFajl = open(imetxtFajl,"w")
-		for i in range(len(matchDir)):
-			if(matchDir[i].endswith("txt")):
-				continue
-			elif (matchDir[i].endswith("output.mkv")):
-				continue
-			imeFajla = matchDir[i]
-			line = "file '{}\{}'\n".format(self.imeFoldera,imeFajla)
-			txtFajl.write(str(line))
-		txtFajl.close()
 
+		for i in range(len(listWithNumbers)):
+			pocetak = "video"+str(i)+"_"
+			imeFajla = self.findNameOfVideo(matchDir,pocetak)
+			line = "file '{}\{}'\n".format(self.imeFoldera, imeFajla)
+			txtFajl.write(str(line))
+
+		txtFajl.close()
 		outputName = self.imeFoldera+"\\output"+self.extt
 		if(os.path.exists(outputName)):
 			os.unlink(outputName)
+
 		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}/{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
 		print(command)
 		subprocess.call(command,shell=True)
+
 	def orderOfVids(self):
 		duzinaListe = len(self.vremenaUSekundama)
 		novaLista = []
 		for i in range(0,duzinaListe):
 			novaLista.append("video"+str(i)+self.extt)
 		return novaLista
+	def findNameOfVideo(self,lista,var):
+		#var je pocinje sa
+		for i in lista:
+			if(i.startswith(var)):
+				return i
+
+	def getCurrentPutanja(self):
+		lista = [self.putanja,self.prvoPolPutanja,self.drugoPolPutanja]
+		putanja = ""
+		for i in lista:
+			if(i!=""):
+				putanja = i
+				break
+		return putanja
+
+	def getInfoAboutVideos(self,info):
+		sablon = re.compile(r'video(\d{1,})')
+		putanja = self.imeFoldera
+		fajlovi = os.listdir(putanja)
+		videos2 = []
+		videosForList2 = []
+		for i in range(len(fajlovi)):
+			if(fajlovi[i].startswith("video")):
+				pretraga = sablon.findall(fajlovi[i])
+				if(len(pretraga)>0):
+					videos2.append(int(pretraga[0]))
+				videosForList2.append(fajlovi[i])
+		videos2.sort()
+		videosForList2.sort()
+		if(info=="len"):
+			if(len(videos2)>0):
+				return videos2[-1]+1
+			else:
+				return 0
+		elif(info=="list"):
+			return videos2
+		elif(info=="list2"):
+			return videosForList2
+	def checkForFile(self,strr):
+		lista = self.getInfoAboutVideos("list2")[:]
+		for i in lista:
+			if (i.endswith(strr)):
+				return True
+		return False
+
 
 
 

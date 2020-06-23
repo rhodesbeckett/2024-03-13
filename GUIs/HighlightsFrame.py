@@ -16,7 +16,6 @@ class HighlightsFrame(Frame):
 		self.tabKey = Event
 		self.stringVars = []
 		self.defaultVar = "prvo"
-		self.trenutnoVreme = "regular"
 		self.imeTxtFajla = ""
 		self.scrollbar_setup()
 		self.create_widgets()
@@ -50,12 +49,7 @@ class HighlightsFrame(Frame):
 
 		self.addRow()
 
-	def addRow(self,trenutnoVreme="regular"):
-		if(trenutnoVreme!=self.trenutnoVreme):
-			if(trenutnoVreme == "regular"):
-				trenutnoVreme = "extra"
-			else:
-				trenutnoVreme = "regular"
+	def addRow(self):
 		self.rowH += 1
 
 		labelPocetak = Label(self.frame, text="Pocetak", font=("Courier", 20))
@@ -97,7 +91,6 @@ class HighlightsFrame(Frame):
 		rBtn2.grid(
 			row=self.rowH, column=self.columnH, sticky=W
 		)
-		rBtn2.trenutnoVreme = trenutnoVreme
 
 		self.columnH += 1
 
@@ -106,9 +99,13 @@ class HighlightsFrame(Frame):
 		self.deleteBtn = Button(self.frame,text="Obrisi",font=("Courier", 20))
 		self.deleteBtn["command"] = lambda var1=self.getLastRadioBtn(),var2=self.stringVars.index(self.stringVars[-1]):self.deleteRow(var1,var2)
 		self.deleteBtn.grid(row=self.rowH,column = self.columnH,sticky = W)
-		if(trenutnoVreme == "extra"):
-			self.deleteBtn["bg"] = "#e0b7b4"
 		self.columnH = 0
+
+		self.update()
+
+		self.canvas.yview_moveto(2)
+
+		self.update()
 
 	def getLista(self):
 		return self.frame.winfo_children()[:-12:-1]
@@ -133,6 +130,7 @@ class HighlightsFrame(Frame):
 					self.defaultVar = vrednost
 					self.addRow()
 					self.getLista()[7].focus()
+
 					break
 				except:
 					lastRadio-=1
@@ -147,8 +145,6 @@ class HighlightsFrame(Frame):
 		except:
 			self.tabKey = event
 			print("postavljeno2")
-	def setTrenutnoVreme(self,trenutnoVreme):
-		self.trenutnoVreme = trenutnoVreme
 
 	def getAllElements(self):
 		return self.frame.winfo_children()
@@ -181,24 +177,7 @@ class HighlightsFrame(Frame):
 
 		# self.stringVars[stringVarIndex] = None
 		self.stringVars[stringVarIndex] = None
-		if(self.trenutnoVreme == "extra"):
-			counter = self.getSizeOfCheckRows()
-			if(counter == 0):
-				self.setTrenutnoVreme("regular")
-				self.controller.prozori["FootballFrame"].showOrHideExtraFrame(False)
 
-	def getSizeOfCheckRows(self):
-		#dobij listu
-		niz = self.getAllElements()
-		counter = 0
-		for i in range(len(niz)):
-			if(str(type(niz[i])) == "<class 'tkinter.Radiobutton'>"):
-				try:
-					if(niz[i].trenutnoVreme == "extra"):
-						counter+=1
-				except:
-					continue
-		return counter
 
 		# dobijrb
 		# dodaj u counter
@@ -208,9 +187,11 @@ class HighlightsFrame(Frame):
 		# br = int(lastRadioBtn.split(".!")[5].split("radiobutton")[1])
 		# return br
 		return lastRadioBtn
+
 	def addBackButton(self):
 		self.backButton = Button(self.frame, text="<", font=("Courier", 20),command=self.goBack)
 		self.backButton.grid(row=0, column=0, padx=(5, 2), pady=5, sticky=W)
+
 	def addMenu(self):
 
 		menubar = Menu(self.frame)
@@ -223,15 +204,16 @@ class HighlightsFrame(Frame):
 
 		# za meceve
 		matchesmenu = Menu(menubar,tearoff=0)
-		matchesmenu.add_command(label="Only first regular")
-		matchesmenu.add_command(label="Only second regular")
-		matchesmenu.add_command(label="Regular two parts")
-		matchesmenu.add_command(label="Regular one part")
+		matchesmenu.add_command(label="Only first regular",command=self.setFirstReg)
+		matchesmenu.add_command(label="Only second regular",command=self.setSecondtReg)
+		matchesmenu.add_command(label="Regular one part",command=self.setFullReg)
 		menubar.add_cascade(label="Matches",menu=matchesmenu)
 
 		self.controller.config(menu=menubar)
+
 	def goBack(self):
 		self.controller.prebaci_frejm("FootballFrame")
+
 	def saveToFile(self):
 
 		if(self.controller.page_name=="HighlightsFrame"):
@@ -253,12 +235,7 @@ class HighlightsFrame(Frame):
 						varIndex = str(templista[rbtnIndex]).split(".!")[5].split("radiobutton")[1]
 						varIndex = int((int(varIndex) / 2) - 1)
 						poluvreme = self.stringVars[varIndex].get()
-						try:
-							trenutnoVreme = templista[rbtnIndex].trenutnoVreme
-							if(trenutnoVreme == "extra"):
-								poluvreme = poluvreme+"Extra"
-						except:
-							print("greska")
+
 
 						minut = row[0].get()
 						sekunda = row[1].get()
@@ -278,12 +255,18 @@ class HighlightsFrame(Frame):
 			if(self.imeTxtFajla == ""):
 				self.imeTxtFajla  = imeTempFajla
 			fajl.close()
+
 	def removeAllEntries(self):
 		lista = self.getAllElements()
+
 		exceptions = [".!frame.!highlightsframe.!canvas.!frame.!menu",".!frame.!highlightsframe.!canvas.!frame.!button"]
 		for i in lista:
 			if(str(i) not in exceptions):
 				i.destroy()
+		for b in range(len(self.stringVars)):
+			self.stringVars[b] = None
+
+
 	def checkFileEntries(self):
 		if(self.controller.page_name=="HighlightsFrame"):
 			highlightsPutanja = ""
@@ -303,7 +286,7 @@ class HighlightsFrame(Frame):
 
 
 			if(highlightsPutanja != "" and extt == ".txt"):
-				sablon = re.compile(r'(.*\s.*\s.*(\sprvoextra|drugoextra|prvo|drugo|))')
+				sablon = re.compile(r'(.*\s.*\s.*(\sprvo|drugo|))')
 				fajl = open(highlightsPutanja,"r",encoding="utf-8")
 				linija = fajl.readline()
 				redovi = []
@@ -331,19 +314,16 @@ class HighlightsFrame(Frame):
 					red = -1
 					brojac = 0
 					entries = []
-
+					brojacForStringVars = 0
 					for i in range(len(redovi)):
+						self.defaultVar = redovi[i][3]
+						# if (brojacForStringVars == 0):
+						# 	self.stringVars = []
+						# 	brojacForStringVars + 1
+						self.addRow()
 
-
-						if(redovi[i][3].endswith("extra")):
-							self.setTrenutnoVreme("extra")
-							self.addRow("extra")
-							self.controller.prozori["FootballFrame"].showOrHideExtraFrame(True)
-						else:
-							self.setTrenutnoVreme("regular")
-							self.addRow("regular")
-							self.controller.prozori["FootballFrame"].showOrHideExtraFrame(False)
 						lista = self.getLista()
+
 						for j in range(len(lista)):
 							if (str(type(lista[j])) == "<class 'tkinter.Entry'>"):
 								brojac+=1
@@ -363,7 +343,8 @@ class HighlightsFrame(Frame):
 									varIndex = str(lista[lista.index(rBtn)]).split(".!")[5].split("radiobutton")[1]
 									varIndex = int((int(varIndex) / 2) - 1)
 
-									self.stringVars[varIndex].set(redovi[red][3].split("\n")[0].split("extra")[0])
+									self.stringVars[varIndex].set(redovi[red][3].split("\n")[0])
+
 									# print(self.stringVars[varIndex])
 
 									#dodaj u row
@@ -375,6 +356,20 @@ class HighlightsFrame(Frame):
 					messagebox.showinfo('Highlights load', 'Ispravite greske u highlights txt da bi ste uspesno ucitali.')
 			else:
 				messagebox.showinfo('Highlights load', 'txt fajl format je neophodan.')
+
 	def closeApp(self):
 		self.saveToFile()
 		self.controller.quit()
+
+	def setFirstReg(self):
+		if(self.controller.page_name == "FootballFrame"):
+			self.controller.promeniTextZaMecLabel("prvo")
+			self.controller.prozori["FootballFrame"].showOrHideFrameForCut(True)
+	def setSecondtReg(self):
+		if(self.controller.page_name == "FootballFrame"):
+			self.controller.promeniTextZaMecLabel("drugo")
+			self.controller.prozori["FootballFrame"].showOrHideFrameForCut(True)
+	def setFullReg(self):
+		if (self.controller.page_name == "FootballFrame"):
+			self.controller.promeniTextZaMecLabel("full")
+			self.controller.prozori["FootballFrame"].showOrHideFrameForCut(False)
