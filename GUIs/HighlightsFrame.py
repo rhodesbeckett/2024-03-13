@@ -4,6 +4,7 @@ import re
 import os
 from tkinter import messagebox
 import random
+import threading
 
 class HighlightsFrame(Frame):
 	def __init__(self, parent, controller,fe):
@@ -19,6 +20,7 @@ class HighlightsFrame(Frame):
 		self.imeTxtFajla = ""
 		self.scrollbar_setup()
 		self.create_widgets()
+
 
 	def scrollbar_setup(self):
 		self.canvas = Canvas(self, borderwidth=0)
@@ -71,7 +73,7 @@ class HighlightsFrame(Frame):
 		##########
 
 		Label(self.frame, text="+", font=("Courier", 20)).grid(row=self.rowH, column=self.columnH, padx=(0, 0),
-																  pady=5, sticky=W)
+															   pady=5, sticky=W)
 		self.columnH += 1
 
 		self.entryPlus = Entry(self.frame, width=2, font=("Courier", 20))
@@ -102,10 +104,17 @@ class HighlightsFrame(Frame):
 		self.columnH = 0
 
 		self.update()
-
 		self.canvas.yview_moveto(2)
-
 		self.update()
+
+
+
+
+	def startFocus(self):
+		self.t_render = threading.Thread(target=self.getLista()[7].focus)
+		self.t_render.start()
+
+
 
 	def getLista(self):
 		return self.frame.winfo_children()[:-12:-1]
@@ -129,7 +138,7 @@ class HighlightsFrame(Frame):
 					vrednost = self.stringVars[lastRadio].get()
 					self.defaultVar = vrednost
 					self.addRow()
-					self.getLista()[7].focus()
+					self.startFocus()
 
 					break
 				except:
@@ -209,7 +218,26 @@ class HighlightsFrame(Frame):
 		matchesmenu.add_command(label="Regular one part",command=self.setFullReg)
 		menubar.add_cascade(label="Matches",menu=matchesmenu)
 
+		#za audio
+		audioMenu = Menu(menubar, tearoff=0)
+		audioMenu.add_command(label="Disable audio", command=lambda var= False:self.setAudio(var))
+		audioMenu.add_command(label="Enable audio", command=lambda var= True:self.setAudio(var))
+		menubar.add_cascade(label="Audio", menu=audioMenu)
+
+		#za video
+		videoMenu = Menu(menubar, tearoff=0)
+		videoMenu.add_command(label="Source extension", command=lambda var= "":self.setExt(var))
+		videoMenu.add_command(label="MP4 extension", command=lambda var= ".mp4":self.setExt(var))
+		menubar.add_cascade(label="Video", menu=videoMenu)
+
 		self.controller.config(menu=menubar)
+	def setAudio(self,par):
+		self.footballEditor.audioVar = par
+	def setExt(self,par):
+		if(par==""):
+			self.footballEditor.extt = self.footballEditor.originalExt
+		elif(par!=""):
+			self.footballEditor.extt = par
 
 	def goBack(self):
 		self.controller.prebaci_frejm("FootballFrame")

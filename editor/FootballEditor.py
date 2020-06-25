@@ -3,6 +3,7 @@ import os
 import os.path
 import re
 import subprocess
+from moviepy.video.io.VideoFileClip import VideoFileClip
 
 
 # prvi str je source drugi je naziv iscek
@@ -11,6 +12,7 @@ class FootballEditor(object):
 	prvoPolPutanja = ""
 	drugoPolPutanja = ""
 	extt = ""
+	originalExt = ""
 	vremenaUSekundama = []
 	highlightsCounter = 0
 	prvo_pol = 0
@@ -25,6 +27,7 @@ class FootballEditor(object):
 	tested = False
 	imeFoldera = ""
 	tipHighlightsa = ""
+	audioVar = True
 
 
 	# sablonZaHighlights = re.compile("(\d{1,2}):(\d{1,2}) (\d{1,2}|\n")
@@ -42,23 +45,30 @@ class FootballEditor(object):
 				if (self.tipHighlightsa=="firstRegular"):
 					self.prvoPolPutanja = rep
 					self.extt = os.path.splitext(str(self.prvoPolPutanja))[1]
+					self.originalExt = self.extt
 				elif (self.tipHighlightsa == "secondRegular"):
 					self.drugoPolPutanja = rep
 					self.extt = os.path.splitext(str(self.drugoPolPutanja))[1]
+					self.originalExt = self.extt
 				elif (self.tipHighlightsa == "regularFull"):
 					self.putanja = rep
 					self.extt = os.path.splitext(str(self.putanja))[1]
+					self.originalExt = self.extt
 		except Exception as e:
 			print("greska: " + str(e))
 
 	def seckanje(self, br, pocetak, kraj):
-		drugiDeo = "_"+str(pocetak) + str(kraj) + self.extt
+		drugiDeo = "_" + str(pocetak) + str(kraj) + self.extt
 		naziv = self.imeFoldera+"/video" + str(br) + drugiDeo
 		print(naziv)
 		#fajl ne postoji dakle moze da se secka
 		if(self.checkForFile(drugiDeo) == False):
-			print("ne postoji dakle kreiram video")
-			ffmpeg_extract_subclip(self.getCurrentPutanja(), pocetak, kraj, targetname=naziv)
+			fajl = VideoFileClip(self.getCurrentPutanja())
+			new = fajl.subclip(pocetak, kraj)
+			if(self.extt == ".mp4"):
+				new.write_videofile(naziv,logger=None,audio= self.audioVar)
+			else:
+				ffmpeg_extract_subclip(self.getCurrentPutanja(), pocetak, kraj, targetname=naziv)
 		else:
 			return True
 
@@ -113,11 +123,12 @@ class FootballEditor(object):
 			txtFajl.write(str(line))
 
 		txtFajl.close()
-		outputName = self.imeFoldera+"\\output"+self.extt
+		# outputName = self.imeFoldera+"\\output"+self.extt
+		outputName = self.imeFoldera + "\\output" +self.extt
 		if(os.path.exists(outputName)):
 			os.unlink(outputName)
 
-		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}/{}{}".format(imetxtFajl,self.imeFoldera,"output",self.extt))
+		command = str("ffmpeg -f concat -safe 0 -i {} -c copy {}/{}{}".format(imetxtFajl,self.imeFoldera,"output",".mp4"))
 		print(command)
 		subprocess.call(command,shell=True)
 

@@ -17,7 +17,7 @@ class Root(Tk):
 		self.page_name = ""
 		self.prozori = {}
 		self.footballEditor = FootballEditor()
-		# self.resizable(False, False)
+		self.resizable(False, False)
 
 		for frejm in (FootballFrame, HighlightsFrame, TestFrame):
 			self.page_name = frejm.__name__
