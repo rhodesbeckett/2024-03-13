@@ -46,14 +46,20 @@ class FootballEditor(object):
 					self.prvoPolPutanja = rep
 					self.extt = os.path.splitext(str(self.prvoPolPutanja))[1]
 					self.originalExt = self.extt
+					self.drugoPolPutanja = ""
+					self.putanja = ""
 				elif (self.tipHighlightsa == "secondRegular"):
 					self.drugoPolPutanja = rep
 					self.extt = os.path.splitext(str(self.drugoPolPutanja))[1]
 					self.originalExt = self.extt
+					self.prvoPolPutanja = ""
+					self.putanja = ""
 				elif (self.tipHighlightsa == "regularFull"):
 					self.putanja = rep
 					self.extt = os.path.splitext(str(self.putanja))[1]
 					self.originalExt = self.extt
+					self.prvoPolPutanja = ""
+					self.drugoPolPutanja = ""
 		except Exception as e:
 			print("greska: " + str(e))
 
@@ -119,8 +125,9 @@ class FootballEditor(object):
 		for i in range(len(listWithNumbers)):
 			pocetak = "video"+str(i)+"_"
 			imeFajla = self.findNameOfVideo(matchDir,pocetak)
-			line = "file '{}\{}'\n".format(self.imeFoldera, imeFajla)
-			txtFajl.write(str(line))
+			if(imeFajla!= None):
+				line = "file '{}\{}'\n".format(self.imeFoldera, imeFajla)
+				txtFajl.write(str(line))
 
 		txtFajl.close()
 		# outputName = self.imeFoldera+"\\output"+self.extt
@@ -165,7 +172,9 @@ class FootballEditor(object):
 				if(len(pretraga)>0):
 					videos2.append(int(pretraga[0]))
 				videosForList2.append(fajlovi[i])
+		# sortirana lista sa brojevima
 		videos2.sort()
+		# sortirana lista sa nazivima(nije bitan redosled)
 		videosForList2.sort()
 		if(info=="len"):
 			if(len(videos2)>0):

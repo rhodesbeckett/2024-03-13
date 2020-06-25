@@ -185,11 +185,13 @@ class FootballFrame(Frame):
 					pocetak = video[i][0]
 					kraj = video[i][1]
 					seckanje = self.footballEditor.seckanje(iCounter, pocetak, kraj)
+					#ovde None znaci da klip
+					# nije ranije postojao
+					# i da je kreiran
 					if(seckanje == None):
 						iCounter += 1
 				if(provera == True):
 					messagebox.showinfo('Cut', 'Cut je uspesno zavrsen.')
-		print("cut")
 
 	def getHighlightsType(self):
 		return self.footballEditor.tipHighlightsa
