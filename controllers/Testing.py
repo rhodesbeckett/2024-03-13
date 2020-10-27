@@ -12,26 +12,26 @@ class Testing(object):
         self.match = models["Match"]
         self.videos = models["Videos"]
 
-    def test_match(self, easy):
+    def test_match(self, window):
         if self.match.validate_location():
             self.counter+=1
-            easy.set("text", "OK", 0, 2)
+            window.get("LabelMessageMatch")["text"] = "OK"
         else:
-            easy.set("text", "NOT OK", 0, 2)
+            window.get("LabelMessageMatch")["text"] = "NOT OK"
 
-    def test_half_time(self, easy_set):
+    def test_half_time(self, window):
         seconds = self.half_time.get_seconds()
         if seconds > 0:
             if seconds < self.match.get_match_seconds():
                 self.counter+=1
-                easy_set.set("text", "OK", 0, self.half_time.test_label_index)
+                window.get(self.half_time.test_label)["text"] = "OK"
                 return None
-            easy_set.set("text", "NOT OK", 0, self.half_time.test_label_index)
+            window.get(self.half_time.test_label)["text"] = "NOT OK"
         elif seconds == 0:
-            easy_set.set("text", "NOT OK", 0,self.half_time.test_label_index)
+            window.get(self.half_time.test_label)["text"] = "NOT OK"
             return None
 
-    def test_highlights(self, easy):
+    def test_highlights(self, window):
         ok = True
         temp_list = []
         for i in self.all_highlights.all.values():
@@ -43,11 +43,11 @@ class Testing(object):
 
         if ok == True:
             if self.counter == 2:
-                easy.set("text", "OK", 0, 12)
+                window.get("LabelHighlightsMessage")["text"] = "OK"
                 self.all_highlights.seconds = temp_list[:]
                 self.counter += 1
         else:
-            easy.set("text", "NOT OK", 0, 12)
+            window.get("LabelHighlightsMessage")["text"] = "NOT OK"
 
     def test_photo(self, easy):
         def make_dir():
@@ -69,16 +69,16 @@ class Testing(object):
 
             slika = Image.open("./slike/frame.jpg")
             slika = slika.resize((651, 305), Image.ANTIALIAS)
-            self.testImg = ImageTk.PhotoImage(slika)
-            easy.set("image", self.testImg, 0, 10)
+            self.test_img = ImageTk.PhotoImage(slika)
+            easy.get("LabelTestPhoto")["image"] = self.test_img
 
         def get_seconds():
             return self.half_time.get_seconds()
 
         can_run = [self.match.can_take_photo,]
         if False not in can_run:
-            min = int(easy.get_text(1, 0))
-            sec = int(easy.get_text(1, 2))
+            min = int(easy.get("EntryTimeStampMin").get())
+            sec = int(easy.get("EntryTimeStampSec").get())
             print(sec)
             #
             name = make_dir()

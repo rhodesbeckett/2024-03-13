@@ -1,0 +1,172 @@
+{
+  "Frame1": {
+    "master":"FrameContainer",
+    "layout": "grid",
+    "config": {},
+    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "methods": [],
+    "newRow": false
+  },
+  "ButtonBack": {
+    "master":"Frame1",
+    "layout": "grid",
+    "methods": [0],
+    "config": {"text": "<"},
+    "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+    "newRow": true
+    },
+  "LabelMatch": {
+    "master":"Frame1",
+    "layout": "grid",
+    "methods": [],
+    "config": {"text": "MATCH"},
+    "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+    "newRow": true
+    },
+  "LabelMessageMatch": {
+    "master":"Frame1",
+    "layout": "grid",
+    "methods": [],
+    "config": {"text":" " },
+    "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+    "newRow": false
+    },
+  "LabelFirstHalf": {
+    "master":"Frame1",
+    "layout": "grid",
+    "config": {"text":"First half" },
+    "grid": {"padx":[5,0],"pady":0,"sticky":"W"},
+    "newRow": true
+    },
+  "LabelMessageFirstHalf": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text":"NOT OK"},
+    "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+    "newRow": false
+    },
+  "LabelSecondHalf": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "Second half"},
+    "grid": {"padx":[5,0],"sticky":"W"},
+    "newRow": true
+    },
+  "LabelMessageSecondHalf": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text":"NOT OK"},
+    "grid": {"padx":[0,0],"columnspan":3,"sticky":"E"},
+    "newRow": false
+    },
+  "LabelTimeStamp": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "Enter timestamp for testing:"},
+    "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+    "newRow": true
+    },
+
+  "Frame2": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {},
+    "grid": {"sticky":"W"},
+    "newRow": true
+    },
+  "EntryTimeStampMin": {
+    "master":"Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config" : {"width": 2},
+    "grid": {"padx":[5,2],"pady":7,"sticky":"W"},
+    "newRow": false
+  },
+  "LabelColon": {
+    "master":"Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": ":"},
+    "grid": {"padx":[0,5],"pady":5,"sticky":"W"},
+    "newRow": false
+  },
+  "EntryTimeStampSec": {
+    "master":"Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"width": 2},
+    "grid": {"padx":[2,5],"pady":2,"sticky":"W"},
+    "newRow": false
+  },
+  "HalfTimeTestLabel": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "Halftime:"},
+    "grid": {"sticky": "W"},
+    "newRow": false
+  },
+  "RadiobuttonFirst": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "1"},
+    "grid": {"padx":2,"sticky": "W"},
+    "newRow": false
+  },
+  "RadiobuttonSecond": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "2"},
+    "grid": {"padx":2,"sticky": "W"},
+    "newRow": false
+  },
+
+  "ButtonCheck": {
+    "master":"Frame2",
+    "layout":"grid",
+    "methods": [1],
+    "config": {"text": "Proveri"},
+    "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+    "newRow": true
+  },
+  "SeparatorVertical": {
+    "master": "Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"orient": "vertical"},
+    "grid": {"rowspan": 10,"row":0,"column": 5 ,"sticky": "NS"},
+    "newRow": false
+  },
+  "LabelTestPhoto": {
+    "master": "Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": ""},
+    "grid": {"rowspan":10,"padx": 10,"pady": 10,"row":0,"column": 7,"sticky": "NW"},
+    "newRow": false
+  },
+  "LabelHighlights": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "Highlights:"},
+    "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+    "newRow": true
+  },
+  "LabelHighlightsMessage": {
+    "master":"Frame1",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "NOT OK"},
+    "grid": {"padx":[5,0],"columnspan":2,"sticky":"E"},
+    "newRow": false
+  }
+
+}

@@ -1,0 +1,246 @@
+{
+  "Frame1": {
+    "layout": "grid",
+    "methods": [],
+    "master": "FrameContainer",
+    "config": {},
+    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "newRow": false
+  },
+  "ButtonMatch": {
+    "layout": "grid",
+    "methods": [2],
+    "master": "Frame1",
+    "config": {
+      "text": "MATCH"
+    },
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "ButtonHighlights": {
+    "layout": "grid",
+    "methods": [0],
+    "master": "Frame1",
+    "config": {
+      "text": "HIGHLIGHTS"
+    },
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "Frame2": {
+    "master": "Frame1",
+    "layout": "grid",
+    "methods": [],
+    "config": {},
+    "grid": {
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "LabelFirstHalf": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "text": "FIRST HALF:"
+    },
+    "grid": {
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "EntryFirstHalfMin": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "width": 2
+    },
+    "grid": {
+      "padx": [
+        5,
+        2
+      ],
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "LabelFirstHalfColon": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "text": ":"
+    },
+    "grid": {
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "EntryFirstHalfSec": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "width": 2
+    },
+    "grid": {
+      "padx": [
+        5,
+        2
+      ],
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "LabelSecondHalf": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "text": "SECOND HALF:"
+    },
+    "grid": {
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "EntrySecondHalfMin": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "width": 2
+    },
+    "grid": {
+      "padx": [
+        5,
+        2
+      ],
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "LabelSecondHalfColon": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "text": ":"
+    },
+    "grid": {
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "EntrySecondHalfSec": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "width": 2
+    },
+    "grid": {
+      "padx": [
+        2,
+        5
+      ],
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "ButtonTestAll": {
+    "master": "Frame1",
+    "layout": "grid",
+    "methods": [1],
+    "config": {
+      "text": "TEST"
+    },
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "W"
+    },
+    "newRow": true
+  },
+  "ButtonRender": {
+    "master": "Frame1",
+    "layout": "grid",
+    "methods": [5],
+    "config": {
+      "text": "RENDER"
+    },
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "W"
+    },
+    "newRow": false
+  },
+  "Frame3": {
+    "master": "Frame1",
+    "layout": "grid",
+    "methods": [],
+    "config": {},
+    "grid": {
+      "sticky": "W"
+    },
+    "newRow": false
+  },
+  "ButtonCut": {
+    "master": "Frame3",
+    "layout": "grid",
+    "methods": [4],
+    "config": {
+      "text": "CUT"
+    },
+    "grid": {
+      "padx": 1,
+      "pady": 5,
+      "sticky": "W"
+    },
+    "newRow": false
+  },
+  "LabelFolder": {
+    "master": "Frame3",
+    "layout": "grid",
+    "methods": [],
+    "config": {
+      "text": "FOLDER:"
+    },
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  },
+  "EntryVideosLocation": {
+    "master": "Frame3",
+    "layout": "grid",
+    "methods": [3],
+    "config": {},
+    "grid": {
+      "padx": 15,
+      "pady": 5,
+      "sticky": "E"
+    },
+    "newRow": false
+  }
+}

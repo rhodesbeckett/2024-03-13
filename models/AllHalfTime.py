@@ -3,23 +3,23 @@ from models.HalfTime import HalfTime
 class AllHalfTime(object):
     to_sub = 0
     # "Full match": "full_regular",
-    choices = {"Only first half": "first_regular",
-               "Only second half": "second_regular"}
+    choices = {0: "first_regular",
+               1: "second_regular"}
     editing_type = ""
-    test_label_index = 0
+    test_label = 0
     setting = 1
 
     def __init__(self):
         self.first_half = HalfTime()
         self.second_half = HalfTime()
 
-    def set_editing_type(self,type):
-        if type == "second_regular":
-            self.test_label_index = 6
+    def set_editing_type(self, type_):
+        if type_ == "second_regular":
+            self.test_label = "LabelMessageSecondHalf"
             self.to_sub = 2700
         else:
-            self.test_label_index = 4
-        self.editing_type = type
+            self.test_label = "LabelMessageFirstHalf"
+        self.editing_type = type_
 
     def get_seconds(self,half_time=0):
         if self.editing_type == "first_regular" or half_time == 1:

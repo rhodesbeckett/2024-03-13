@@ -1,0 +1,34 @@
+{
+  "Frame2": {
+    "master": "FrameContainer",
+    "layout": "grid",
+    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "config": {},
+    "methods": [0],
+    "newRow": false
+  },
+  "LabelQuestion": {
+    "master": "Frame2",
+    "layout": "grid",
+    "grid": {"sticky": "W","padx": [50,5],"pady": 5,"columnspan": 3},
+    "config": {"font": ["Helvetica",20],"text": "How you want to edit videos?"},
+    "methods": [],
+    "newRow": false
+  },
+  "Button1": {
+    "master": "Frame2",
+    "layout": "grid",
+    "grid": {"sticky": "W","padx": 10,"pady": 10},
+    "config": {"font": ["Helvetica",20],"text": "Only first regular"},
+    "methods": [],
+    "newRow": true
+  },
+  "Button2": {
+    "master": "Frame2",
+    "layout": "grid",
+    "grid": {"sticky": "W","padx": 10,"pady": 10},
+    "config": {"font": ["Helvetica",20],"text": "Only second regular"},
+    "methods": [],
+    "newRow": false
+  }
+}

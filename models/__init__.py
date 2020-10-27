@@ -5,7 +5,7 @@ from models.HighlightsRow import HighlightsRow
 from models.Videos import Videos
 
 def factory_models():
-    return {"Match":Match(),
+    return {"Match": Match(),
             "AllHalfTime":AllHalfTime(),
             "AllHighlights":AllHighlights(),
             "Videos":Videos()}

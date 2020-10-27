@@ -28,7 +28,10 @@ class AllHighlights(object):
         return hr
 
     def get_last_row(self):
-        return self.all[self.current_row].row
+        try:
+            return self.all[self.current_row].row
+        except:
+            return []
 
 
 

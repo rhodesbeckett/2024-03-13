@@ -1,0 +1,58 @@
+{
+  "LabelStart": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "start"},
+    "grid": {"padx": [5,2],"pady": 5},
+    "newRow": true
+  },
+  "EntryStart": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"width": 2},
+    "grid": {"padx": [5,2],"pady": 5},
+    "newRow": false
+  },
+  "LabelColon": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": ":"},
+    "grid": {"pady": 5},
+    "newRow": false
+  },
+  "EntrySecStart": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"width": 2},
+    "grid": {"padx": [2,5],"pady": 5},
+    "newRow": false
+  },
+  "LabelPlus": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "+"},
+    "grid": {"pady": 5},
+    "newRow": false
+  },
+  "EntrySecEnd": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"width": 2},
+    "grid": {"padx": [5,20],"pady": 5},
+    "newRow": false
+  },
+  "ButtonDelete": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "DELETE"},
+    "grid": {"padx": [10,10],"columnspan": 4},
+    "newRow": false
+  }
+}

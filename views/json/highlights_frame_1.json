@@ -1,0 +1,49 @@
+{
+  "Frame0": {
+    "master": "FrameContainer",
+    "layout": "grid",
+    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "config": {},
+    "methods": [],
+    "newRow": false
+  },
+  "Canvas": {
+    "master": "Frame0",
+    "layout": "pack",
+    "pack": {"side":"left", "fill":"both", "expand":true},
+    "config": {},
+    "methods": [0,1],
+    "newRow": false
+  },
+  "Scrollbar": {
+    "master": "Frame0",
+    "layout": "pack",
+    "pack": {"side":"right", "fill":"y"},
+    "config": {"orient": "vertical"},
+    "methods": [2],
+    "newRow": false
+  },
+  "Frame2": {
+    "master": "Canvas",
+    "layout": "grid",
+    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "config": {},
+    "methods": [0,5]
+  },
+  "ButtonBack": {
+    "master": "Frame2",
+    "layout": "grid",
+    "methods": [4],
+    "config": {"text": "<"},
+    "grid": {},
+    "newRow": true
+  },
+  "LabelHalfTime": {
+    "master": "Frame2",
+    "layout":"grid",
+    "methods": [],
+    "config": {"text": "FIRST HALF TIME:"},
+    "grid": {"pady": 3,"columnspan": 3},
+    "newRow": true
+  }
+}

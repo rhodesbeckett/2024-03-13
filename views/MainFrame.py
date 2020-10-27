@@ -1,108 +1,91 @@
+from easy_tk import EasyTkObject
+from easy_tk import EasyTk
+from easy_tk import grid_config_container
 from tkinter import *
-from easy_tkinter import Easy
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 
+class MainFrame(EasyTkObject):
 
-class MainFrame(Frame):
+    def __init__(self, root, widget, controller,set_font):
+        super(MainFrame, self).__init__()
+        self.easy.add_complete_widget(root)
+        self.easy.add_complete_widget(widget)
+        self.controller = controller
+        self.set_font = set_font
 
-    def __init__(self, parent, controller, models):
-        Frame.__init__(self, parent)
-        self.easy = Easy(self)
-        # set all models
+    def set_models(self,models):
         self.match = models["Match"]
         self.half_time = models["AllHalfTime"]
         self.videos = models["Videos"]
         self.all_highlights = models["AllHighlights"]
 
-        # root controllers for switching pages
-        self.controller = controller
-        self.create_widgets()
-        self.adding_commands()
-
     def create_widgets(self):
-        self.easy.set_font(("Courier", 20))
-        self.easy.insert(Button, 0, self.easy.set_data("MATCH", 15, 5))
-        self.easy.insert(Button, 0, self.easy.set_data("HIGHLIGHTS", 15, 5, ))
+        self.easy.import_methods([self.highlights_window, self.test_window,self.match_button,self.entry_click,self.cut,self.render])
+        self.open_file("views/json/main_frame.json")
+        self.reading_from_json()
+        self.set_font(self.easy.all_widgets,[Label,Button,Entry])
 
-        self.easy.insert(Frame, 0, self.easy.set_data(None), True)
+    def match_button(self,widgets):
+        def open_match_src():
+            frame = self.get("Frame1")
+            rep = filedialog.askopenfilename(
+                title="Load file",
+                parent=frame,
+                initialdir='/adffgdfg',
+                initialfile='tmp',
+                filetypes=[
+                    ("All files", "*")])
+            self.match.set_match(rep)
 
-        self.easy.insert(Label, 1, self.easy.set_data("FIRST HALF:", 0, 5, E))
+        btn_match = self.get("ButtonMatch")
+        btn_match["command"] = open_match_src
 
-        self.easy.insert(Entry, 1, self.easy.set_data(" ", (5, 2), 5, E))
-        self.easy.set("width", 2)
+    def entry_click(self,widgets):
+        for i in ["EntryFirstHalfMin","EntryFirstHalfSec","EntrySecondHalfMin","EntrySecondHalfSec",
+                  "EntryVideosLocation"]:
+            self.get(i).bind("<1>",lambda a=5:self.controller.refresh_testing())
 
-        self.easy.insert(Label, 1, self.easy.set_data(":", (0, 0), 5, E))
+    def render(self,widgets):
+        self.get("ButtonRender")["command"] = self.controller.render
 
-        self.easy.insert(Entry, 1, self.easy.set_data(" ", (5, 2), 5, E))
-        self.easy.set("width", 2)
+    def cut(self,widgets):
+        self.get("ButtonCut")["command"] = self.controller.cut
 
-        self.easy.insert(Label, 1, self.easy.set_data("SECOND HALF:", (0, 0), 5, E))
-        self.easy.insert(Entry, 1, self.easy.set_data(" ", (5, 2), 5, E))
-        self.easy.set("width", 2)
 
-        self.easy.insert(Label, 1, self.easy.set_data(":", pady=5, sticky=E))
+    def tkraise(self):
+        self.get("root").geometry("895x351")
+        self.get("root").update()
+        self.get("Frame1").tkraise()
 
-        self.easy.insert(Entry, 1, self.easy.set_data(" ", (2, 5), 5, E))
-        self.easy.set("width", 2)
+    def highlights_window(self, widgets):
+        btn_highlights = self.get("ButtonHighlights")
+        btn_highlights["command"] = lambda window="HighlightsFrame": self.controller.switch_window(window)
 
-        self.easy.add_new_row(0)
+    def test_window(self, widgets):
+        btn_highlights = self.get("ButtonTestAll")
+        btn_highlights["command"] = lambda window="TestFrame": self.start_test()
 
-        self.easy.insert(Button, 0, self.easy.set_data("TEST", 15, 5, W))
-        self.easy.insert(Button, 0, self.easy.set_data("RUN", 15, 5, W))
-
-        self.easy.insert(Frame, 0, self.easy.set_data(None), True)
-        # , 15, 5, E
-        self.easy.insert(Button, 2, self.easy.set_data("JUST CUT", 1, 5, W))
-        self.easy.insert(Label, 2, self.easy.set_data("FOLDER:", 15, 5, E))
-        self.easy.insert(Entry, 2, self.easy.set_data(" ", 15, 5, E))
-
-    def open_match_src(self):
-        rep = filedialog.askopenfilename(
-            title="Load file",
-            parent=self,
-            initialdir='/adffgdfg',
-            initialfile='tmp',
-            filetypes=[
-                ("All files", "*")])
-        self.match.set_match(rep)
-        self.controller.refresh_testing()
-
-    def adding_commands(self):
-        self.easy.set("command", self.open_match_src, 0, 0)
-        self.easy.set("command", lambda frame="HighlightsFrame": self.controller.prebaci_frejm(frame), 0, 1)
-        self.easy.set("command", self.start_test, 0, 3)
-        self.easy.set("command", self.controller.render, 0, 4)
-        self.easy.set("command", self.controller.cut, 2, 0)
-        self.click_on_entries()
-
-    def click_on_entries(self):
-        parent = 1
-        for i in [1,3,5,7,2]:
-            if i == 2:
-                parent = 2
-            self.easy.get_object(parent,i).bind("<1>",lambda a=5:self.controller.refresh_testing())
+    def hide_entry(self):
+        if self.half_time.editing_type == "first_regular":
+            self.get("EntrySecondHalfMin")["state"] = "disabled"
+            self.get("EntrySecondHalfSec")["state"] = "disabled"
+        elif self.half_time.editing_type == "second_regular":
+            self.get("EntryFirstHalfMin")["state"] = "disabled"
+            self.get("EntryFirstHalfSec")["state"] = "disabled"
 
     def start_test(self):
+        # self.half_time.set_time(.get())
         self.half_time.set_time(self.get_half_time(1))
         self.half_time.set_time(self.get_half_time(2))
         self.videos.set_src(self.get_video())
-        self.controller.prebaci_frejm("TestFrame")
-
-    def hide_half_time(self):
-        # provera novog modula halftimes
-        if self.half_time.editing_type == "first_regular":
-            self.easy.set("state", "disabled", 1, 5)
-            self.easy.set("state", "disabled", 1, 7)
-
-        elif self.half_time.editing_type == "second_regular":
-            self.easy.set("state", "disabled", 1, 1)
-            self.easy.set("state", "disabled", 1, 3)
+        self.controller.switch_window("TestFrame")
+        self.videos.set_src(self.get_video())
 
     def get_half_time(self, half_time):
         if half_time == 1:
-            return (self.easy.get_text(1, 1), self.easy.get_text(1, 3))
+            return (self.get("EntryFirstHalfMin").get(), self.get("EntryFirstHalfSec").get())
         elif half_time == 2:
-            return (self.easy.get_text(1, 5), self.easy.get_text(1, 7))
+            return (self.get("EntrySecondHalfMin").get(), self.get("EntrySecondHalfSec").get())
 
     def get_video(self):
-        return self.easy.get_text(2, 2)
+        return self.get("EntryVideosLocation").get()
