@@ -27,7 +27,7 @@
     "master":"Frame1",
     "layout": "grid",
     "methods": [],
-    "config": {"text":" " },
+    "config": {"text":"   " },
     "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
     "newRow": false
     },
@@ -42,7 +42,7 @@
     "master":"Frame1",
     "layout":"grid",
     "methods": [],
-    "config": {"text":"NOT OK"},
+    "config": {"text":"   ","bg": "red"},
     "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
     "newRow": false
     },
@@ -58,7 +58,7 @@
     "master":"Frame1",
     "layout":"grid",
     "methods": [],
-    "config": {"text":"NOT OK"},
+    "config": {"text":"   ","bg": "red"},
     "grid": {"padx":[0,0],"columnspan":3,"sticky":"E"},
     "newRow": false
     },
@@ -164,7 +164,7 @@
     "master":"Frame1",
     "layout":"grid",
     "methods": [],
-    "config": {"text": "NOT OK"},
+    "config": {"text":"   ","bg": "red"},
     "grid": {"padx":[5,0],"columnspan":2,"sticky":"E"},
     "newRow": false
   }

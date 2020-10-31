@@ -1,8 +1,9 @@
 from easy_tk import EasyTkObject
 from easy_tk.helpers import *
-from easy_tk import grid_config_container
+from easy_tk import WindowScrollbar
 from tkinter import Label, Button, Entry
 import threading
+from PIL import ImageTk,Image
 
 keys = ["LabelStart", "EntryStart", "LabelColon", "EntrySecStart", "LabelPlus", "EntrySecEnd", "ButtonDelete"]
 
@@ -17,22 +18,30 @@ class HighlightsFrame(EasyTkObject):
         self.easy.add_complete_widget(widget)
         self.controller = controller
         self.set_font = set_font
+        self.window_scrollbar = WindowScrollbar(self)
 
     def set_models(self, models):
         self.all_highlights = models["AllHighlights"]
         self.half_time = models["AllHalfTime"]
         self.other_widgets = {}
+        self.all_highlights.set_names(keys)
 
     def create_widgets(self):
+
         self.easy.import_methods(
-            [grid_config_container, canvas_methods, scrollbar_methods, frame2_methods, self.go_back, self.set_keypress,
-             self.add_row])
+            [self.window_scrollbar.set_scrollbar, self.go_back, self.set_keypress, ])
+        self.open_file("views/json/scrollbar.json")
+        self.reading_from_json()
+
         self.open_file("views/json/highlights_frame_1.json")
         self.reading_from_json()
 
         self.add_row()
         self.add_to_all_highlights()
-        self.set_first_highlights_label()
+        # self.set_first_highlights_label()
+
+        self.image = ImageTk.PhotoImage(Image.open("bg.gif"))
+        self.get("LabelBackground")["image"] = self.image
 
     def add_row(self):
         self.open_file("views/json/highlights_frame_2.json")
@@ -57,7 +66,7 @@ class HighlightsFrame(EasyTkObject):
                 self.all_highlights.add_to_row(self.get(i))
             else:
                 other_widgets.append(self.get(i))
-        other_widgets[-1]["command"] = lambda br=row:self.deleteRow(br)
+        other_widgets[-1]["command"] = lambda br=row:self.delete_row(br)
         self.other_widgets.setdefault(self.all_highlights.current_row,other_widgets)
 
 
@@ -99,12 +108,17 @@ class HighlightsFrame(EasyTkObject):
         obj.t_focus = threading.Thread(target=obj.getLista()[0].focus)
         obj.t_focus.start()
 
-    def deleteRow(self, index):
+    def delete_row(self, index):
         self.all_highlights.delete_row(index)
         for i in self.other_widgets[index]:
             i.destroy()
             i = None
         del self.other_widgets[index]
+        # self.delete_from_easy(self.all_highlights.get_json_names(index))
+
+    # def delete_from_easy(self,widget_names):
+    #     for i in widget_names:
+    #         self.easy.all_widgets[i] = None
 
     def set_first_highlights_label(self):
         if self.label_set == False:
@@ -126,7 +140,6 @@ class HighlightsFrame(EasyTkObject):
         elif text == "SECOND HALF:":
             self.all_highlights.half_time = 2
             add_highlights_label(2)
-
 
     def getLista(self):
         return self.all_highlights.get_last_row()

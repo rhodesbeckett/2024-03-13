@@ -1,12 +1,4 @@
 {
-  "FrameContainer": {
-    "master": "root",
-    "layout": "pack",
-    "pack": {"side": "top","fill": "both","expand": true},
-    "methods": [0],
-    "config": {},
-    "newRow": false
-  },
   "Frame0": {
     "master": "FrameContainer",
     "layout": "grid",
@@ -19,8 +11,8 @@
     "master": "Frame0",
     "layout": "pack",
     "pack": {"side":"left", "fill":"both", "expand":true},
-    "config": {},
-    "methods": [1],
+    "config": {"borderwidth": 1},
+    "methods": [0],
     "newRow": false
   },
   "Scrollbar": {
@@ -28,7 +20,7 @@
     "layout": "pack",
     "pack": {"side":"right", "fill":"y"},
     "config": {"orient": "vertical"},
-    "methods": [2],
+    "methods": [],
     "newRow": false
   },
   "Frame2": {
@@ -36,6 +28,6 @@
     "layout": "grid",
     "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
     "config": {},
-    "methods": [3]
+    "methods": []
   }
 }

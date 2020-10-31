@@ -7,6 +7,14 @@
     "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
     "newRow": false
   },
+  "LabelBackground": {
+    "master": "Frame1",
+    "layout": "place",
+    "place": {"x": 0,"y": 0,"relwidth": 1,"relheight": 1},
+    "config": {},
+    "methods": [],
+    "newRow": false
+  },
   "ButtonMatch": {
     "layout": "grid",
     "methods": [2],

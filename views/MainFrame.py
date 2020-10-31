@@ -1,31 +1,43 @@
 from easy_tk import EasyTkObject
 from easy_tk import EasyTk
-from easy_tk import grid_config_container
 from tkinter import *
 from tkinter import filedialog
+from PIL import ImageTk, Image
+
 
 class MainFrame(EasyTkObject):
 
-    def __init__(self, root, widget, controller,set_font):
+    def __init__(self, root, widget, controller, set_font):
         super(MainFrame, self).__init__()
         self.easy.add_complete_widget(root)
         self.easy.add_complete_widget(widget)
         self.controller = controller
         self.set_font = set_font
 
-    def set_models(self,models):
+    def set_models(self, models):
         self.match = models["Match"]
         self.half_time = models["AllHalfTime"]
         self.videos = models["Videos"]
         self.all_highlights = models["AllHighlights"]
 
+    def style_all_buttons(self):
+        for i in self.easy.all_widgets:
+            if i.startswith("Button"):
+                self.get(i)["relief"] = "solid"
+                self.get(i)["borderwidth"] = 2
+                self.get(i)["bg"] = "#dedcdc"
+
     def create_widgets(self):
-        self.easy.import_methods([self.highlights_window, self.test_window,self.match_button,self.entry_click,self.cut,self.render])
+        self.easy.import_methods(
+            [self.highlights_window, self.test_window, self.match_button, self.entry_click, self.cut, self.render])
         self.open_file("views/json/main_frame.json")
         self.reading_from_json()
-        self.set_font(self.easy.all_widgets,[Label,Button,Entry])
+        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
+        self.style_all_buttons()
+        self.imeage = ImageTk.PhotoImage(Image.open("bg.gif"))
+        self.get("LabelBackground")["image"] = self.imeage
 
-    def match_button(self,widgets):
+    def match_button(self, widgets):
         def open_match_src():
             frame = self.get("Frame1")
             rep = filedialog.askopenfilename(
@@ -40,17 +52,16 @@ class MainFrame(EasyTkObject):
         btn_match = self.get("ButtonMatch")
         btn_match["command"] = open_match_src
 
-    def entry_click(self,widgets):
-        for i in ["EntryFirstHalfMin","EntryFirstHalfSec","EntrySecondHalfMin","EntrySecondHalfSec",
+    def entry_click(self, widgets):
+        for i in ["EntryFirstHalfMin", "EntryFirstHalfSec", "EntrySecondHalfMin", "EntrySecondHalfSec",
                   "EntryVideosLocation"]:
-            self.get(i).bind("<1>",lambda a=5:self.controller.refresh_testing())
+            self.get(i).bind("<1>", lambda a=5: self.controller.refresh_testing())
 
-    def render(self,widgets):
+    def render(self, widgets):
         self.get("ButtonRender")["command"] = self.controller.render
 
-    def cut(self,widgets):
+    def cut(self, widgets):
         self.get("ButtonCut")["command"] = self.controller.cut
-
 
     def tkraise(self):
         self.get("root").geometry("895x351")

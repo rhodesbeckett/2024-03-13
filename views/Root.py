@@ -3,7 +3,7 @@ from views.MainFrame import MainFrame
 from views.TestFrame import TestFrame
 from views.HighlightsFrame import HighlightsFrame
 from views.ChoiceFrame import ChoiceFrame
-from easy_tk.helpers import grid_config_container
+
 from models import factory_models
 from controllers import *
 import threading
@@ -20,7 +20,7 @@ class Root(EasyTkObject):
         self.geometry = "895x351"
 
     def set_container(self):
-        self.add_just_one_from_json("views/json/scroll_bar.json", "FrameContainer")
+        self.add_just_one("views/json/frame_container.json", "FrameContainer")
         child = self.get("FrameContainer", False)
         master = self.easy.create_master(child.obj)
         self.easy.all_masters.setdefault("FrameContainer", master)
@@ -45,7 +45,7 @@ class Root(EasyTkObject):
             self.page_name = frame.__name__
             frame = frame(root, widget, self, self.set_font)
             self.prozori[self.page_name] = frame
-            frame.easy.methods = [grid_config_container, ]
+            frame.easy.methods = []
             frame.set_models(models)
             frame.create_widgets()
 
@@ -56,9 +56,12 @@ class Root(EasyTkObject):
     def set_font(self, easy_all, widgets):
         for i in easy_all:
             for j in widgets:
-                if isinstance(easy_all.get(i).get(), j):
-                    easy_all.get(i).get()["font"] = ["Courier", 18]
-                    break
+                try:
+                    if isinstance(easy_all.get(i).get(), j):
+                        easy_all.get(i).get()["font"] = ('Minion Pro SmBd', 18, '')
+                        break
+                except:
+                    continue
 
     def render(self):
         if self.rendering.is_ready():

@@ -7,6 +7,14 @@
     "methods": [0],
     "newRow": false
   },
+  "LabelBackground": {
+    "master": "Frame2",
+    "layout": "place",
+    "place": {"x": 0,"y": 0,"relwidth": 1,"relheight": 1},
+    "config": {},
+    "methods": [],
+    "newRow": false
+  },
   "LabelQuestion": {
     "master": "Frame2",
     "layout": "grid",

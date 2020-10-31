@@ -15,20 +15,20 @@ class Testing(object):
     def test_match(self, window):
         if self.match.validate_location():
             self.counter+=1
-            window.get("LabelMessageMatch")["text"] = "OK"
+            window.get("LabelMessageMatch")["bg"] = "green"
         else:
-            window.get("LabelMessageMatch")["text"] = "NOT OK"
+            window.get("LabelMessageMatch")["bg"] = "red"
 
     def test_half_time(self, window):
         seconds = self.half_time.get_seconds()
         if seconds > 0:
             if seconds < self.match.get_match_seconds():
                 self.counter+=1
-                window.get(self.half_time.test_label)["text"] = "OK"
+                window.get(self.half_time.test_label)["bg"] = "green"
                 return None
-            window.get(self.half_time.test_label)["text"] = "NOT OK"
+            window.get(self.half_time.test_label)["bg"] = "red"
         elif seconds == 0:
-            window.get(self.half_time.test_label)["text"] = "NOT OK"
+            window.get(self.half_time.test_label)["bg"] = "red"
             return None
 
     def test_highlights(self, window):
@@ -43,11 +43,11 @@ class Testing(object):
 
         if ok == True:
             if self.counter == 2:
-                window.get("LabelHighlightsMessage")["text"] = "OK"
+                window.get("LabelHighlightsMessage")["bg"] = "green"
                 self.all_highlights.seconds = temp_list[:]
                 self.counter += 1
         else:
-            window.get("LabelHighlightsMessage")["text"] = "NOT OK"
+            window.get("LabelHighlightsMessage")["bg"] = "red"
 
     def test_photo(self, easy):
         def make_dir():
