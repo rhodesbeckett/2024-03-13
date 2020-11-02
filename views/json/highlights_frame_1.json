@@ -10,7 +10,7 @@
   "ButtonBack": {
     "master": "Frame2",
     "layout": "grid",
-    "methods": [1,2],
+    "methods": ["go_back","set_keypresss"],
     "config": {"text": "<"},
     "grid": {},
     "newRow": true

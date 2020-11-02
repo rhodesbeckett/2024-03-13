@@ -27,9 +27,10 @@ class HighlightsFrame(EasyTkObject):
         self.all_highlights.set_names(keys)
 
     def create_widgets(self):
-
-        self.easy.import_methods(
-            [self.window_scrollbar.set_scrollbar, self.go_back, self.set_keypress, ])
+        methods = {"set_scrollbar":self.window_scrollbar.set_scrollbar,
+        "go_back":self.go_back,
+        "set_keypresss":self.set_keypress}
+        self.easy.import_methods(methods)
         self.open_file("views/json/scrollbar.json")
         self.reading_from_json()
 
@@ -114,11 +115,6 @@ class HighlightsFrame(EasyTkObject):
             i.destroy()
             i = None
         del self.other_widgets[index]
-        # self.delete_from_easy(self.all_highlights.get_json_names(index))
-
-    # def delete_from_easy(self,widget_names):
-    #     for i in widget_names:
-    #         self.easy.all_widgets[i] = None
 
     def set_first_highlights_label(self):
         if self.label_set == False:

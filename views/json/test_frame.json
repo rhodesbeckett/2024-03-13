@@ -10,7 +10,7 @@
   "ButtonBack": {
     "master":"Frame1",
     "layout": "grid",
-    "methods": [0],
+    "methods": ["go_back"],
     "config": {"text": "<"},
     "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
     "newRow": true
@@ -83,7 +83,7 @@
     "master":"Frame2",
     "layout":"grid",
     "methods": [],
-    "config" : {"width": 2},
+    "config" : {"width": 2,"bg":"white"},
     "grid": {"padx":[5,2],"pady":7,"sticky":"W"},
     "newRow": false
   },
@@ -99,7 +99,7 @@
     "master":"Frame2",
     "layout":"grid",
     "methods": [],
-    "config": {"width": 2},
+    "config": {"width": 2,"bg":"white"},
     "grid": {"padx":[2,5],"pady":2,"sticky":"W"},
     "newRow": false
   },
@@ -131,8 +131,8 @@
   "ButtonCheck": {
     "master":"Frame2",
     "layout":"grid",
-    "methods": [1],
-    "config": {"text": "Proveri"},
+    "methods": ["take_photo"],
+    "config": {"text": "Check"},
     "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
     "newRow": true
   },

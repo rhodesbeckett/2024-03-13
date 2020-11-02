@@ -4,7 +4,7 @@
     "layout": "grid",
     "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
     "config": {},
-    "methods": [0],
+    "methods": ["btn"],
     "newRow": false
   },
   "LabelBackground": {
@@ -27,7 +27,7 @@
     "master": "Frame2",
     "layout": "grid",
     "grid": {"sticky": "W","padx": 10,"pady": 10},
-    "config": {"font": ["Helvetica",20],"text": "Only first regular"},
+    "config": {"font": ["Helvetica",20],"text": "Only first half."},
     "methods": [],
     "newRow": true
   },
@@ -35,7 +35,7 @@
     "master": "Frame2",
     "layout": "grid",
     "grid": {"sticky": "W","padx": 10,"pady": 10},
-    "config": {"font": ["Helvetica",20],"text": "Only second regular"},
+    "config": {"font": ["Helvetica",20],"text": "Only second half."},
     "methods": [],
     "newRow": false
   }

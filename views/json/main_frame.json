@@ -17,7 +17,7 @@
   },
   "ButtonMatch": {
     "layout": "grid",
-    "methods": [2],
+    "methods": ["match_button"],
     "master": "Frame1",
     "config": {
       "text": "MATCH"
@@ -31,7 +31,7 @@
   },
   "ButtonHighlights": {
     "layout": "grid",
-    "methods": [0],
+    "methods": ["highlights_window"],
     "master": "Frame1",
     "config": {
       "text": "HIGHLIGHTS"
@@ -71,7 +71,7 @@
     "layout": "grid",
     "methods": [],
     "config": {
-      "width": 2
+      "width": 2,"bg":"white"
     },
     "grid": {
       "padx": [
@@ -101,7 +101,7 @@
     "layout": "grid",
     "methods": [],
     "config": {
-      "width": 2
+      "width": 2,"bg":"white"
     },
     "grid": {
       "padx": [
@@ -131,7 +131,7 @@
     "layout": "grid",
     "methods": [],
     "config": {
-      "width": 2
+      "width": 2,"bg":"white"
     },
     "grid": {
       "padx": [
@@ -161,8 +161,8 @@
     "layout": "grid",
     "methods": [],
     "config": {
-      "width": 2
-    },
+      "width": 2,"bg":"white"}
+    ,
     "grid": {
       "padx": [
         2,
@@ -176,7 +176,7 @@
   "ButtonTestAll": {
     "master": "Frame1",
     "layout": "grid",
-    "methods": [1],
+    "methods": ["test_window"],
     "config": {
       "text": "TEST"
     },
@@ -190,7 +190,7 @@
   "ButtonRender": {
     "master": "Frame1",
     "layout": "grid",
-    "methods": [5],
+    "methods": ["render"],
     "config": {
       "text": "RENDER"
     },
@@ -214,7 +214,7 @@
   "ButtonCut": {
     "master": "Frame3",
     "layout": "grid",
-    "methods": [4],
+    "methods": ["cut"],
     "config": {
       "text": "CUT"
     },
@@ -242,8 +242,8 @@
   "EntryVideosLocation": {
     "master": "Frame3",
     "layout": "grid",
-    "methods": [3],
-    "config": {},
+    "methods": ["entry_click"],
+    "config": {"bg":"white"},
     "grid": {
       "padx": 15,
       "pady": 5,

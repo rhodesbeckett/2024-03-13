@@ -45,7 +45,7 @@ class Root(EasyTkObject):
             self.page_name = frame.__name__
             frame = frame(root, widget, self, self.set_font)
             self.prozori[self.page_name] = frame
-            frame.easy.methods = []
+            frame.easy.methods = {}
             frame.set_models(models)
             frame.create_widgets()
 

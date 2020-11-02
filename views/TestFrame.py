@@ -22,7 +22,7 @@ class TestFrame(EasyTkObject):
         btn["command"]  = lambda window="MainFrame": self.controller.switch_window(window)
 
     def create_widgets(self):
-        self.easy.import_methods([self.go_back,self.take_photo])
+        self.easy.import_methods({"go_back":self.go_back,"take_photo":self.take_photo})
         self.open_file("views/json/test_frame.json")
         self.reading_from_json()
         self.set_font(self.easy.all_widgets, [Label, Button, Entry])

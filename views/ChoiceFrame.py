@@ -17,7 +17,7 @@ class ChoiceFrame(EasyTkObject):
         self.open_file("views/json/choice_frame.json")
 
     def tkraise(self):
-        self.easy.import_methods([self.btn, ])
+        self.easy.import_methods({"btn":self.btn})
         self.reading_from_json()
         self.easy.all_widgets.get("root").get().geometry("1035x453")
         self.easy.all_widgets.get("root").get().update()

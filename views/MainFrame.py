@@ -28,8 +28,10 @@ class MainFrame(EasyTkObject):
                 self.get(i)["bg"] = "#dedcdc"
 
     def create_widgets(self):
-        self.easy.import_methods(
-            [self.highlights_window, self.test_window, self.match_button, self.entry_click, self.cut, self.render])
+        methods = {"highlights_window":self.highlights_window,
+        "test_window":self.test_window,"match_button":self.match_button,
+        "entry_click":self.entry_click,"cut":self.cut,"render":self.render}
+        self.easy.import_methods(methods)
         self.open_file("views/json/main_frame.json")
         self.reading_from_json()
         self.set_font(self.easy.all_widgets, [Label, Button, Entry])
@@ -64,7 +66,7 @@ class MainFrame(EasyTkObject):
         self.get("ButtonCut")["command"] = self.controller.cut
 
     def tkraise(self):
-        self.get("root").geometry("895x351")
+        self.get("root").geometry("950x351")
         self.get("root").update()
         self.get("Frame1").tkraise()
 

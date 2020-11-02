@@ -11,7 +11,7 @@
     "master": "Frame2",
     "layout":"grid",
     "methods": [],
-    "config": {"width": 2},
+    "config": {"width": 2,"bg":"white"},
     "grid": {"padx": [5,2],"pady": 5},
     "newRow": false
   },
@@ -27,7 +27,7 @@
     "master": "Frame2",
     "layout":"grid",
     "methods": [],
-    "config": {"width": 2},
+    "config": {"width": 2,"bg":"white"},
     "grid": {"padx": [2,5],"pady": 5},
     "newRow": false
   },
@@ -43,7 +43,7 @@
     "master": "Frame2",
     "layout":"grid",
     "methods": [],
-    "config": {"width": 2},
+    "config": {"width": 2,"bg":"white"},
     "grid": {"padx": [5,20],"pady": 5},
     "newRow": false
   },
