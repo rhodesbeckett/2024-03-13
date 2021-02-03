@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import MatchInfo from '../views/MatchInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +8,12 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+  },
+  {
+    path: '/matchCompInfo',
+    name: 'matchCompInfo',
+    component: MatchInfo
   },
   {
     path: '/about',
@@ -32,6 +37,11 @@ const routes = [
     path: '/cut-and-render',
     name: 'CR',
     component: () => import(/* wepbackChunkName: "about" */ '../views/CutAndRender.vue')
+  },
+  {
+    path: '/test2',
+    name: 'test2',
+    component: () => import(/* webpackChunkName: "test2" */ '../views/Test.vue')
   }
 ]
 

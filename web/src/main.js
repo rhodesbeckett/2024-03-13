@@ -3,8 +3,8 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router'
 
-let VueCookie = require("vue-cookie")
-Vue.use(VueCookie)
+Vue.use(require('vue-cookies'))
+Vue.use(require('vue-cookie'))
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)

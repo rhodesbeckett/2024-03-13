@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/matchCompInfo">Match info</router-link> |
       <router-link to="/editor">Highlights</router-link> |
       <router-link to="/testing">Testing data</router-link> |
-      <router-link to="/cut-and-render">Cut and render</router-link>
+      <router-link to="/cut-and-render">Cut and render | </router-link>
+      
     </div>
     <router-view/>
   </div>

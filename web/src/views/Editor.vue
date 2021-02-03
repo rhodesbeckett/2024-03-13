@@ -36,7 +36,8 @@ import MainContainer from '@/components/MainContainer.vue'
 import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
 import FlexContainer from '@/components/FlexContainer.vue'
-import Row from '@/assets/Row.js'
+
+import axios from 'axios'
 
 export default {
     components: {
@@ -49,16 +50,29 @@ export default {
     },
     methods: {
       newRow(row) {
-        if (row.check() == true) {
+        if (this.checkRow(row) == true) {
           if(this.checkAllRows()) {
-            let row = new Row();
-            this.highlightRows.push(row)
+            console.log("moze novi red")
+            this.createRow()
+            this.updateServer()
           }
+        }
+      },
+      createRow() {
+        this.highlightRows.push({
+            min: null,
+            sec: null,
+            toAdd: null
+        })
+      },
+      checkRow(row) {
+        if(Number.isInteger(row.min) && Number.isInteger(row.sec) && Number.isInteger(row.toAdd)) {
+            return true
         }
       },
       checkAllRows() {
         for(let i=0;i<this.highlightRows.length;i++) {
-          if (this.highlightRows[i].check() == true) {
+          if (this.checkRow(this.highlightRows[i]) == true) {
             continue
           }
           else {
@@ -68,13 +82,38 @@ export default {
         return true
       },
       deleteRow(row) {
-        console.log(row);
         this.highlightRows.splice(row,1)
+        this.updateServer()
+      },
+      getHighlights() {
+        const path = `http://localhost:5000/getHighlights/${this.$cookie.get('mcID')}`
+        axios.get(path)
+        .then((res) => {
+          this.highlightRows = JSON.parse(res.data.highlights)
+          if(this.highlightRows.length == 0) {
+            this.createRow()
+          }
+        })
+      },
+      updateServer() {
+        const path = `http://localhost:5000/update/${this.$cookie.get('mcID')}/highlights`
+        axios.post(path,this.highlightRows).then(
+          (res) => {
+            console.log(res)
+          }
+        )
       }
     },
     created() {
-      let row = new Row();
-      this.highlightRows.push(row)
+      if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
+        this.$router.push('/')
+      }
+      else {
+        // get mc and set all data for page
+        
+        this.getHighlights()
+        return ;
+      }
     },
     computed: {
       
