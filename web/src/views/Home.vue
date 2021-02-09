@@ -45,16 +45,18 @@ export default {
                 
             }
             else {
-                this.$cookies.set('mcID',id,'30d',true)
+                this.$cookies.set('mcID',id,'1500d',true)
+                this.$router.push('matchCompInfo')
             }
-            this.$router.push('matchCompInfo')
+            
         },
         createMC() {
             const path = 'http://localhost:5000/insert'
             axios.get(path)
             .then((res) => {
                 console.log(res)
-                this.$cookies.set('mcID',res.data.mcID,'30d',true)
+                this.$cookies.set('mcID',res.data.mcID,'1500d',true)
+                this.$router.push('matchCompInfo')
             })
         }
     },

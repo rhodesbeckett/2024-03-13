@@ -4,12 +4,15 @@ import pymongo
 from bson.json_util import dumps
 import json
 from bson.objectid import ObjectId
+import requests
+from model import Model
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["videosdb"]
 collection = mydb["matchCompilations"]
 
 app = Flask(__name__)
+model = Model(collection)
 """ mongo = PyMongo(app) """
 
 CORS(app,resources={r'/*': {'origins': '*'}})
@@ -38,7 +41,9 @@ def insert():
                 "src":False,
                 "halfTime":False,
                 "highlights":False
-        } 
+        },
+        "canCut": False,
+        "canRender": False,
     }
     matchCompID = collection.insert_one(matchComp)
     print(matchCompID.inserted_id)
@@ -63,12 +68,36 @@ def get_highlights(ID):
 
 @app.route('/getTest/<ID>')
 def get_test(ID):
-    result = collection.find_one({"_id":ObjectId(ID),})
-    return jsonify({"test":dumps(result["testing"])})
+    model.set_id(ID)
+    model.test_all()
+    return jsonify({"test":model.testResponse})
 
-@app.route('/getPhoto/<id>')
-def get_photo(id):
-    return jsonify({"msg":"success"})
+    """ result = collection.find_one({"_id":ObjectId(ID),}) """
+    """ return jsonify({"test":dumps(result["testing"])}) """
+
+@app.route('/getPhoto/<minute>/<second>')
+def get_photo(minute,second):
+    model.test_photo(int(minute),int(second))
+    return jsonify({"imgSrc":"http://localhost:5000/static/frame.jpg"})
+
+@app.route('/getCanCut/<ID>',methods=["GET"])
+def get_can_cut(ID):
+    result = collection.find_one({"_id":ObjectId(ID),})
+    return jsonify({"canCut":dumps(result["canCut"])})
+
+@app.route('/cut/<ID>',methods=["GET"])
+def cut(ID):
+    model.set_id(ID)
+    model.cut_all()
+    return jsonify({'test': False})
+
+@app.route('/render/<ID>', methods= ["GET"])
+def render(ID):
+    model.set_id(ID)
+    model.test_all()
+    model.make_txt_file()
+    model.render()
+    return jsonify({'render': True})
 
 @app.route('/getCutProgress<id>')
 def get_cut_progress(id):

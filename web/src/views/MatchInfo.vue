@@ -5,7 +5,7 @@
       div(class="home-input")
         input(class="user-input" v-model="title" :inputLength="100")
       h3(class="home-label") Match
-      Button(class="home-button" buttonText="UPLOAD")
+      input(class="home-button" type='file' text="UPLOAD" ref="videoSrc")
       h3(class="home-label") Editing
       p(class="home-button" v-if="time.isChosen == true") {{ editing }}
       div(class="home-button" v-if="time.isChosen == false")
@@ -15,13 +15,13 @@
           input(type="radio" name="halfTime" value="2nd" @click="radioClick(2)" ) 
 
       h3(class="home-label") 1st:
-      div(class="halftime-input" v-if="editing == 'firstHalfTime' " ref="firstHalfTime")
+      div(class="halftime-input" v-if="editing == 'firstHalf' && editing == 'firstHalf' " ref="firstHalfTime")
         Input(:inputLength="3" :v-bind="time.firstHalf.min" :value="time.firstHalf.min" v-on:input="time.firstHalf.min = $event")
         span(class="halftime-dots") :
         Input(:inputLength="3" :v-bind="time.firstHalf.sec" :value="time.firstHalf.sec" v-on:input="time.firstHalf.sec = $event")
       
       h3(class="home-label") 2nd:
-      div(class="halftime-input" ref="secondHalfTime")
+      div(class="halftime-input" v-if="editing == 'secondHalf' && editing == 'secondHalf'" ref="secondHalfTime")
         Input(:inputLength="3" :v-bind="time.secondHalf.min" :value="time.secondHalf.min" v-on:input="time.secondHalf.min = $event")
         span(class="halftime-dots") :
         Input(:inputLength="3" :v-bind="time.secondHalf.sec" :value="time.secondHalf.sec" v-on:input="time.secondHalf.sec = $event")
@@ -57,14 +57,13 @@ export default {
   methods: {
     radioClick(halfTime) {
       this.time.isChosen = true
-      console.log(halfTime)
       if(halfTime == 1) {
-        this.editing = "firstHalfTime"
+        this.editing = "firstHalf"
         this.toggleHalfTime(this.$refs.secondHalfTime,true)
         this.toggleHalfTime(this.$refs.firstHalfTime,false)
       }
       else {
-        this.editing = "secondHalfTime"
+        this.editing = "secondHalf"
         this.toggleHalfTime(this.$refs.firstHalfTime,true)
         this.toggleHalfTime(this.$refs.secondHalfTime,false)
       }
@@ -94,12 +93,21 @@ export default {
           this.showTimeInput()
       })
     },
+    getVideoSrc() {
+      if (this.$refs.videoSrc.files.length > 0) {
+        return this.$refs.videoSrc.files[0].name
+      }
+      else {
+        return this.src
+      }
+      
+    },
     saveBtn() {
       let obj = {
         compDesc: {
         title: this.title,
         editing: this.editing,
-        src: "",
+        src: this.getVideoSrc(),
         time:{}
         }
       }
@@ -114,10 +122,10 @@ export default {
       })
     },
     showTimeInput() {
-      if(this.editing == "firstHalfTime") {
+      if(this.editing == "firstHalf") {
         this.radioClick(1)
       }
-      else if(this.editing == "secondHalfTime") {
+      else if(this.editing == "secondHalf") {
         this.radioClick(2)
       }
     }
@@ -131,9 +139,6 @@ export default {
         this.getMC()
         return ;
       }
-  },
-  mounted() {
-    console.log(this.editing)
   }
   
 }
