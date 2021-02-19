@@ -1,0 +1,54 @@
+@media(max-width:768px) {
+    .not-visible-mobile {
+        display: none;
+    }
+    .is-flex-mobile {
+        font-size: 1.2em;
+    }
+}
+
+.center-dot {
+    text-align: center;
+}
+
+.highlight-row:hover {
+    border-bottom: 1px dotted #0000001a;
+}
+
+@media(max-width: 915px) and (min-width: 769px) {
+    .highlights-input {
+        font-size: 1em;
+    }
+}
+
+@media(max-width:768px) {
+    .highlight-row {
+        border-bottom: 1px solid #000000b0;
+    }
+    .highlight-row:hover {
+        border-bottom: 1px dotted #000000b0;
+    }
+}
+@media(max-width: 458px) {
+    .highlights-input {
+        font-size: 0.8em;
+    }
+}
+.testing-icon {
+    color:white;
+    border: 1px solid black;
+}
+
+.navbar--routing {
+    margin-bottom: 3.65em;
+}
+
+.add-btn {
+    font-size: 1.4rem;
+    /* margin-left: 1em; */
+    color: black;
+}
+
+.comp-choices {
+    font-size: 1.05em;
+}

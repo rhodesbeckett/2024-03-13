@@ -1,29 +1,31 @@
 <template>
-  <MainContainer>
-    <template #content>
-        <h4>Choose compilation</h4>
-        <select>
-            <option v-for="comp in matchComps"
-            :key="comp._id.$oid"
-            @click="setMatchID(comp._id.$oid)">
-                {{ comp.compDesc.title }}
-            </option>
-        </select>
-        <Button class="button-add-mc" v-on:click.native="setMatchID('')" buttonText="+"/>
-    </template>
-  </MainContainer>
+    <div class="columns is-centered is-multiline">
+        <div class="column is-3">
+            <h1 class="title">Choose compilation:</h1>
+        </div>
+        <div class="column is-2" >
+            <select class="comp-choices">
+                <option v-for="comp in matchComps"
+                :key="comp._id.$oid"
+                @click="setMatchID(comp._id.$oid)">
+                    {{ comp.compDesc.title }}
+                </option>
+            </select>
+        </div>
+        <div class="column is-1" style="align-self:center;">
+            <a class="add-btn" @click="setMatchID('')"><i class="fas fa-plus-circle"></i></a>
+        </div>
+    </div>
 </template>
 
 <script>
-import MainContainer from '@/components/MainContainer.vue'
-import Button from '@/components/Button.vue'
 import axios from 'axios'
 
 
 export default {
     name: "Home",
     components: {
-        MainContainer,Button
+        
     },
     data() {
         return {
@@ -69,14 +71,5 @@ export default {
 
 <style>
 
-h4 {
-    grid-column: 3 / 6;
-}
-
-.button-add-mc {
-    grid-column: 6 / 7;
-    border: 1.2px solid black;
-    font-size: 1.5em;
-}
 
 </style>

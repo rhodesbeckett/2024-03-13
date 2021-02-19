@@ -50,11 +50,17 @@ def insert():
 
     return jsonify({"mcID":f'{matchCompID.inserted_id}'})
 
+""" @app.route('/update/<ID>/canCut',methods=["POST"])
+def updateCanCut(ID):
+    return jsonify({"msg":"success"}) """
+
 @app.route('/update/<ID>/<key>',methods=["POST"])
 def update(ID,key):
-    new_property = {"$set":{key:request.get_json(force=True)}}
+    new_property = {"$set":{key:get_value(request,key)}}
     collection.update_one({"_id":ObjectId(ID)},new_property)
     return jsonify({"msg":"success"})
+
+
 
 @app.route('/getMC/<ID>',methods=["GET"])
 def get_mc(ID):
@@ -116,6 +122,17 @@ def get_all():
 def deleteAll():
     collection.delete_many({})
     return jsonify({"msg":"success"})
+
+def get_value(request,key):
+    if key == "canCut":
+        try:
+            response = request.get_json(force=True)
+            return response
+        except:
+            print("error")
+            return False
+    else:
+        return request.get_json(force=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

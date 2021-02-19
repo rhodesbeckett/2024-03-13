@@ -1,47 +1,44 @@
-<template lang="pug">
-  div(class="editor-container")
-   MainContainer(class="editor-main-container--default-edit" v-for="row,i in highlightRows" :key="i")
-    <template #content>
-      h3(class="editor-label-row") Start
-      div(class="editor-input-min")
-        Input(
-          v-bind:value="row.min"
-          :inputLength="3"
-          v-on:input="row.min = $event"
-        type="number")
-      h3(class="editor-label-row") :
-      div(class="editor-input-sec")
-        Input(
-          :inputLength="3"
-          v-bind:value="row.sec"
-          type="number"
-          v-on:input="row.sec = $event")
-      h3(class="editor-label-row") +
-      div(class="editor-input-to-add")
-        Input(
-          :inputLength="3"
-          type="number"
-          v-bind:value="row.toAdd"
-          v-on:input="row.toAdd = $event"
-          @test="newRow(row)" )
-      Button(class="editor-delete-button" v-on:click.native="deleteRow(i)" buttonText="delete")
-    </template>
-    
+<template>
+<div>
+  <div class="columns highlight-row is-centered" v-for="(row,i) in highlightRows" v-bind:key="i" style="align-items:center;" >
+    <div class="column is-1 is-2-mobile">
+      <input class="input highlights-input"  size="3" maxlength="3" type="number"
+      v-bind:value="row.min"
+      v-on:input="row.min = parseInt($event.target.value)">
+    </div>
+    <div class="column is-1 is-2-mobile center-dot">
+        :
+    </div>
+    <div class="column is-1 is-2-mobile ">
+        <input class="input highlights-input" size="3" maxlength="3" type="number"
+        v-bind:value="row.sec"
+        v-on:input="row.sec = parseInt($event.target.value)">
+    </div>
+    <div class="column is-1 is-2-mobile center-dot">
+      +
+    </div>
+    <div class="column is-1 is-2-mobile ">
+      <input class="input highlights-input" size="3" maxlength="3" type="number"
+      v-bind:value="row.toAdd"
+      v-on:input="row.toAdd = parseInt($event.target.value)"
+      @keydown.tab = "newRow(row)">
+    </div>
+    <div class="column is-1 is-2-mobile">
+        <a class="button is-danger is-large is-2" @click="deleteRow(i)">Delete</a>
+    </div>
+  </div>
+</div>
 
-    
 </template>
 
 <script>
-import MainContainer from '@/components/MainContainer.vue'
-import Button from '@/components/Button.vue'
-import Input from '@/components/Input.vue'
-import FlexContainer from '@/components/FlexContainer.vue'
+
 
 import axios from 'axios'
 
 export default {
     components: {
-      MainContainer,Button,Input,FlexContainer,
+      
     },
     data() {
       return {

@@ -1,14 +1,63 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/matchCompInfo">Match info</router-link> |
-      <router-link to="/editor">Highlights</router-link> |
-      <router-link to="/testing">Testing data</router-link> |
-      <router-link to="/cut-and-render">Cut and render | </router-link>
-      
-    </div>
-    <router-view/>
-  </div>
+    <section class="section">
+        <div class="container">
+          <nav class="navbar navbar--routing" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">
+                  <img :src="'/static/pyfootball.png'"> width="112" height="28">
+                </a>
+            
+                <a role="button" class="navbar-burger" @click="toggleHamburger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="navbar-menu" ref="navbarMenu">
+                <div class="navbar-start">
+                  <!-- navbar items -->
+                </div>
+              
+                <div class="navbar-end">
+                  <div class="navbar-item">
+                    <router-link to="/matchCompInfo" class="button">
+                        <span class="icon">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                        <span>Match information</span>
+                    </router-link>
+                  </div>
+                  <div class="navbar-item">
+                    <router-link to="/editor" class="button">
+                        <span class="icon">
+                            <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                        </span>
+                        <span>Highlights</span>
+                    </router-link>
+                  </div>
+                  <div class="navbar-item">
+                    <router-link to="/testing" class="button">
+                        <span class="icon">
+                            <i class="fas fa-border-style" aria-hidden="true"></i>
+                        </span>
+                        <span>Testing</span>
+                    </router-link>
+                  </div>
+                  <div class="navbar-item">
+                    <router-link to="/cut-and-render" class="button">
+                        <span class="icon">
+                            <i class="fas fa-video" aria-hidden="true"></i>
+                        </span>
+                        <span>Cut and render</span>
+                    </router-link>
+                  </div>
+                </div>
+            </div>
+          </nav>
+          <router-view/>
+      </div>
+  </section>
 </template>
 
 <script>
@@ -16,30 +65,20 @@ export default {
   methods: {
     test() {
       console.log("something ffrom appp vue");
+    },
+    toggleHamburger() {
+      this.$refs.navbarMenu.classList.toggle('visible-hamburger')
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import "./assets/bulma.min.css";
+@import "./assets/main.css";
+
+.visible-hamburger {
+  display: initial;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

@@ -20,14 +20,14 @@ class Model(object):
         if title != "" and self.validate_location(src):
             self.create_video_location()
             self.testResponse['src'] = True
-            self._cv2 = cv2.VideoCapture(f'{self.path}/{src}')
+            self._cv2 = cv2.VideoCapture(src)
             self.counter += 1
         else:
             self.testResponse['src'] = False
 
     def validate_location(self,src):
-        if src in os.listdir(self.path):
-            if os.path.isfile(f'{self.path}/{src}'):
+        if os.path.exists(src):
+            if os.path.isfile(src):
                 if mimetypes.guess_type(src)[0].startswith('video'):
                     return True
             return False
@@ -126,7 +126,7 @@ class Model(object):
         end = start + row['toAdd']
         video_id = f'_{start}{end}.mp4'
         name = f'{self.highlights_location}/video{video_id}'
-        fajl = VideoFileClip(f'{self.path}/{self.mc["src"]}')
+        fajl = VideoFileClip(self.mc["src"])
         new = fajl.subclip(start,end)
         new.write_videofile(name,logger= None)
 

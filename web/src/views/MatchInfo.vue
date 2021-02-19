@@ -1,46 +1,66 @@
-<template lang="pug">
-  MainContainer
-    <template #content>
-      h3(class="home-label") Title:
-      div(class="home-input")
-        input(class="user-input" v-model="title" :inputLength="100")
-      h3(class="home-label") Match
-      input(class="home-button" type='file' text="UPLOAD" ref="videoSrc")
-      h3(class="home-label") Editing
-      p(class="home-button" v-if="time.isChosen == true") {{ editing }}
-      div(class="home-button" v-if="time.isChosen == false")
-        label 1st
-          input(type="radio" name="halfTime" value="1st" @click="radioClick(1)")
-        label 2nd
-          input(type="radio" name="halfTime" value="2nd" @click="radioClick(2)" ) 
-
-      h3(class="home-label") 1st:
-      div(class="halftime-input" v-if="editing == 'firstHalf' && editing == 'firstHalf' " ref="firstHalfTime")
-        Input(:inputLength="3" :v-bind="time.firstHalf.min" :value="time.firstHalf.min" v-on:input="time.firstHalf.min = $event")
-        span(class="halftime-dots") :
-        Input(:inputLength="3" :v-bind="time.firstHalf.sec" :value="time.firstHalf.sec" v-on:input="time.firstHalf.sec = $event")
-      
-      h3(class="home-label") 2nd:
-      div(class="halftime-input" v-if="editing == 'secondHalf' && editing == 'secondHalf'" ref="secondHalfTime")
-        Input(:inputLength="3" :v-bind="time.secondHalf.min" :value="time.secondHalf.min" v-on:input="time.secondHalf.min = $event")
-        span(class="halftime-dots") :
-        Input(:inputLength="3" :v-bind="time.secondHalf.sec" :value="time.secondHalf.sec" v-on:input="time.secondHalf.sec = $event")
-      
-      Button(class="home-label" buttonText="SAVE" v-on:click.native="saveBtn")
-    </template>
+<template>
+    <div class="columns is-centered is-multiline">
+      <div class="column is-12 matchInfo-container">
+          <h1 class="title matchInfo__title">Title:</h1>
+          <input type="text" v-model="title" class="input matchInfo__input">
+          <h1 class="title matchInfo__title">Match:</h1>
+          <input type="text" v-model="src" placeholder="full path" class="input matchInfo__input--half">
+          <h1 class="title matchInfo__title">Editing</h1>
+          <h2 class="matchInfo__editing-response" v-if="time.isChosen == true">{{ editing }}</h2>
+          <div class="matchInfo__input--half matchInfo__radio-btns" v-if="time.isChosen == false">
+            <label>
+              1st
+              <input type="radio" class="title" name="halfTime" value="1st" @click="radioClick(1)">
+            </label>
+            <label>
+            2nd
+              <input type="radio" class="title" name="halfTime" value="2nd" @click="radioClick(2)">
+          </label>
+          </div>
+          <h1 class="title matchInfo__title">1st:</h1>
+          <div v-if="editing == 'firstHalf'" class="matchInfo__halfTimeInput">
+            <div>
+            <input type="number" size="3" maxlength="3" class="input"
+             :v-bind="time.firstHalf.min"
+             :value="time.firstHalf.min"
+             v-on:input="time.firstHalf.min = parseInt($event.target.value)">
+            </div>
+          <span style="margin: 0 1.5em;">:</span>
+          <div>
+            <input type="number" size="3" maxlength="3" class="input"
+            :v-bind="time.firstHalf.sec"
+            :value="time.firstHalf.sec"
+            v-on:input="time.firstHalf.sec = parseInt($event.target.value)">
+            </div>
+          </div>
+          <h1 class="title matchInfo__title">2nd:</h1>
+          <div v-if="editing == 'secondHalf'"  class="matchInfo__halfTimeInput">
+            <div>
+            <input type="number" size="3" maxlength="3" class="input"
+            :v-bind="time.secondHalf.min"
+            :value="time.secondHalf.min"
+            v-on:input="time.secondHalf.min = parseInt($event.target.value)">
+            </div>
+          <span style="margin: 0 1.5em;">:</span>
+          <div>
+            <input type="number" size="3" maxlength="3" class="input"
+            :v-bind="time.secondHalf.sec"
+            :value="time.secondHalf.sec"
+            v-on:input="time.secondHalf.sec = parseInt($event.target.value)">
+            </div>
+          </div>
+        <a class="matchInfo__title button is-success" @click="saveBtn" style="margin-top: 0.75em;">SAVE</a>
+      </div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MainContainer from '@/components/MainContainer.vue'
-import Input from '@/components/Input.vue'
-import Button from '@/components/Button.vue'
 import axios from 'axios'
 
 export default {
   name: 'Home',
   components: {
-    MainContainer,Input,Button
   },
   data() {
     return {
@@ -55,6 +75,9 @@ export default {
     }
   },
   methods: {
+    updateHighlightValue(inputElem,event) {
+      console.log(event)
+    },
     radioClick(halfTime) {
       this.time.isChosen = true
       if(halfTime == 1) {
@@ -93,21 +116,13 @@ export default {
           this.showTimeInput()
       })
     },
-    getVideoSrc() {
-      if (this.$refs.videoSrc.files.length > 0) {
-        return this.$refs.videoSrc.files[0].name
-      }
-      else {
-        return this.src
-      }
-      
-    },
+    
     saveBtn() {
       let obj = {
         compDesc: {
         title: this.title,
         editing: this.editing,
-        src: this.getVideoSrc(),
+        src: this.src,
         time:{}
         }
       }
@@ -147,29 +162,63 @@ export default {
 
 <style>
 
-.home-label {
-  grid-column: 1 / 2;
-}
 
-.home-input {
-  grid-column: 2 / 6;
-}
+  .matchInfo-container {
+      display: grid;
+      grid-template-columns:
+        [title-start] 1fr
+        [title-end] 2fr
+        [input-start] 2fr
+        [half-of-input] 4fr
+        [input-end];
+      grid-template-rows: repeat(6,1fr);
+      justify-content: center;
+      max-width: 1080px;
+      margin: 0 auto;
+  }
 
-.home-input > input {
-  width: 100%;
-}
+  .matchInfo__title {
+    grid-column: title;
+  }
 
-.home-button {
-  grid-column: 2 / 3;
-  display: flex;
-  justify-content: space-around;
-}
+  @media(max-width: 1027px) {
+    .matchInfo__title {
+      font-size: 1.8em;
+    }
+  }
 
-.halftime-input {
-  grid-column: 2 / 3;
-}
+  .matchInfo__input {
+    grid-column: title-end / input-end;
+  }
 
-.halftime-dots {
-  margin: 0 0.5em;
-}
+  .matchInfo__editing-response {
+    grid-column: title-end / input-start;
+    justify-self: center;
+  }
+
+  .matchInfo__input--half {
+    grid-column: title-end / half-of-input;
+  }
+
+  .matchInfo__radio-btns, .matchInfo__halfTimeInput {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  @media(max-width: 1027px) {
+    .matchInfo__radio-btns, .matchInfo__halfTimeInput {
+      align-items: flex-start;
+    }
+  }
+  @media(max-width: 768px) {
+    .matchInfo__halfTimeInput {
+      grid-column: title-start / input-end;
+      justify-content:start;
+    }
+  }
+  .matchInfo__saveBtn {
+    grid-column: title-start / input-start;
+  }
+
 </style>

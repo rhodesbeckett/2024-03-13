@@ -1,37 +1,40 @@
-<template lang='pug'>
-    MainContainer(style="text-align:left;")
-        <template #content>
-            h3(class='testing-label') Match
-            h4(class="testing-response") {{ srcTest }}
-            img(class="testing-photo" :src="imgSrc")
-            h3(class='testing-label') Halftime
-            h4(class="testing-response") {{ halfTimeTest }}
-            h3(class='testing-label') Highlights
-            h4(class="testing-response") {{ highlightsTest }}
-            h3(class='testing-label') Test match
-            div(class='testing-input')
-                Input(:inputLength="3"
-                v-bind:value="minutePhoto"
-                v-on:input="minutePhoto = $event" type="number")
+<template>
+    <div class="columns is-centered is-multiline">
+        <div class="column is-12 testing-container">
+        <h1 class="title" style="grid-area: matchTest;">Match</h1>
+        <h2 class="title is-6" style="grid-area: matchValue;">{{ srcTest }}</h2>
 
-                span(class="testing-space") :
+        <h1 class="title" style="grid-area: halfTimeTest;">Halftime</h1>
+        <h2 class="title is-6" style="grid-area: halfTimeValue;">{{ halfTimeTest }}</h2>
 
-                Input(:inputLength="3"
-                v-bind:value="secondPhoto"
-                v-on:input="secondPhoto = $event" type="number")
-            Button(class="testing-button" v-on:click.native="getImage" buttonText="Check photo")
-        </template>
+        <h1 class="title" style="grid-area: highlightsTest;" >Highlights</h1>
+        <h2 class="title is-6" style="grid-area: highlightsValue;">{{ highlightsTest }}</h2>
+
+        <h1 class="title" style="grid-area: testPicture;">Test match</h1>
+        <div style="grid-area: pictureInput;">
+            <input type="number" size="3" maxlength="3" class="user-input"
+            v-bind:value="minutePhoto"
+            v-on:input="minutePhoto = $event.target.value;">
+            <span class="testing-space">:</span>
+            <input type="number" size="3" maxlength="3" class="user-input"
+            v-bind:value="secondPhoto"
+            v-on:input="secondPhoto = $event.target.value;">
+        </div>
+
+        <a class="button is-success checkBtn" @click="getImage" style="grid-area: checkBtn;">Check</a>
+
+        <img style="grid-area: picture;" :src="imgSrc"/>
+
+        </div>
+    </div>
 </template>
 
 <script>
-import MainContainer from '@/components/MainContainer.vue'
-import Input from '@/components/Input.vue'
-import Button from '@/components/Button.vue'
 import axios from 'axios'
 
 export default {
     components: {
-        MainContainer,Input,Button
+        
     },
     data() {
         return {
@@ -73,7 +76,7 @@ export default {
                 // update code
                 canCut = true;
             }
-            
+            console.log(canCut)
             axios.post( path, canCut).
             then( (res) => {
                 console.log(res)
@@ -88,37 +91,57 @@ export default {
 
 <style>
 
-.testing-label {
-    grid-column: 1 / 2;
-}
+    .testing-container {
+        display: grid;
+        grid-template-columns: 5fr 5fr auto;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "matchTest matchValue picture"
+        "halfTimeTest halfTimeValue picture"
+        "highlightsTest highlightsValue picture"
+        "testPicture testPicture picture"
+        "pictureInput pictureInput picture"
+        "checkBtn blankSpace picture";
+        justify-content: center;
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+    @media(max-width: 860px) {
+      .testing-container {
+        grid-template-columns: 1fr 2fr auto;
+        grid-template-areas: 
+        "matchTest matchTest matchTest"
+        "matchValue matchValue matchValue"
+        "halfTimeTest halfTimeTest halfTimeTest"
+        "halfTimeValue halfTimeValue halfTimeValue"
+        "highlightsTest highlightsTest highlightsTest"
+        "highlightsValue highlightsValue highlightsValue"
+        "testPicture testPicture testPicture"
+        "pictureInput pictureInput pictureInput"
+        "checkBtn blankSpace blankSpace"
+        "picture picture picture"
+      }
+      .checkBtn {
+        margin-bottom: 0.5em;
+      }
+      .testing-container > h2 {
+        text-decoration: underline;
+      }
+    }
+    .testing-container__title {
+        font-size: 1.2em;
+    }
+    
+    .checkBtn {
+        margin-top: 1.15em;
+    }
+    @media(max-width: 1024px) {
+      .testing-container > h1 {
+        font-size: 1.2em;
+      }
 
-.false-response {
-    background-color: red;
-}
-
-.true-response {
-    background-color: green;
-}
-
-.testing-response {
-    grid-column: 2 / 3;
-}
-
-.testing-input {
-    grid-column: 1 / 2;
-    margin-bottom: 0.5em;
-}
-.testing-photo {
-    grid-column: 3 / 8;
-    grid-row: 1 / 8;
-}
-
-.testing-space {
-    margin: 0 0.5em;
-}
-
-.testing-button {
-    grid-column: 1 / 2;
-}
-
+      .testing-container > h2 {
+        font-size: 0.8em;
+      }
+    }
 </style>

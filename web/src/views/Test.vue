@@ -1,5 +1,7 @@
 <template>
-  <p> {{ poruka }} </p>
+<p> {{ poruka }} </p>
+
+  
 </template>
 
 <script>

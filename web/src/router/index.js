@@ -30,7 +30,7 @@ const routes = [
   },
   {
     path: '/testing',
-    name: 'Testnig',
+    name: 'Testing',
     component: () => import(/* wepbackChunkName: "about" */ '../views/Testing.vue')
   },
   {

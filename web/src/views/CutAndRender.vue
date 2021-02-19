@@ -1,21 +1,31 @@
-<template lang="pug">
-  MainContainer
-    <template #content>
-        Button(class="cut-button" v-on:click.native="cut()" buttonText="CUT")
-        div(class="progress-bar") {{ canCut }}
-        Button(class="cut-button" v-on:click.native="render()" buttonText="RENDER")
-        div(class="progress-bar") {{ canCut }}
-    </template>
+<template>
+    <div class="columns is-centered is-multiline final-container">
+        <div class="column is-2">
+            <a class="button is-success is-medium" @click="cut">Cut</a>
+        </div>
+        <div class="column is-10">
+        </div>
+        <div class="column is-12">
+            <progress class="progress is-primary is-medium" value="1" max="100">15%</progress>
+        </div>
+
+        <div class="column is-2 ">
+            <a class="button is-success is-medium" @click="render">Render</a>
+        </div>
+        <div class="column is-10">
+        </div>
+        <div class="column is-12">
+            <progress class="progress is-primary is-medium" value="1" max="100">15%</progress>
+        </div>
+    </div>
 </template>
 
 <script>
-import MainContainer from '@/components/MainContainer.vue'
-import Button from '@/components/Button.vue'
 import axios from 'axios'
 
 export default {
     components: {
-        MainContainer,Button
+        
     },
     data() {
         return {
@@ -59,6 +69,11 @@ export default {
 </script>
 
 <style>
+
+.final-container {
+    max-width: 1080px;
+    margin: 0 auto;
+}
 
 .cut-button {
     grid-column: 1 / 2;
