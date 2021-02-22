@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router'
 
+
 Vue.use(require('vue-cookies'))
 Vue.use(require('vue-cookie'))
 

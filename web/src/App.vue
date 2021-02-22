@@ -4,7 +4,7 @@
           <nav class="navbar navbar--routing" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
-                  <img :src="'/static/pyfootball.png'"> width="112" height="28">
+                  <img src="@/assets/pyfootball.png" width="112" height="28">
                 </a>
             
                 <a role="button" class="navbar-burger" @click="toggleHamburger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -63,9 +63,6 @@
 <script>
 export default {
   methods: {
-    test() {
-      console.log("something ffrom appp vue");
-    },
     toggleHamburger() {
       this.$refs.navbarMenu.classList.toggle('visible-hamburger')
     }
