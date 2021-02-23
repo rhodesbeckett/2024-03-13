@@ -1,30 +1,24 @@
 <template>
-<p> {{ poruka }} </p>
+
+<transition-group>
+    <p v-for="i in lista" v-bind:key="i"> {{ i.ime }}</p>
+</transition-group>
+
 
   
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     data() {
         return {
-            poruka : 'saa'
+            poruka : 'test',
+            lista: [{ime:"Ime1"},{ime:"Ime2"},{ime: "Ime3"}]
         }
     },
     methods: {
-        getPoruka() {
-            const path = 'http://localhost:5000/testJSON'
-            console.log("getPoruka")
-            axios.get(path)
-            .then((res) => {
-                this.poruka = res.data.poruka
-            })
-        }
-    },
-    created() {
-        this.getPoruka()
+        
     }
 }
 </script>

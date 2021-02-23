@@ -55,7 +55,11 @@
                 </div>
             </div>
           </nav>
-          <router-view/>
+          <transition
+            name="zoom"
+            mode="out-in">
+              <router-view/>
+          </transition>
       </div>
   </section>
 </template>
@@ -77,5 +81,29 @@ export default {
 .visible-hamburger {
   display: initial;
 }
+
+.zoom-enter-active,
+
+.zoom-leave-active {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-name: zoom;
+}
+
+.zoom-leave-active {
+  animation-direction: reverse;
+}
+
+@keyframes zoom {
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.4, 0.4, 0.4);
+}
+100% {
+    opacity: 1;
+  }
+}
+
 
 </style>

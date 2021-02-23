@@ -1,32 +1,38 @@
 <template>
 <div>
-  <div class="columns highlight-row is-centered" v-for="(row,i) in highlightRows" v-bind:key="i" style="align-items:center;" >
-    <div class="column is-1 is-2-mobile">
-      <input class="input highlights-input"  size="3" maxlength="3" type="number"
-      v-bind:value="row.min"
-      v-on:input="row.min = parseInt($event.target.value)">
+  <transition-group
+  enter-active-class="highlights-add"
+  leave-to-class="highlights-remove"
+  appear-class="highlights-update"
+  >
+    <div class="columns highlight-row is-centered" v-for="(row,i) in highlightRows" v-bind:key="highlightRows[i]" style="align-items:center;" >
+      <div class="column is-1 is-2-mobile">
+        <input class="input highlights-input" min="0" max="999" size="3" maxlength="3" type="text"
+        v-bind:value="row.min"
+        v-on:input="updateRowInput(row, 'min', $event.target.value)">
+      </div>
+      <div class="column is-1 is-2-mobile center-dot">
+          :
+      </div>
+      <div class="column is-1 is-2-mobile ">
+          <input class="input highlights-input" size="3" min="0" max="999" maxlength="3" type="text"
+          v-bind:value="row.sec"
+          v-on:input="updateRowInput(row, 'sec', $event.target.value)">
+      </div>
+      <div class="column is-1 is-2-mobile center-dot">
+        +
+      </div>
+      <div class="column is-1 is-2-mobile ">
+        <input class="input highlights-input" size="3" maxlength="3" type="text"
+        v-bind:value="row.toAdd"
+        v-on:input="updateRowInput(row, 'toAdd', $event.target.value)"
+        @keydown.tab = "newRow(row)">
+      </div>
+      <div class="column is-1 is-2-mobile">
+          <a class="button is-danger is-large is-2" @click="deleteRow(i)">Delete</a>
+      </div>
     </div>
-    <div class="column is-1 is-2-mobile center-dot">
-        :
-    </div>
-    <div class="column is-1 is-2-mobile ">
-        <input class="input highlights-input" size="3" maxlength="3" type="number"
-        v-bind:value="row.sec"
-        v-on:input="row.sec = parseInt($event.target.value)">
-    </div>
-    <div class="column is-1 is-2-mobile center-dot">
-      +
-    </div>
-    <div class="column is-1 is-2-mobile ">
-      <input class="input highlights-input" size="3" maxlength="3" type="number"
-      v-bind:value="row.toAdd"
-      v-on:input="row.toAdd = parseInt($event.target.value)"
-      @keydown.tab = "newRow(row)">
-    </div>
-    <div class="column is-1 is-2-mobile">
-        <a class="button is-danger is-large is-2" @click="deleteRow(i)">Delete</a>
-    </div>
-  </div>
+  </transition-group>
 </div>
 
 </template>
@@ -99,6 +105,25 @@ export default {
             console.log(res)
           }
         )
+      },
+      updateRowInput(row,part,value) {
+        if(value == "") {
+          this.updateDetail(row,part,0)
+        }
+        else {
+          this.updateDetail(row,part,value)
+        }
+      },
+      updateDetail(row,part,value) {
+        if (part == "min") {
+          row.min = parseInt(value)
+        }
+        else if(part == "sec") {
+          row.sec = parseInt(value)
+        }
+        else if(part == "toAdd") {
+          row.toAdd = parseInt(value)
+        }
       }
     },
     created() {
@@ -147,5 +172,60 @@ export default {
   max-width: none;
   margin: 0;
 }
+
+.highlights-add {
+  animation: highlights-add 0.6s;
+}
+
+@keyframes highlights-add {
+  0% {
+    transform: rotateX(45deg);
+    opacity: 0.0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1.0;
+  }
+}
+
+.highlights-remove {
+  animation: highlights-remove 0.8s;
+}
+
+@keyframes highlights-remove {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1.0;
+  }
+  100% {
+    transform: rotateX(45deg);
+    opacity: 0.0;
+  }
+}
+
+.highlights-update {
+  transition: highlights-update 0.8s ease-in;
+}
+
+@keyframes highlights-update {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1.0;
+  }
+  50% {
+    transform: rotateX(45deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1.0;
+  }
+}
+
+.highlights-move {
+  transition: transform 5s;
+}
+
+
 
 </style>
