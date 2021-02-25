@@ -11,6 +11,10 @@
     text-align: center;
 }
 
+.highlight-row {
+    transition: all 1s;
+    position: relative;
+}
 .highlight-row:hover {
     border-bottom: 1px dotted #0000001a;
 }

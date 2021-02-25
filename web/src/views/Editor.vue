@@ -1,9 +1,9 @@
 <template>
 <div>
   <transition-group
+  name="highlights"
   enter-active-class="highlights-add"
-  leave-to-class="highlights-remove"
-  appear-class="highlights-update"
+  leave-active-class="highlights-remove"
   >
     <div class="columns highlight-row is-centered" v-for="(row,i) in highlightRows" v-bind:key="highlightRows[i]" style="align-items:center;" >
       <div class="column is-1 is-2-mobile">
@@ -204,7 +204,7 @@ export default {
 }
 
 .highlights-update {
-  transition: highlights-update 0.8s ease-in;
+  animation: highlights-update 1.8s;
 }
 
 @keyframes highlights-update {
@@ -219,13 +219,12 @@ export default {
   100% {
     transform: rotateX(0deg);
     opacity: 1.0;
+    position: absolute;
   }
 }
 
 .highlights-move {
   transition: transform 5s;
 }
-
-
 
 </style>

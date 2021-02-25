@@ -87,6 +87,8 @@ class Model(object):
         return False
 
     def get_seconds_start(self,row):
+        if self.mc['editing'] == "secondHalf":
+            return self.seconds + row['min'] * 60 + row['sec'] -2700
         return self.seconds + row['min'] * 60 + row['sec']
 
     def test_all(self):
@@ -102,19 +104,20 @@ class Model(object):
         self.highlights = json.loads(requests.get(f'http://localhost:5000/getHighlights/{ID}').json()['highlights'])
 
 
-    def test_photo(self,min,sec):
-        seconds = self.seconds + min * 60 + sec
+    def test_photo(self,row):
+        seconds = self.get_seconds_start(row)
         frame = int(self.get_fps() * seconds)
         if not frame > self.get_sum_frames():
             self._cv2.set(1, frame)
             ret, frame2 = self._cv2.read()
-            cv2.imwrite("./static/frame.jpg", frame2)
+            cv2.imwrite(f'./static/frame{seconds}.jpg', frame2)
             self._cv2.release()
             cv2.destroyAllWindows()
 
-            slika = Image.open("./static/frame.jpg")
+            slika = Image.open(f'./static/frame{seconds}.jpg')
             slika = slika.resize((651, 305), Image.ANTIALIAS)
-            slika.save("./static/frame.jpg")
+            slika.save(f'./static/frame{seconds}.jpg')
+            return f'frame{seconds}.jpg'
 
     def cut_all(self):
         self.test_all()

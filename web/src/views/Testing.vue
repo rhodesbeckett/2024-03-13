@@ -63,9 +63,7 @@ export default {
             const path = `http://localhost:5000/getPhoto/${this.minutePhoto}/${this.secondPhoto}`
             axios.get(path)
             .then((res) => {
-                    console.log(res.data)
                     this.imgSrc = res.data.imgSrc
-                    
                 }
             )
         },

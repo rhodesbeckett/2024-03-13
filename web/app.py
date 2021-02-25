@@ -83,8 +83,10 @@ def get_test(ID):
 
 @app.route('/getPhoto/<minute>/<second>')
 def get_photo(minute,second):
-    model.test_photo(int(minute),int(second))
-    return jsonify({"imgSrc":"http://localhost:5000/static/frame.jpg"})
+    row = {"min":int(minute),"sec":int(second)}
+    model.test_all()
+    file_name = model.test_photo(row)
+    return jsonify({"imgSrc":f'http://localhost:5000/static/{file_name}'})
 
 @app.route('/getCanCut/<ID>',methods=["GET"])
 def get_can_cut(ID):
