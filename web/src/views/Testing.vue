@@ -74,10 +74,11 @@ export default {
                 // update code
                 canCut = true;
             }
-            console.log(canCut)
             axios.post( path, canCut).
             then( (res) => {
-                console.log(res)
+                if (res.data.msg) {
+                    return null
+                }
             })
         }
     },

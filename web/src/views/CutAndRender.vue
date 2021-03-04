@@ -45,7 +45,9 @@ export default {
                 let path = `http://localhost:5000/cut/${this.$cookie.get('mcID')}`
                 axios.get(path).
                 then( (res) => {
-                    console.log(res)
+                    if (res.data.msg) {
+                        return null
+                    }
                 })
             }
             else {

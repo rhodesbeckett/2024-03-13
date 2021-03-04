@@ -55,7 +55,6 @@ export default {
       newRow(row) {
         if (this.checkRow(row) == true) {
           if(this.checkAllRows()) {
-            console.log("moze novi red")
             this.createRow()
             this.updateServer()
           }
@@ -102,7 +101,9 @@ export default {
         const path = `http://localhost:5000/update/${this.$cookie.get('mcID')}/highlights`
         axios.post(path,this.highlightRows).then(
           (res) => {
-            console.log(res)
+              if (res.data.msg == "success") {
+                return null
+              }
           }
         )
       },

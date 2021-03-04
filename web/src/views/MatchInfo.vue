@@ -133,7 +133,9 @@ export default {
       const path = `http://localhost:5000/update/${this.$cookie.get('mcID')}/compDesc`
       axios.post(path,obj.compDesc)
       .then( (res) => {
-        console.log(res)
+        if (res.data.msg) {
+          return null
+        }
       })
     },
     showTimeInput() {
