@@ -4,7 +4,7 @@
     <button @click="del">  Shuffle</button>
     <transition-group
         name="test">
-    <p v-for="i in lista" v-bind:key="i"> {{ i.ime }}</p>
+    <p v-for="(i,j) in lista"  @click="del(j)" v-bind:key="i.ime"> {{ i.ime }}</p>
 </transition-group>
 </div>
 
@@ -26,8 +26,8 @@ export default {
         shuffle() {
             this.lista = this.lista.sort( () => .5 - Math.random() );
         },
-        del() {
-            this.lista.splice(2,1)
+        del(index) {
+            this.lista.splice(index,1)
         }
     }
 }

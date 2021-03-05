@@ -5,7 +5,7 @@
   enter-active-class="highlights-add"
   leave-active-class="highlights-remove"
   >
-    <div class="columns highlight-row is-centered" v-for="(row,i) in highlightRows" v-bind:key="highlightRows[i]" style="align-items:center;" >
+    <div class="columns highlight-row is-centered" v-for="row in highlightRows" v-bind:key="row.id" style="align-items:center;" >
       <div class="column is-1 is-2-mobile">
         <input class="input highlights-input" min="0" max="999" size="3" maxlength="3" type="text"
         v-bind:value="row.min"
@@ -29,7 +29,7 @@
         @keydown.tab = "newRow(row)">
       </div>
       <div class="column is-1 is-2-mobile">
-          <a class="button is-danger is-large is-2" @click="deleteRow(i)">Delete</a>
+          <a class="button is-danger is-large is-2" @click="deleteRow(row.id)">Delete</a>
       </div>
     </div>
   </transition-group>
@@ -49,6 +49,7 @@ export default {
     data() {
       return {
         highlightRows: [ ],
+        poruka: ""
       }
     },
     methods: {
@@ -64,9 +65,14 @@ export default {
         this.highlightRows.push({
             min: null,
             sec: null,
-            toAdd: null
+            toAdd: null,
+            id: this.randomID()
         })
       },
+      randomID() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1; 
+      },
+
       checkRow(row) {
         if(Number.isInteger(row.min) && Number.isInteger(row.sec) && Number.isInteger(row.toAdd)) {
             return true
@@ -83,8 +89,8 @@ export default {
         }
         return true
       },
-      deleteRow(row) {
-        this.highlightRows.splice(row,1)
+      deleteRow(id) {
+        this.highlightRows = this.highlightRows.filter( item => { return item.id != id})
         this.updateServer()
       },
       getHighlights() {
@@ -114,6 +120,7 @@ export default {
         else {
           this.updateDetail(row,part,value)
         }
+        console.log(this.highlightRows)
       },
       updateDetail(row,part,value) {
         if (part == "min") {
