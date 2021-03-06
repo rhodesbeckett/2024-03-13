@@ -1,5 +1,6 @@
 <template>
     <div class="columns is-centered is-multiline">
+      
       <div class="column is-12 matchInfo-container">
           <h1 class="title matchInfo__title">Title:</h1>
           <input type="text" v-model="title" class="input matchInfo__input">
@@ -49,7 +50,11 @@
             v-on:input="time.secondHalf.sec = parseInt($event.target.value)">
             </div>
           </div>
-        <a class="matchInfo__title button is-success" @click="saveBtn" style="margin-top: 0.75em;">SAVE</a>
+        <a class="matchInfo__title button is-success" @click="saveBtn" style="margin-top: 0.75em;">SAVE
+            <div class="message-server" ref="messageServer">
+              MatchInfo saved!
+            </div>
+        </a>
       </div>
   </div>
 </template>
@@ -57,6 +62,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+import gsap from 'gsap'
 
 export default {
   name: 'Home',
@@ -134,6 +140,7 @@ export default {
       axios.post(path,obj.compDesc)
       .then( (res) => {
         if (res.data.msg) {
+          this.showMessage()
           return null
         }
       })
@@ -145,6 +152,10 @@ export default {
       else if(this.editing == "secondHalf") {
         this.radioClick(2)
       }
+    },
+    showMessage() {
+      let elemAnim = gsap.to(this.$refs.messageServer,{duration:0.3,scale:1.0})
+      setTimeout(function () { elemAnim.reverse() },500)
     }
   },
   created() {
@@ -156,7 +167,8 @@ export default {
         this.getMC()
         return ;
       }
-  }
+  },
+  
   
 }
 </script>

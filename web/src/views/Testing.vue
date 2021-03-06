@@ -1,5 +1,8 @@
 <template>
-    <div class="columns is-centered is-multiline">
+    <div class="columns is-centered is-multiline message-container">
+        <div class="message-server message-server--centered message-server--not-visible" ref="messageServer">
+            You can cut and render!
+        </div>
         <div class="column is-12 testing-container">
         <h1 class="title" style="grid-area: matchTest;">Match</h1>
         <h2 class="title is-6" style="grid-area: matchValue;">{{ srcTest }}</h2>
@@ -10,7 +13,8 @@
         <h1 class="title" style="grid-area: highlightsTest;" >Highlights</h1>
         <h2 class="title is-6" style="grid-area: highlightsValue;">{{ highlightsTest }}</h2>
 
-        <h1 class="title" style="grid-area: testPicture;">Test match</h1>
+        <h1 class="title" style="grid-area: testPicture;">Test match
+        </h1>
         <div style="grid-area: pictureInput;">
             <input type="number" size="3" maxlength="3" class="user-input"
             v-bind:value="minutePhoto"
@@ -21,7 +25,8 @@
             v-on:input="secondPhoto = $event.target.value;">
         </div>
 
-        <a class="button is-success checkBtn" @click="getImage" style="grid-area: checkBtn;">Check</a>
+        <a class="button is-success checkBtn " @click="getImage" style="grid-area: checkBtn;">Check
+        </a>
 
         <img style="grid-area: picture;" :src="imgSrc"/>
 
@@ -31,6 +36,7 @@
 
 <script>
 import axios from 'axios'
+import gsap from 'gsap'
 
 export default {
     components: {
@@ -44,6 +50,7 @@ export default {
             imgSrc: "https://via.placeholder.com/600x300",
             minutePhoto: 0,
             secondPhoto: 0,
+            canCutAndRender: false
         }
     },
     methods: {
@@ -73,6 +80,11 @@ export default {
             if (this.srcTest == true && this.halfTimeTest == true && this.highlightsTest == true) {
                 // update code
                 canCut = true;
+                this.showMessage(this.$refs.messageServer)
+                
+            }
+            else {
+                this.$refs.messageServer.remove()
             }
             axios.post( path, canCut).
             then( (res) => {
@@ -80,11 +92,23 @@ export default {
                     return null
                 }
             })
+        },
+        showMessage(element) {
+            setTimeout(
+                function() {
+                    let elemAnim = gsap.to(element,{duration:0.5,opacity:1.0})
+                    setTimeout( function () { elemAnim.reverse() },700)
+                    setTimeout(element.remove,100)
+                },1000
+            )
+            
+
         }
     },
     created() {
         this.getTest()
     }
+    
 }
 </script>
 
