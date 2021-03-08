@@ -110,7 +110,7 @@ class Testing(object):
             row.row[2]["bg"] = "#eb4034"
             end = 0
         if (start and end) not in (0,):
-            row.row[0]["bg"] = "SystemWindow"
-            row.row[1]["bg"] = "SystemWindow"
-            row.row[2]["bg"] = "SystemWindow"
+            row.row[0]["bg"] = "#f0f0f0"
+            row.row[1]["bg"] = "#f0f0f0"
+            row.row[2]["bg"] = "#f0f0f0"
         return start, end
