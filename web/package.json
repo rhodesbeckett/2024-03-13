@@ -11,8 +11,6 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "gsap": "^3.6.0",
-    "pug": "^3.0.0",
-    "pug-plain-loader": "^1.1.0",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
