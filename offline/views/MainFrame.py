@@ -3,9 +3,9 @@ from easy_tk import EasyTk
 from tkinter import *
 from tkinter import filedialog
 from PIL import ImageTk, Image
+from views.BaseView import BaseView
 
-
-class MainFrame(EasyTkObject):
+class MainFrame(BaseView):
 
     def __init__(self, root, widget, controller, set_font):
         super(MainFrame, self).__init__()
@@ -13,12 +13,7 @@ class MainFrame(EasyTkObject):
         self.easy.add_complete_widget(widget)
         self.controller = controller
         self.set_font = set_font
-
-    def set_models(self, models):
-        self.match = models["Match"]
-        self.half_time = models["AllHalfTime"]
-        self.videos = models["Videos"]
-        self.all_highlights = models["AllHighlights"]
+        self.frame_path = "views/json/main_frame.json"
 
     def style_all_buttons(self):
         for i in self.easy.all_widgets:
@@ -26,14 +21,14 @@ class MainFrame(EasyTkObject):
                 self.get(i)["relief"] = "solid"
                 self.get(i)["borderwidth"] = 2
                 self.get(i)["bg"] = "#dedcdc"
-
-    def create_widgets(self):
+  
+    def method_part(self):
         methods = {"highlights_window":self.highlights_window,
         "test_window":self.test_window,"match_button":self.match_button,
         "entry_click":self.entry_click,"cut":self.cut,"render":self.render}
         self.easy.import_methods(methods)
-        self.open_file("views/json/main_frame.json")
-        self.reading_from_json()
+
+    def frame_part(self):
         self.set_font(self.easy.all_widgets, [Label, Button, Entry])
         self.style_all_buttons()
         self.imeage = ImageTk.PhotoImage(Image.open("bg.gif"))

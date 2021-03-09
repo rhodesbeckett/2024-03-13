@@ -1,14 +1,14 @@
-from easy_tk import EasyTkObject
 from easy_tk.helpers import *
 from easy_tk import WindowScrollbar
 from tkinter import Label, Button, Entry
 import threading
 from PIL import ImageTk,Image
+from views.BaseView import BaseView
 
 keys = ["LabelStart", "EntryStart", "LabelColon", "EntrySecStart", "LabelPlus", "EntrySecEnd", "ButtonDelete"]
 
 
-class HighlightsFrame(EasyTkObject):
+class HighlightsFrame(BaseView):
     current_half_time = 0
     label_set = False
 
@@ -19,6 +19,7 @@ class HighlightsFrame(EasyTkObject):
         self.controller = controller
         self.set_font = set_font
         self.window_scrollbar = WindowScrollbar(self)
+        self.frame_path = "views/json/scrollbar.json"
 
     def set_models(self, models):
         self.all_highlights = models["AllHighlights"]
@@ -26,14 +27,13 @@ class HighlightsFrame(EasyTkObject):
         self.other_widgets = {}
         self.all_highlights.set_names(keys)
 
-    def create_widgets(self):
+    def method_part(self):
         methods = {"set_scrollbar":self.window_scrollbar.set_scrollbar,
         "go_back":self.go_back,
         "set_keypresss":self.set_keypress}
         self.easy.import_methods(methods)
-        self.open_file("views/json/scrollbar.json")
-        self.reading_from_json()
 
+    def frame_part(self):
         self.open_file("views/json/highlights_frame_1.json")
         self.reading_from_json()
 

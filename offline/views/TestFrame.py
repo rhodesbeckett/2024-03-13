@@ -1,7 +1,8 @@
 from easy_tk import EasyTkObject
 from tkinter import Label,Button,Entry
+from views.BaseView import BaseView
 
-class TestFrame(EasyTkObject):
+class TestFrame(BaseView):
     hidden = False
 
     def __init__(self, root, widget,controller,set_font):
@@ -10,23 +11,18 @@ class TestFrame(EasyTkObject):
         self.easy.add_complete_widget(widget)
         self.controller = controller
         self.set_font = set_font
+        self.frame_path = "views/json/test_frame.json"
 
-    def set_models(self,models):
-        self.match = models["Match"]
-        self.half_time = models["AllHalfTime"]
-        self.videos = models["Videos"]
-        self.all_highlights = models["AllHighlights"]
+    def method_part(self):
+        self.easy.import_methods({"go_back":self.go_back,"take_photo":self.take_photo})
+
+    def frame_part(self):
+        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
+        self.hide_widgets()
 
     def go_back(self,widgets):
         btn = self.get("ButtonBack")
         btn["command"]  = lambda window="MainFrame": self.controller.switch_window(window)
-
-    def create_widgets(self):
-        self.easy.import_methods({"go_back":self.go_back,"take_photo":self.take_photo})
-        self.open_file("views/json/test_frame.json")
-        self.reading_from_json()
-        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
-        self.hide_widgets()
 
     def tkraise(self):
         self.get("root").geometry("1050x453")

@@ -1,14 +1,8 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+from controllers.Controller import Controller
 
-
-class Cutting(object):
-
-    def __init__(self, models):
-        self.half_time = models["AllHalfTime"]
-        self.all_highlights = models["AllHighlights"]
-        self.match = models["Match"]
-        self.videos = models["Videos"]
+class Cutting(Controller):
 
     def check_start(self):
         return 0

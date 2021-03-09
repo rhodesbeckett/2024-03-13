@@ -1,14 +1,9 @@
 import os
 import subprocess
-class Rendering(object):
+from controllers.Controller import Controller
+
+class Rendering(Controller):
     txt_file_name = ""
-
-    def __init__(self,models):
-        self.half_time = models["AllHalfTime"]
-        self.all_highlights = models["AllHighlights"]
-        self.match = models["Match"]
-        self.videos = models["Videos"]
-
 
     def is_ready(self):
         return self.videos.cutted

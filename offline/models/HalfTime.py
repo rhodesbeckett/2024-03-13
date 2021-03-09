@@ -38,6 +38,6 @@ class HalfTime(object):
             return int(self.sec)
 
     def smaller_than(self,seconds):
-        if self.get_seconds()<seconds:
+        if self.get_seconds() < seconds:
             return True
         return False

@@ -18,7 +18,8 @@ class Match(object):
         return False
 
     def set_match(self, match):
-        self.__src = match
+        if type(match) == str:
+            self.__src = match
 
     def get_src(self):
         return self.__src

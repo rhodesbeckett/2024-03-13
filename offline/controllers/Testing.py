@@ -1,16 +1,12 @@
 import os
 from PIL import Image,ImageTk
 import cv2
+from controllers.Controller import Controller
 
-class Testing(object):
+class Testing(Controller):
     # u konstruktoru ima sve modele,svaki controllers ima sve
     half_time_tested = False
     counter = 0
-    def __init__(self, models):
-        self.half_time = models["AllHalfTime"]
-        self.all_highlights = models["AllHighlights"]
-        self.match = models["Match"]
-        self.videos = models["Videos"]
 
     def test_match(self, window):
         if self.match.validate_location():
