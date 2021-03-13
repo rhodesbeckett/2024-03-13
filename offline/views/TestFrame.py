@@ -5,19 +5,15 @@ from views.BaseView import BaseView
 class TestFrame(BaseView):
     hidden = False
 
-    def __init__(self, root, widget,controller,set_font):
-        super(TestFrame, self).__init__()
-        self.easy.add_complete_widget(root)
-        self.easy.add_complete_widget(widget)
-        self.controller = controller
-        self.set_font = set_font
+    def __init__(self,controller):
+        super(TestFrame,self).__init__(controller)
         self.frame_path = "views/json/test_frame.json"
 
     def method_part(self):
         self.easy.import_methods({"go_back":self.go_back,"take_photo":self.take_photo})
 
     def frame_part(self):
-        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
+        self.set_font([Label, Button, Entry])
         self.hide_widgets()
 
     def go_back(self,widgets):

@@ -7,12 +7,8 @@ from views.BaseView import BaseView
 
 class MainFrame(BaseView):
 
-    def __init__(self, root, widget, controller, set_font):
-        super(MainFrame, self).__init__()
-        self.easy.add_complete_widget(root)
-        self.easy.add_complete_widget(widget)
-        self.controller = controller
-        self.set_font = set_font
+    def __init__(self,controller):
+        super(MainFrame,self).__init__(controller)
         self.frame_path = "views/json/main_frame.json"
 
     def style_all_buttons(self):
@@ -29,7 +25,7 @@ class MainFrame(BaseView):
         self.easy.import_methods(methods)
 
     def frame_part(self):
-        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
+        self.set_font([Label, Button, Entry])
         self.style_all_buttons()
         self.imeage = ImageTk.PhotoImage(Image.open("bg.gif"))
         self.get("LabelBackground")["image"] = self.imeage

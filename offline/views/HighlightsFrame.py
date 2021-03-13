@@ -12,12 +12,8 @@ class HighlightsFrame(BaseView):
     current_half_time = 0
     label_set = False
 
-    def __init__(self, root, widget, controller, set_font):
-        super(HighlightsFrame, self).__init__()
-        self.easy.add_complete_widget(root)
-        self.easy.add_complete_widget(widget)
-        self.controller = controller
-        self.set_font = set_font
+    def __init__(self,controller):
+        super(HighlightsFrame,self).__init__(controller)
         self.window_scrollbar = WindowScrollbar(self)
         self.frame_path = "views/json/scrollbar.json"
 
@@ -47,7 +43,7 @@ class HighlightsFrame(BaseView):
     def add_row(self):
         self.open_file("views/json/highlights_frame_2.json")
         self.reading_from_json()
-        self.set_font(self.easy.all_widgets, [Label, Button, Entry])
+        self.set_font([Label, Button, Entry])
         self.all_highlights.create_row()
 
     def add_to_all_highlights(self):

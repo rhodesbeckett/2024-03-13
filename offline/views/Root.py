@@ -43,7 +43,8 @@ class Root(EasyTkObject):
 
         for frame in (MainFrame, TestFrame, HighlightsFrame, ChoiceFrame):
             self.page_name = frame.__name__
-            frame = frame(root, widget, self, self.set_font)
+            frame = frame(self)
+            frame.adding_complete_widgets(root,widget)
             self.prozori[self.page_name] = frame
             frame.easy.methods = {}
             frame.set_models(models)
