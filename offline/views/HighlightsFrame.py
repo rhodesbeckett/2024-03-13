@@ -39,6 +39,9 @@ class HighlightsFrame(BaseView):
 
         self.image = ImageTk.PhotoImage(Image.open("bg.gif"))
         self.get("LabelBackground")["image"] = self.image
+        
+        self.frame_to_raise="Frame0"
+        self.dimensions="562x467"
 
     def add_row(self):
         self.open_file("views/json/highlights_frame_2.json")
@@ -137,7 +140,5 @@ class HighlightsFrame(BaseView):
         return self.all_highlights.get_last_row()
 
     def tkraise(self):
-        self.get("root").geometry("562x467")
-        self.get("root").update()
-        self.get("Frame0").tkraise()
+        super(HighlightsFrame,self).tkraise()
         self.controller.refresh_testing()

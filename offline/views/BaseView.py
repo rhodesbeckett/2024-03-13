@@ -1,5 +1,5 @@
 from easy_tk import EasyTkObject
-
+from views.ViewDecorator import widget_decorator
 
 class BaseView(EasyTkObject):
     frame_path = ""
@@ -7,17 +7,12 @@ class BaseView(EasyTkObject):
     def __init__(self,controller):
         super(BaseView,self).__init__()
         self.controller = controller
+        self.dimensions = ""
+        self.frame_to_raise = ""
     
     def adding_complete_widgets(self,root,widget):
         self.easy.add_complete_widget(root)
         self.easy.add_complete_widget(widget)
-
-    def widget_decorator(func):
-        def wrapper(*args,):
-            args[0].method_part()
-            func(args[0])
-            args[0].frame_part()
-        return wrapper
 
     def set_models(self, models):
         self.match = models["Match"]
@@ -45,6 +40,14 @@ class BaseView(EasyTkObject):
     def create_widgets(self):
         self.open_file(self.frame_path)
         self.reading_from_json()
+
+    def tkraise(self):
+        self.get("root").geometry(self.dimensions)
+        self.get("root").update()
+        self.get(self.frame_to_raise).tkraise()
+    """ @raise_decorator
+    def tkraise(self,frame,dimensions):
+        pass """
 
 """ class BaseViewDecorator(object):
      """

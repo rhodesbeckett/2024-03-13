@@ -9,21 +9,22 @@ class TestFrame(BaseView):
         super(TestFrame,self).__init__(controller)
         self.frame_path = "views/json/test_frame.json"
 
+        
     def method_part(self):
         self.easy.import_methods({"go_back":self.go_back,"take_photo":self.take_photo})
 
     def frame_part(self):
         self.set_font([Label, Button, Entry])
         self.hide_widgets()
+        self.frame_to_raise = "Frame1"
+        self.dimensions = "1050x453"
 
     def go_back(self,widgets):
         btn = self.get("ButtonBack")
         btn["command"]  = lambda window="MainFrame": self.controller.switch_window(window)
 
     def tkraise(self):
-        self.get("root").geometry("1050x453")
-        self.get("root").update()
-        self.get("Frame1").tkraise()
+        super(TestFrame,self).tkraise()
         self.hide_widgets()
         self.controller.refresh_testing()
 

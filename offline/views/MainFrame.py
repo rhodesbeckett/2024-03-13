@@ -11,6 +11,7 @@ class MainFrame(BaseView):
         super(MainFrame,self).__init__(controller)
         self.frame_path = "views/json/main_frame.json"
 
+
     def style_all_buttons(self):
         for i in self.easy.all_widgets:
             if i.startswith("Button"):
@@ -29,6 +30,8 @@ class MainFrame(BaseView):
         self.style_all_buttons()
         self.imeage = ImageTk.PhotoImage(Image.open("bg.gif"))
         self.get("LabelBackground")["image"] = self.imeage
+        self.frame_to_raise="Frame1"
+        self.dimensions="950x351"
 
     def match_button(self, widgets):
         def open_match_src():
@@ -55,11 +58,6 @@ class MainFrame(BaseView):
 
     def cut(self, widgets):
         self.get("ButtonCut")["command"] = self.controller.cut
-
-    def tkraise(self):
-        self.get("root").geometry("950x351")
-        self.get("root").update()
-        self.get("Frame1").tkraise()
 
     def highlights_window(self, widgets):
         btn_highlights = self.get("ButtonHighlights")

@@ -3,7 +3,7 @@ from PIL import ImageTk,Image
 from views.BaseView import BaseView
 
 class ChoiceFrame(BaseView):
-
+    
     def __init__(self,controller):
         super(ChoiceFrame,self).__init__(controller)
         self.frame_path = "views/json/choice_frame.json"
@@ -15,11 +15,9 @@ class ChoiceFrame(BaseView):
         self.set_font([Label,Button])
         self.image = ImageTk.PhotoImage(Image.open("bg.gif"))
         self.get("LabelBackground")["image"] = self.image
+        self.frame_to_raise = "Frame2"
+        self.dimensions = "1035x453"
 
-    def tkraise(self):
-        self.easy.all_widgets.get("root").get().geometry("1035x453")
-        self.easy.all_widgets.get("root").get().update()
-        self.easy.all_widgets.get("Frame2").get().tkraise()
 
     def choose(self,choice):
         self.half_time.set_editing_type(choice)
