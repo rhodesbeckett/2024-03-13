@@ -19,7 +19,7 @@
                   <!-- navbar items -->
                 </div>
               
-                <div class="navbar-end">
+                <div class="navbar-end navbar-yes navbar-not-visible" ref="navbarEnd">
                   <div class="navbar-item">
                     <router-link to="/matchCompInfo" class="button">
                         <span class="icon">
@@ -69,6 +69,12 @@ export default {
   methods: {
     toggleHamburger() {
       this.$refs.navbarMenu.classList.toggle('visible-hamburger')
+      let navbarEnd = this.$refs.navbarEnd;
+      setTimeout(function() {
+        navbarEnd.classList.toggle('navbar-not-visible')
+        navbarEnd.classList.toggle('navbar-visible')
+      },200);
+
     }
   }
 }
@@ -79,7 +85,7 @@ export default {
 @import "./assets/main.css";
 
 .visible-hamburger {
-  display: initial;
+  display: initial; 
 }
 
 .zoom-enter-active,
@@ -93,6 +99,27 @@ export default {
 .zoom-leave-active {
   animation-direction: reverse;
 }
+
+.navbar-yes {
+  transition: all 0.5s;
+}
+
+@media(max-width: 1023px) {
+  .navbar-not-visible {
+    opacity: 0;
+    transition: all 0.5s;
+  }
+
+  .navbar-visible {
+    opacity: 1;
+    width: 100%;
+    background:white;
+    transition: all 0.5s;
+  }
+}
+
+
+
 
 @keyframes zoom {
 
