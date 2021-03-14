@@ -4,11 +4,6 @@ from controllers.Controller import Controller
 
 class Cutting(Controller):
 
-    def check_start(self):
-        return 0
-
-    def check_end(self):
-        return 0
 
     def cut_all(self):
         self.videos.create_video_location()
@@ -30,7 +25,3 @@ class Cutting(Controller):
             else:
                 self.videos.add_to_txt_file("video" + str(counter) + second_part)
                 ffmpeg_extract_subclip(self.match.get_src(), start, end, targetname=name)
-
-
-    def file_exist(self):
-        return 0

@@ -70,11 +70,11 @@ class HighlightsFrame(BaseView):
         self.other_widgets.setdefault(self.all_highlights.current_row,other_widgets)
 
 
-    def go_back(self, widgets):
+    def go_back(self):
         btn = self.get("ButtonBack")
         btn["command"] = lambda window="MainFrame": self.controller.switch_window(window)
 
-    def set_keypress(self, widgets):
+    def set_keypress(self):
         for i in ["<Tab>", "q", "Q", "f", "F"]:
             self.get("root").bind(i, self.__keypress)
 
@@ -104,9 +104,9 @@ class HighlightsFrame(BaseView):
             self.add_to_all_highlights()
             self.__startFocus()
 
-    def __startFocus(obj):
-        obj.t_focus = threading.Thread(target=obj.getLista()[0].focus)
-        obj.t_focus.start()
+    def __startFocus(self):
+        self.t_focus = threading.Thread(target=self.getLista()[0].focus)
+        self.t_focus.start()
 
     def delete_row(self, index):
         self.all_highlights.delete_row(index)

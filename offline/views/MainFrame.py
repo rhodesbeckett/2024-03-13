@@ -27,10 +27,9 @@ class MainFrame(BaseView):
 
     def match_button(self):
         def open_match_src():
-            frame = self.get("Frame1")
             rep = filedialog.askopenfilename(
                 title="Load file",
-                parent=frame,
+                parent=self.get("Frame1"),
                 initialdir='/adffgdfg',
                 initialfile='tmp',
                 filetypes=[
@@ -73,7 +72,6 @@ class MainFrame(BaseView):
         self.half_time.set_time(self.get_half_time(2))
         self.videos.set_src(self.get_video())
         self.controller.switch_window("TestFrame")
-        self.videos.set_src(self.get_video())
 
     def get_half_time(self, half_time):
         if half_time == 1:
