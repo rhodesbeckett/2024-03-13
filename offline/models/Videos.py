@@ -31,3 +31,8 @@ class Videos(object):
         for i in self.list_of_videos():
             if i.startswith(prefix):
                 return i
+
+    def add_to_txt_file(self,name):
+        with open(self.videos_src + "/" + "mylist.txt","a") as txt_file:
+            line = "file '{}'\n".format(name)
+            txt_file.write(str(line))

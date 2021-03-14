@@ -25,9 +25,12 @@ class Cutting(Controller):
             fajl = VideoFileClip(self.match.get_src())
             new = fajl.subclip(start, end)
             if (self.match.get_extt() == ".mp4"):
+                self.videos.add_to_txt_file("video" + str(counter) + second_part)
                 new.write_videofile(name, logger=None)
             else:
+                self.videos.add_to_txt_file("video" + str(counter) + second_part)
                 ffmpeg_extract_subclip(self.match.get_src(), start, end, targetname=name)
+
 
     def file_exist(self):
         return 0

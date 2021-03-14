@@ -66,7 +66,7 @@ class Root(EasyTkObject):
 
     def render(self):
         if self.rendering.is_ready():
-            self.rendering.make_txt_file()
+            """ self.rendering.make_txt_file() """
             t_render = threading.Thread(target=self.rendering.render())
             t_render.start()
             self.testing.counter = 0

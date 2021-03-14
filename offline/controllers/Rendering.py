@@ -8,26 +8,11 @@ class Rendering(Controller):
     def is_ready(self):
         return self.videos.cutted
 
-
-    def make_txt_file(self):
-        self.txt_file_name = self.videos.videos_src + "/" + "mylist.txt"
-        imetxtFajl = str(self.txt_file_name)
-        txtFajl = open(imetxtFajl, "w")
-        for i in range(len(self.videos.list_of_videos())):
-            pocetak = "video" + str(i) + "_"
-            imeFajla = self.videos.name_start(pocetak)
-            if (imeFajla != None):
-                line = "file '{}'\n".format(imeFajla)
-                txtFajl.write(str(line))
-        txtFajl.close()
-
     def render(self):
         outputName = self.videos.videos_src + "\\output" + self.match.get_extt()
         if (os.path.exists(outputName)):
             os.unlink(outputName)
-        command = str(
-            'ffmpeg -f concat -safe 0 -i "{}" -c copy "{}/{}{}"'.format(self.txt_file_name, self.videos.videos_src, "output", ".mp4"))
-        print(command)
+        command = f'ffmpeg -f concat -safe 0 -i "{self.videos.videos_src}/mylist.txt" -c copy "{self.videos.videos_src}/output.mp4"'
         subprocess.call(command, shell=True)
-        os.startfile(self.videos.videos_src)
+        """ os.startfile(self.videos.videos_src) """
         return 0
