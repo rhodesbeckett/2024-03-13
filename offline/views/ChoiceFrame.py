@@ -33,6 +33,4 @@ class ChoiceFrame(BaseView):
                 counter+=1
                 text = self.half_time.choices[counter]
                 self.get(i)["command"] = lambda choice=text:self.choose(choice)
-                self.get(i)["relief"] = "solid"
-                self.get(i)["borderwidth"] = 2
-                self.get(i)["bg"] = "#dedcdc"
+                self.style_all_buttons()

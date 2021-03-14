@@ -11,13 +11,6 @@ class MainFrame(BaseView):
         super(MainFrame,self).__init__(controller)
         self.frame_path = "views/json/main_frame.json"
 
-
-    def style_all_buttons(self):
-        for i in self.easy.all_widgets:
-            if i.startswith("Button"):
-                self.get(i)["relief"] = "solid"
-                self.get(i)["borderwidth"] = 2
-                self.get(i)["bg"] = "#dedcdc"
   
     def method_part(self):
         methods = {"highlights_window":self.highlights_window,

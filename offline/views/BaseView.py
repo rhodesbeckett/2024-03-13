@@ -45,9 +45,11 @@ class BaseView(EasyTkObject):
         self.get("root").geometry(self.dimensions)
         self.get("root").update()
         self.get(self.frame_to_raise).tkraise()
-    """ @raise_decorator
-    def tkraise(self,frame,dimensions):
-        pass """
+    
 
-""" class BaseViewDecorator(object):
-     """
+    def style_all_buttons(self):
+        for i in self.easy.all_widgets:
+            if i.startswith("Button"):
+                self.get(i)["relief"] = "solid"
+                self.get(i)["borderwidth"] = 2
+                self.get(i)["bg"] = "#dedcdc"
