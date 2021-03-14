@@ -18,7 +18,6 @@ class ChoiceFrame(BaseView):
         self.frame_to_raise = "Frame2"
         self.dimensions = "1035x453"
 
-
     def choose(self,choice):
         self.half_time.set_editing_type(choice)
         self.controller.switch_window("MainFrame")

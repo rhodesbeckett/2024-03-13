@@ -46,7 +46,6 @@ class BaseView(EasyTkObject):
         self.get("root").update()
         self.get(self.frame_to_raise).tkraise()
     
-
     def style_all_buttons(self):
         for i in self.easy.all_widgets:
             if i.startswith("Button"):

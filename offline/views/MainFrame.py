@@ -10,7 +10,6 @@ class MainFrame(BaseView):
     def __init__(self,controller):
         super(MainFrame,self).__init__(controller)
         self.frame_path = "views/json/main_frame.json"
-
   
     def method_part(self):
         methods = {"highlights_window":self.highlights_window,
@@ -26,7 +25,7 @@ class MainFrame(BaseView):
         self.frame_to_raise="Frame1"
         self.dimensions="950x351"
 
-    def match_button(self, widgets):
+    def match_button(self):
         def open_match_src():
             frame = self.get("Frame1")
             rep = filedialog.askopenfilename(
@@ -41,22 +40,22 @@ class MainFrame(BaseView):
         btn_match = self.get("ButtonMatch")
         btn_match["command"] = open_match_src
 
-    def entry_click(self, widgets):
+    def entry_click(self):
         for i in ["EntryFirstHalfMin", "EntryFirstHalfSec", "EntrySecondHalfMin", "EntrySecondHalfSec",
                   "EntryVideosLocation"]:
             self.get(i).bind("<1>", lambda a=5: self.controller.refresh_testing())
 
-    def render(self, widgets):
+    def render(self):
         self.get("ButtonRender")["command"] = self.controller.render
 
-    def cut(self, widgets):
+    def cut(self,):
         self.get("ButtonCut")["command"] = self.controller.cut
 
-    def highlights_window(self, widgets):
+    def highlights_window(self):
         btn_highlights = self.get("ButtonHighlights")
         btn_highlights["command"] = lambda window="HighlightsFrame": self.controller.switch_window(window)
 
-    def test_window(self, widgets):
+    def test_window(self):
         btn_highlights = self.get("ButtonTestAll")
         btn_highlights["command"] = lambda window="TestFrame": self.start_test()
 
