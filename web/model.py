@@ -102,6 +102,7 @@ class Model(object):
     def set_id(self,ID):
         self.mc = json.loads(requests.get(f'http://localhost:5000/getMC/{ID}').json()['compDesc'])
         self.highlights = json.loads(requests.get(f'http://localhost:5000/getHighlights/{ID}').json()['highlights'])
+        self.matchID = ID
 
 
     def test_photo(self,row):
@@ -121,8 +122,10 @@ class Model(object):
 
     def cut_all(self):
         self.test_all()
+        self.progress_part = 100 / len(self.highlights)
         for row in self.highlights:
             self.cut_one(row)
+
 
     def cut_one(self,row):
         start = self.get_seconds_start(row)
@@ -132,6 +135,8 @@ class Model(object):
         fajl = VideoFileClip(self.mc["src"])
         new = fajl.subclip(start,end)
         new.write_videofile(name,logger= None)
+        progress = self.progress_part * (self.highlights.index(row)+1)
+        self.update_cut_progress(progress)
 
     def create_video_location(self):
         self.highlights_location = f'highlights/{self.mc["title"]}'
@@ -165,3 +170,8 @@ class Model(object):
 
     def get_dir_sorted(self):
         pass
+
+    def update_cut_progress(self,progress):
+        url = f'http://localhost:5000/update/{self.matchID}/cutProgress'
+        data = {"cutProgress":progress}
+        requests.post(url,data)

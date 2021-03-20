@@ -44,6 +44,8 @@ def insert():
         },
         "canCut": False,
         "canRender": False,
+        "cutProgress":0,
+        "renderProgress":0
     }
     matchCompID = collection.insert_one(matchComp)
     print(matchCompID.inserted_id)
@@ -59,8 +61,6 @@ def update(ID,key):
     new_property = {"$set":{key:get_value(request,key)}}
     collection.update_one({"_id":ObjectId(ID)},new_property)
     return jsonify({"msg":"success"})
-
-
 
 @app.route('/getMC/<ID>',methods=["GET"])
 def get_mc(ID):
@@ -107,12 +107,13 @@ def render(ID):
     model.render()
     return jsonify({'render': True})
 
-@app.route('/getCutProgress<id>')
-def get_cut_progress(id):
-    return jsonify({"msg":"success"})
+@app.route('/getCutProgress/<ID>')
+def get_cut_progress(ID):
+    result = collection.find_one({"_id":ObjectId(ID),})
+    return jsonify({"cutProgress":dumps(result["cutProgress"])})
 
-@app.route('/getRenderProgress<id>')
-def get_render_progress(id):
+@app.route('/getRenderProgress/<ID>')
+def get_render_progress(ID):
     return jsonify({"msg":"success"})
 
 @app.route('/getAll',methods=["GET"])
@@ -125,6 +126,15 @@ def deleteAll():
     collection.delete_many({})
     return jsonify({"msg":"success"})
 
+@app.route('/updateCut',methods=["GET"])
+def updateCut():
+    url = "http://localhost:5000/update/60562407c7b37a22cf3e51c7/cutProgress"
+    data = {"cutProgress":5}
+    requests.post(url,data)
+    return jsonify({"msg":"success"})
+
+
+
 def get_value(request,key):
     if key == "canCut":
         try:
@@ -133,6 +143,9 @@ def get_value(request,key):
         except:
             print("error")
             return False
+    elif key == "cutProgress":
+        """ .split("cutProgress=")[1] """
+        return float(request.get_data("cutProgress").decode("UTF-8").split("cutProgress=")[1])
     else:
         return request.get_json(force=True)
 
