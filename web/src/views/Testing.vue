@@ -58,7 +58,6 @@ export default {
             const path = `http://localhost:5000/getTest/${this.$cookies.get("mcID")}`
             axios.get(path)
             .then((res) => {
-                    console.log(res.data)
                     this.srcTest = res.data.test.src
                     this.halfTimeTest = res.data.test.halfTime
                     this.highlightsTest = res.data.test.highlights

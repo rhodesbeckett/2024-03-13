@@ -6,7 +6,7 @@
         <div class="column is-10">
         </div>
         <div class="column is-12">
-            <progress class="progress is-primary is-medium" value="1" max="100">15%</progress>
+            <progress class="progress is-primary is-medium cut-progress" :value="this.cutProgress" max="100">15%</progress>
         </div>
 
         <div class="column is-2 ">
@@ -29,7 +29,8 @@ export default {
     },
     data() {
         return {
-            canCut : false
+            canCut : false,
+            cutProgress:0,
         }
     },
     methods: {
@@ -49,6 +50,7 @@ export default {
                         return null
                     }
                 })
+                this.updateProgress()
             }
             else {
                 //
@@ -62,6 +64,17 @@ export default {
                     console.log(res)
                 })
             }
+        },
+        updateProgress() {
+            let cutInterval = setInterval( () => {
+              axios.get(`http://localhost:5000/getCutProgress/${this.$cookie.get('mcID')}`).then(
+                res => {
+                    this.cutProgress = res.data.cutProgress
+                    if(res.data.cutProgress == 100.0) {
+                        clearInterval(cutInterval);
+                    }
+                })
+            },1000)
         }
     },
     created() {
@@ -89,6 +102,14 @@ export default {
     border-top: 0px solid transparent;
     width: 100%;
     margin: 0.5em 0;
+}
+
+.cut-progress {
+    transition: all 0.5s;
+}
+
+progress[value]::-moz-progress-bar {
+    transition: value 0.5s;
 }
 
 </style>

@@ -120,7 +120,6 @@ export default {
         else {
           this.updateDetail(row,part,value)
         }
-        console.log(this.highlightRows)
       },
       updateDetail(row,part,value) {
         if (part == "min") {
