@@ -15,7 +15,7 @@
         <div class="column is-10">
         </div>
         <div class="column is-12">
-            <progress class="progress is-primary is-medium" value="1" max="100">15%</progress>
+            <progress class="progress is-primary is-medium" :value="this.renderProgress" max="100">15%</progress>
         </div>
     </div>
 </template>
@@ -31,6 +31,8 @@ export default {
         return {
             canCut : false,
             cutProgress:0,
+            renderProgress:0,
+            currentProcess: ""
         }
     },
     methods: {
@@ -42,7 +44,7 @@ export default {
             })
         },
         cut() {
-            if (this.canCut == true) {
+            if (this.canCut == true || this.currentProcess == "") {
                 let path = `http://localhost:5000/cut/${this.$cookie.get('mcID')}`
                 axios.get(path).
                 then( (res) => {
@@ -51,18 +53,21 @@ export default {
                     }
                 })
                 this.updateProgress()
+                this.currentProcess = "cut"
             }
             else {
                 //
             }
         },
         render() {
-            if (this.canCut == true) {
+            if (this.canCut == true || this.currentProcess == "") {
                 let path = `http://localhost:5000/render/${this.$cookie.get('mcID')}`
                 axios.get(path).
                 then( (res) => {
                     console.log(res)
                 })
+                this.updateRenderProgress()
+                this.currentProcess = "render"
             }
         },
         updateProgress() {
@@ -72,6 +77,19 @@ export default {
                     this.cutProgress = res.data.cutProgress
                     if(res.data.cutProgress == 100.0) {
                         clearInterval(cutInterval);
+                        this.currentProcess = ""
+                    }
+                })
+            },1000)
+        },
+        updateRenderProgress() {
+            let cutInterval = setInterval( () => {
+              axios.get(`http://localhost:5000/getRenderProgress/${this.$cookie.get('mcID')}`).then(
+                res => {
+                    this.renderProgress = res.data.renderProgress
+                    if(res.data.renderProgress == 100.0) {
+                        clearInterval(cutInterval);
+                        this.currentProcess = ""
                     }
                 })
             },1000)
