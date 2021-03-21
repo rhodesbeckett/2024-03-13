@@ -6,6 +6,7 @@ import mimetypes
 from PIL import Image,ImageTk
 from moviepy.video.io.VideoFileClip import VideoFileClip
 import subprocess
+import time
 
 class Model(object):
     def __init__(self,collection):
@@ -125,6 +126,7 @@ class Model(object):
         self.progress_part = 100 / len(self.highlights)
         for row in self.highlights:
             self.cut_one(row)
+        self.reset_to_0("cut")
 
 
     def cut_one(self,row):
@@ -143,7 +145,6 @@ class Model(object):
         if self.mc['title'] not in os.listdir("highlights"):
             os.mkdir(self.highlights_location)
     
-
     def sorting_dir(self):
         def sorting_by(x):
             return (x[5:])
@@ -162,11 +163,21 @@ class Model(object):
         txt_file.close()
     
     def render(self):
+        self.progress_part = 100 / len(self.highlights)
         output_name = f'{self.highlights_location}/output.mp4'
         if (os.path.exists(output_name)):
             os.unlink(output_name)
         command = f'ffmpeg -f concat -safe 0 -i "{self.txt_file_name}" -c copy "{output_name}"'
         subprocess.call(command,shell= True)
+        self.update_render_progress(100.0)
+        self.reset_to_0("render")
+
+    def reset_to_0(self,process):
+        time.sleep(2)
+        if process == "cut":
+            self.update_cut_progress(0.0)
+        elif process == "render":
+            self.update_render_progress(0.0)
 
     def get_dir_sorted(self):
         pass
@@ -175,3 +186,8 @@ class Model(object):
         url = f'http://localhost:5000/update/{self.matchID}/cutProgress'
         data = {"cutProgress":progress}
         requests.post(url,data)
+    
+    def update_render_progress(self,progress):
+        url = f'http://localhost:5000/update/{self.matchID}/renderProgress'
+        data = {"renderProgress":progress}
+        requests.post(url,data)      

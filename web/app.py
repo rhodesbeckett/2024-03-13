@@ -114,7 +114,8 @@ def get_cut_progress(ID):
 
 @app.route('/getRenderProgress/<ID>')
 def get_render_progress(ID):
-    return jsonify({"msg":"success"})
+    result = collection.find_one({"_id":ObjectId(ID),})
+    return jsonify({"renderProgress":dumps(result["renderProgress"])})
 
 @app.route('/getAll',methods=["GET"])
 def get_all():
@@ -143,9 +144,9 @@ def get_value(request,key):
         except:
             print("error")
             return False
-    elif key == "cutProgress":
+    elif key == "cutProgress" or key == "renderProgress":
         """ .split("cutProgress=")[1] """
-        return float(request.get_data("cutProgress").decode("UTF-8").split("cutProgress=")[1])
+        return float(request.get_data(key).decode("UTF-8").split(f'{key}=')[1])
     else:
         return request.get_json(force=True)
 
