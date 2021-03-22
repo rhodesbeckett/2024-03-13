@@ -62,6 +62,21 @@ export default new Vuex.Store({
         },
         updateHighlightRow(store,index,row) {
             store.highlights[index] = row
+        },
+        updateFirstHalfMin(store,min) {
+            store.compDesc.time.firstHalf.min = min
+        },
+        updateFirstHalfSec(store,sec) {
+            store.compDesc.time.firstHalf.sec = sec
+        },
+        updateSecondHalfMin(store,min) {
+            store.compDesc.time.secondHalf.min = min
+        },
+        updateSecondHalfSec(store,sec) {
+            store.compDesc.time.secondHalf.sec = sec
+        },
+        updateIsChosen(store,isChosen) {
+            store.compDesc.time.isChosen = isChosen
         }
 
     },
@@ -103,7 +118,19 @@ export default new Vuex.Store({
             then( (res) => {
                 this.commit('newCanCut',(res.data.canCut == 'true'))
             })
+        },
+        //update server
+        setCompDesc(store,payload) {
+            const path = `http://localhost:5000/update/${Vue.$cookies.get('mcID')}/compDesc`
+            axios.post(path,store.state.compDesc)
+            .then( (res) => {
+                if (res.data.msg) {
+                    payload.showMessage()
+                    return null
+                }
+            })
         }
+
     },
     modules: {
 
