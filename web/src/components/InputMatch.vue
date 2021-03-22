@@ -1,5 +1,5 @@
 <template>
-  <input type="text" v-model="src" @input="this.updateSrc" placeholder="full path" class="input matchInfo__input--half">
+  <input type="text" :value="this.$store.state.compDesc.src" @input="this.updateSrc" placeholder="full path" class="input matchInfo__input--half">
 </template>
 
 <script>

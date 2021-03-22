@@ -11,7 +11,7 @@ export default {
     computed: {
         formated() {
             console.log(this.halfTime == 1)
-            if (this.halfTime ==+ 1) {
+            if (this.halfTime === 1) {
                 return this.halfTime+"st"
             }
             else if(this.halfTime === 2) {

@@ -1,5 +1,5 @@
 <template>
-  <input type="text" v-model="title" @input="this.changeTitle" class="input matchInfo__input">
+  <input type="text" :value="getTitle" @input="this.changeTitle" class="input matchInfo__input">
 </template>
 
 <script>
@@ -7,7 +7,12 @@
 export default {
     data() {
         return {
-            title: ""
+            title: this.$store.state.compDesc.title
+        }
+    },
+    computed: {
+        getTitle() {
+            return this.$store.state.compDesc.title
         }
     },
     methods: {
