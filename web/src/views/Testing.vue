@@ -100,8 +100,6 @@ export default {
                     setTimeout(element.remove,100)
                 },1000
             )
-            
-
         }
     },
     created() {
