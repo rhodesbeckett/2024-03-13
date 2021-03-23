@@ -5,13 +5,13 @@
         </div>
         <div class="column is-12 testing-container">
         <h1 class="title" style="grid-area: matchTest;">Match</h1>
-        <h2 class="title is-6" style="grid-area: matchValue;">{{ srcTest }}</h2>
+        <h2 class="title is-6" style="grid-area: matchValue;">{{ this.$store.state.testing.src }}</h2>
 
         <h1 class="title" style="grid-area: halfTimeTest;">Halftime</h1>
-        <h2 class="title is-6" style="grid-area: halfTimeValue;">{{ halfTimeTest }}</h2>
+        <h2 class="title is-6" style="grid-area: halfTimeValue;">{{ this.$store.state.testing.halfTime }}</h2>
 
         <h1 class="title" style="grid-area: highlightsTest;" >Highlights</h1>
-        <h2 class="title is-6" style="grid-area: highlightsValue;">{{ highlightsTest }}</h2>
+        <h2 class="title is-6" style="grid-area: highlightsValue;">{{ this.$store.state.testing.highlights }}</h2>
 
         <h1 class="title" style="grid-area: testPicture;">Test match
         </h1>
@@ -44,9 +44,6 @@ export default {
     },
     data() {
         return {
-            srcTest: false,
-            halfTimeTest: false,
-            highlightsTest: false,
             imgSrc: "https://via.placeholder.com/600x300",
             minutePhoto: 0,
             secondPhoto: 0,
@@ -54,17 +51,6 @@ export default {
         }
     },
     methods: {
-        getTest() {
-            const path = `http://localhost:5000/getTest/${this.$cookies.get("mcID")}`
-            axios.get(path)
-            .then((res) => {
-                    this.srcTest = res.data.test.src
-                    this.halfTimeTest = res.data.test.halfTime
-                    this.highlightsTest = res.data.test.highlights
-                    this.updateCanRun()
-                }
-            )
-        },
         getImage() {
             const path = `http://localhost:5000/getPhoto/${this.minutePhoto}/${this.secondPhoto}`
             axios.get(path)
@@ -74,9 +60,10 @@ export default {
             )
         },
         updateCanRun() {
+            
             let path = `http://localhost:5000/update/${this.$cookie.get('mcID')}/canCut`
             let canCut = false;
-            if (this.srcTest == true && this.halfTimeTest == true && this.highlightsTest == true) {
+            if (this.$store.getters.getUpdatedTesting) {
                 // update code
                 canCut = true;
                 this.showMessage(this.$refs.messageServer)
@@ -100,12 +87,10 @@ export default {
                     setTimeout(element.remove,100)
                 },1000
             )
-            
-
         }
     },
     created() {
-        this.getTest()
+        this.$store.dispatch('getTesting',this.updateCanRun)
     }
     
 }
