@@ -62,9 +62,15 @@ export default {
             return this.$store.state.compDesc.editing
         }
     },
-    mounted() {
+    created() {
+      if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
+        this.$router.push('/')
+      }
+      else {
         this.$store.dispatch('getCompDesc')
-    },
+        return ;
+      }
+  },
 }
 </script>
 

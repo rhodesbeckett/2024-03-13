@@ -121,11 +121,12 @@ export default new Vuex.Store({
                 }
             })
         },
-        getTesting() {
+        getTesting(store,vueMethod) {
             const path = `http://localhost:5000/getTest/${Vue.$cookies.get("mcID")}`
             axios.get(path)
             .then((res) => {
                     this.commit('newTesting',res.data.test)
+                    vueMethod()
                 }
             )
         },
@@ -165,6 +166,14 @@ export default new Vuex.Store({
         getHighlights(state) {
             return id => {
                 return state.highlights.find(item => item.id === id)
+            }
+        },
+        getUpdatedTesting(state) {
+            if (state.testing.src == true && state.testing.halfTime == true && state.testing.highlights == true) {
+                return true
+            }
+            else {
+                return false
             }
         }
     }
