@@ -38,11 +38,6 @@ const routes = [
     name: 'CR',
     component: () => import(/* wepbackChunkName: "about" */ '../views/CutAndRender.vue')
   },
-  {
-    path: '/test2',
-    name: 'test2',
-    component: () => import(/* webpackChunkName: "test2" */ '../views/Test.vue'),
-  }
 ]
 
 const router = new VueRouter({
