@@ -10,7 +10,6 @@ export default {
     props: ["radioClick","halfTime"],
     computed: {
         formated() {
-            console.log(this.halfTime == 1)
             if (this.halfTime === 1) {
                 return this.halfTime+"st"
             }

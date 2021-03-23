@@ -3,10 +3,11 @@ import Vue from 'vue'
 import axios from 'axios'
 
 Vue.use(Vuex)
+
 export default new Vuex.Store({
 
     state: {
-        ime: "Uros",
+        
         compDesc: {
             "title": "",
             "src": "",
@@ -77,6 +78,22 @@ export default new Vuex.Store({
         },
         updateIsChosen(store,isChosen) {
             store.compDesc.time.isChosen = isChosen
+        },
+        updateHighlightsRowMin(store,{id,value}) {
+            store.highlights.find(item => item.id === id).min = value
+        },
+        updateHighlightsRowSec(store,{id,value}) {
+            store.highlights.find(item => item.id === id).sec = value
+        },
+        updateHighlightsRowToAdd(store,{id,value}) {
+            store.highlights.find(item => item.id === id).toAdd = value
+        },
+        newRow(store) {
+            let id = Math.floor(Math.random() * (10000 - 1 + 1)) + 1
+            store.highlights.push({"min":null,"sec":null,"toAdd":null,"id":id})
+        },
+        deleteRow(store,id) {
+            store.highlights = store.highlights.filter( item => { if(item.id != id) return item })
         }
 
     },
@@ -129,10 +146,26 @@ export default new Vuex.Store({
                     return null
                 }
             })
+        },
+        setHighlights(store) {
+            const path = `http://localhost:5000/update/${Vue.$cookies.get('mcID')}/highlights`
+            axios.post(path,store.state.highlights)
+            .then( (res) => {
+                if (res.data.msg == "success") {
+                    return null
+                  }
+            })  
         }
 
     },
     modules: {
 
+    },
+    getters: {
+        getHighlights(state) {
+            return id => {
+                return state.highlights.find(item => item.id === id)
+            }
+        }
     }
 })
