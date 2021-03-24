@@ -5,13 +5,13 @@
         </div>
         <div class="column is-12 testing-container">
         <h1 class="title" style="grid-area: matchTest;">Match</h1>
-        <h2 class="title is-6" style="grid-area: matchValue;">{{ this.$store.state.testing.src }}</h2>
+        <h2 class="title is-6" style="grid-area: matchValue;">{{ this.testSrc }}</h2>
 
         <h1 class="title" style="grid-area: halfTimeTest;">Halftime</h1>
-        <h2 class="title is-6" style="grid-area: halfTimeValue;">{{ this.$store.state.testing.halfTime }}</h2>
+        <h2 class="title is-6" style="grid-area: halfTimeValue;">{{ this.testHalftime }}</h2>
 
         <h1 class="title" style="grid-area: highlightsTest;" >Highlights</h1>
-        <h2 class="title is-6" style="grid-area: highlightsValue;">{{ this.$store.state.testing.highlights }}</h2>
+        <h2 class="title is-6" style="grid-area: highlightsValue;">{{ this.testHighlights }}</h2>
 
         <h1 class="title" style="grid-area: testPicture;">Test match
         </h1>
@@ -37,11 +37,9 @@
 <script>
 import axios from 'axios'
 import gsap from 'gsap'
+import { mapGetters,mapActions } from 'vuex'
 
 export default {
-    components: {
-        
-    },
     data() {
         return {
             imgSrc: "https://via.placeholder.com/600x300",
@@ -51,6 +49,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getTesting']),
         getImage() {
             const path = `http://localhost:5000/getPhoto/${this.minutePhoto}/${this.secondPhoto}`
             axios.get(path)
@@ -63,7 +62,7 @@ export default {
             
             let path = `http://localhost:5000/update/${this.$cookie.get('mcID')}/canCut`
             let canCut = false;
-            if (this.$store.getters.getUpdatedTesting) {
+            if (this.updatedTesting) {
                 // update code
                 canCut = true;
                 this.showMessage(this.$refs.messageServer)
@@ -89,8 +88,11 @@ export default {
             )
         }
     },
+    computed: {
+        ...mapGetters(['testSrc','testHalftime','testHighlights','updatedTesting'])
+    },
     created() {
-        this.$store.dispatch('getTesting',this.updateCanRun)
+        this.getTesting(this.updateCanRun)
     }
     
 }

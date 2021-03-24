@@ -1,23 +1,18 @@
 <template>
-  <input type="text" :value="getTitle" @input="this.changeTitle" class="input matchInfo__input">
+  <input type="text" :value="title" @input="this.changeTitle" class="input matchInfo__input">
 </template>
 
 <script>
+import { mapGetters,mapMutations } from 'vuex';
 
 export default {
-    data() {
-        return {
-            title: this.$store.state.compDesc.title
-        }
-    },
-    computed: {
-        getTitle() {
-            return this.$store.state.compDesc.title
-        }
-    },
+    computed: 
+        mapGetters(['title'])
+    ,
     methods: {
+        ...mapMutations(['updateTitle']),
         changeTitle(event) {
-            this.$store.commit('updateTitle',event.target.value)
+            this.updateTitle(event.target.value)
         }
     }
 }

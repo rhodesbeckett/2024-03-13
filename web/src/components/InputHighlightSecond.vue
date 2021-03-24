@@ -3,26 +3,30 @@
         <input class="input highlights-input" min="0" max="999" size="3" maxlength="3" type="text"
         :value="getValue"
         @input="this.updateValue"
-        @keydown.tab = "newRow()"
+        @keydown.tab = "newRowTab()"
         >
     </div>
 </template>
 
 <script>
+import { mapMutations,mapActions,mapGetters } from 'vuex'
+
 export default {
     props: ['id','part'],
     methods: {
+        ...mapMutations(['newRow']),
+        ...mapActions(['setHighlights']),
         updateValue(event) {
             this.$store.commit(`updateHighlightsRow${this.part}`,{"id":this.id,"value":parseInt(event.target.value)})
         },
         checkRow(id) {
-            let row = this.$store.getters.getHighlights(id)
+            let row = this.highlightsRow(id)
             if(Number.isInteger(row.min) && Number.isInteger(row.sec) && Number.isInteger(row.toAdd)) {
                 return true
             }
         },
         checkAllRows() {
-            let row = this.$store.state.highlights
+            let row = this.highlights
             for(let i=0;i<row.length;i++) {
                 if (this.checkRow(row[i].id) == true) {
                     continue
@@ -33,12 +37,12 @@ export default {
             }
             return true
         },
-        newRow() {
+        newRowTab() {
             if (this.part == "ToAdd") {
                 if (this.checkRow(this.id) == true) {
                     if(this.checkAllRows()) {
-                        this.$store.commit('newRow')
-                        this.$store.dispatch('setHighlights')
+                        this.newRow()
+                        this.setHighlights()
                     }
                 }
             }
@@ -46,15 +50,16 @@ export default {
         
     },
     computed: {
+        ...mapGetters(['highlightsRow','highlights']),
         getValue() {
             if (this.part == "Min") {
-                return this.$store.getters.getHighlights(this.id).min
+                return this.highlightsRow(this.id).min
             }
             else if (this.part == "Sec") {
-                return this.$store.getters.getHighlights(this.id).sec
+                return this.highlightsRow(this.id).sec
             }
             else {
-                return this.$store.getters.getHighlights(this.id).toAdd
+                return this.highlightsRow(this.id).toAdd
             }
         }
     }

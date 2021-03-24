@@ -6,8 +6,8 @@
             <h1 class="title matchInfo__title">Match:</h1>
             <InputMatch />
             <h1 class="title matchInfo__title">Editing</h1>
-            <h2 class="matchInfo__editing-response" v-if="isTimeChosen == true">{{ editing }}</h2>
-            <div class="matchInfo__input--half matchInfo__radio-btns" v-if="isTimeChosen == false">
+            <h2 class="matchInfo__editing-response" v-if="isChosen == true">{{ editing }}</h2>
+            <div class="matchInfo__input--half matchInfo__radio-btns" v-if="isChosen == false">
                 <RadioBtnHalfTime :radioClick="radioClick" :halfTime="1"/>
                 <RadioBtnHalfTime :radioClick="radioClick" :halfTime="2"/>
             </div>
@@ -31,43 +31,40 @@ import InputMatch from '../components/InputMatch.vue'
 import RadioBtnHalfTime from '../components/RadioBtnHalfTime.vue'
 import InputHalfTime from '../components/InputHalfTime.vue'
 import gsap from 'gsap'
+import { mapGetters,mapMutations,mapActions } from 'vuex'
 
 export default {
     components: {
         InputTitle,InputMatch,RadioBtnHalfTime,InputHalfTime
     },
     methods: {
+      ...mapMutations(['updateIsChosen','updateEditing']),
+      ...mapActions(['getCompDesc','setCompDesc']),
         radioClick(halfTime) {
-        this.$store.commit('updateIsChosen',true)
-        if(halfTime == 1) {
-            this.$store.commit('updateEditing',"firstHalf")
-        }
-        else {
-            this.$store.commit('updateEditing',"secondHalf")
-        }
+          this.updateIsChosen(true)
+          if(halfTime == 1) {
+              this.updateEditing("firstHalf")
+          }
+          else {
+              this.updateEditing("secondHalf")
+          }
         },
         saveBtn() {
-            this.$store.dispatch('setCompDesc',this)
+            this.setCompDesc(this)
         },
         showMessage() {
             let elemAnim = gsap.to(this.$refs.messageServer,{duration:0.3,scale:1.0})
             setTimeout(function () { elemAnim.reverse() },500)
         }
     },
-    computed: {
-        isTimeChosen() {
-            return this.$store.state.compDesc.time.isChosen
-        },
-        editing() {
-            return this.$store.state.compDesc.editing
-        }
-    },
+    computed: 
+    mapGetters(['isChosen','editing']),
     created() {
       if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
         this.$router.push('/')
       }
       else {
-        this.$store.dispatch('getCompDesc')
+        this.getCompDesc()
         return ;
       }
   },

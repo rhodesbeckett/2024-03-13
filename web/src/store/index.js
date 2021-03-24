@@ -163,12 +163,36 @@ export default new Vuex.Store({
 
     },
     getters: {
-        getHighlights(state) {
+        title(state) {
+            return state.compDesc.title
+        },
+        src(state) {
+            return state.compDesc.src
+        },
+        isChosen(state) {
+            return state.compDesc.time.isChosen
+        },
+        editing(state) {
+            return state.compDesc.editing
+        },
+        highlights(state) {
+            return state.highlights
+        },
+        highlightsRow(state) {
             return id => {
                 return state.highlights.find(item => item.id === id)
             }
         },
-        getUpdatedTesting(state) {
+        testSrc(state) {
+            return state.testing.src
+        },
+        testHalftime(state) {
+            return state.testing.halfTime
+        },
+        testHighlights(state) {
+            return state.testing.highlights
+        },
+        updatedTesting(state) {
             if (state.testing.src == true && state.testing.halfTime == true && state.testing.highlights == true) {
                 return true
             }

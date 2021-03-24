@@ -4,7 +4,7 @@
     name="highlights"
     enter-active-class="highlights-add"
     leave-active-class="highlights-remove">
-        <div class="columns highlight-row is-centered" v-for="row in getAllHighlights" :key="row.id" style="align-items:center;">
+        <div class="columns highlight-row is-centered" v-for="row in highlights" :key="row.id" style="align-items:center;">
             <InputHighlightSecond :id="row.id" part="Min" />
             <div class="column is-1 is-2-mobile center-dot">
             :
@@ -15,7 +15,7 @@
             </div>
             <InputHighlightSecond :id="row.id" part="ToAdd" />
             <div class="column is-1 is-2-mobile">
-                <a class="button is-danger is-large is-2" @click="deleteRow(row.id)">Delete</a>
+                <a class="button is-danger is-large is-2" @click="deleteRow(row.id);setHighlights()">Delete</a>
             </div>
         </div>
     </transition-group>
@@ -26,21 +26,17 @@
 
 <script>
 import InputHighlightSecond from '../components/InputHighlightSecond'
-
+import { mapMutations,mapActions,mapGetters } from 'vuex'
 export default {
     components: {
        InputHighlightSecond
     },
     methods: {
-        deleteRow(id) {
-            this.$store.commit('deleteRow',id)
-            this.$store.dispatch('setHighlights')
-        }
+      ...mapMutations(['deleteRow']),
+      ...mapActions(['setHighlights','getHighlights']),
     },
     computed: {
-        getAllHighlights() {
-            return this.$store.state.highlights
-        }
+        ...mapGetters(['highlights'])
     },
     created() {
       if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
@@ -48,7 +44,7 @@ export default {
       }
       else {
         // get highlights and set all data for page
-        this.$store.dispatch('getHighlights')
+        this.getHighlights()
         return ;
       }
     }
