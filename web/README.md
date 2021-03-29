@@ -1,4 +1,4 @@
-# testing
+# football-video-editor
 
 ## Project setup
 ```

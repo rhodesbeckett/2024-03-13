@@ -1,5 +1,5 @@
 {
-  "name": "testing",
+  "name": "football-video-editor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,8 @@
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
     "vue-router": "^3.4.9",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
