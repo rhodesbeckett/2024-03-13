@@ -23,7 +23,7 @@ export default new Vuex.Store({
             "halfTime":false,
             "highlights":false,
         },
-        highlights: [{"min":null,"sec":null,"toAdd":null,"id":0}],
+        highlights: [{"min":null,"sec":null,"toAdd":null,"id":0,"editing":""}],
         canCut: false,
         canRender: false,
         cutProgress:0,

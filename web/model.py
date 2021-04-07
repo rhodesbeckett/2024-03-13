@@ -125,7 +125,8 @@ class Model(object):
         self.test_all()
         self.progress_part = 100 / len(self.highlights)
         for row in self.highlights:
-            self.cut_one(row)
+            if row["editing"] == self.mc["editing"]:
+                self.cut_one(row)
         self.reset_to_0("cut")
 
 

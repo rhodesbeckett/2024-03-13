@@ -36,7 +36,7 @@ def insert():
             "secondHalf": {"min": None,"sec":None}
             }
         },
-        "highlights": [{"min":None,"sec":None,"toAdd":None,"id":0}],
+        "highlights": [{"min":None,"sec":None,"toAdd":None,"id":0,"editing":""}],
         "testing": {
                 "src":False,
                 "halfTime":False,

@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MatchInfo from '../views/MatchInfo.vue'
+import store from '../store'
 
+
+
+/* import Vuex from 'vuex'
+
+Vue.use(Vuex) */
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,7 +19,8 @@ const routes = [
   {
     path: '/matchCompInfo',
     name: 'matchCompInfo',
-    component: MatchInfo
+    component: MatchInfo,
+    
   },
   {
     path: '/about',
@@ -26,6 +33,15 @@ const routes = [
   {
     path: '/editor',
     name: 'Editor',
+    beforeEnter(to,from,next) {
+      if (from.name == null) {
+        store.dispatch('getCompDesc')
+      }
+      /* else {
+        console.log(router.app)
+      } */
+      next()
+    },
     component: () => import(/* webpackChunkName: "about" */ '../views/Editor.vue')
   },
   {
