@@ -58,16 +58,17 @@ export default {
         }
     },
     computed: 
-    mapGetters(['isChosen','editing']),
-    created() {
-      if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
-        this.$router.push('/')
-      }
-      else {
-        this.getCompDesc()
-        return ;
-      }
-  },
+      mapGetters(['isChosen','editing']),
+      created() {
+        if (this.$cookie.get('mcID') == "" || this.$cookie.get('mcID') == null) {
+          this.$router.push('/')
+        }
+        else {
+          this.getCompDesc()
+          return ;
+        }
+      },
+    
 }
 </script>
 

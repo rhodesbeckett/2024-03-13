@@ -3,9 +3,9 @@
         <div class="container">
           <nav class="navbar navbar--routing" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/">
+                <router-link class="navbar-item" to="/">
                   <img src="@/assets/pyfootball.png" width="112" height="28">
-                </a>
+                </router-link>
             
                 <a role="button" class="navbar-burger" @click="toggleHamburger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                   <span aria-hidden="true"></span>

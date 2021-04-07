@@ -33,7 +33,7 @@ export default {
     },
     methods: {
       ...mapMutations(['deleteRow']),
-      ...mapActions(['setHighlights','getHighlights']),
+      ...mapActions(['setHighlights','getHighlights','getCompDesc']),
     },
     computed: {
         ...mapGetters(['highlights'])
@@ -47,7 +47,8 @@ export default {
         this.getHighlights()
         return ;
       }
-    }
+    },
+    
 }
 </script>
 
