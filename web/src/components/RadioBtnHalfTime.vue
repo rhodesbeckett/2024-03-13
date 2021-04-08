@@ -1,13 +1,13 @@
 <template>
     <label>
         {{ formated }}
-        <input type="radio" class="title" name="halfTime" :value="formated" @click="radioClick(halfTime)">
+        <input type="radio" class="title" name="halfTime" :value="formated" @click="radioClick(halfTime,matchCompID)">
     </label>
 </template>
 
 <script>
 export default {
-    props: ["radioClick","halfTime"],
+    props: ["radioClick","halfTime","matchCompID"],
     computed: {
         formated() {
             if (this.halfTime === 1) {
