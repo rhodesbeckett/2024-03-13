@@ -11,7 +11,7 @@ export default new Vuex.Store({
         compDesc: {
             "title": "",
             "src": "",
-            "editing": "",
+            "editing": "firstHalf",
             "time": {
                 "isChosen": false,
                 "firstHalf": {"min": null,"sec":null},
@@ -23,11 +23,12 @@ export default new Vuex.Store({
             "halfTime":false,
             "highlights":false,
         },
-        highlights: [{"min":null,"sec":null,"toAdd":null,"id":0,"editing":""}],
+        highlights: [],
         canCut: false,
         canRender: false,
         cutProgress:0,
         renderProgress:0
+        
     },
     mutations: {
         novoIme(store,ime) {
@@ -90,7 +91,7 @@ export default new Vuex.Store({
         },
         newRow(store) {
             let id = Math.floor(Math.random() * (10000 - 1 + 1)) + 1
-            store.highlights.push({"min":null,"sec":null,"toAdd":null,"id":id})
+            store.highlights.push({"min":null,"sec":null,"toAdd":null,"id":id,"editing":store.compDesc.editing})
         },
         deleteRow(store,id) {
             store.highlights = store.highlights.filter( item => { if(item.id != id) return item })
@@ -176,7 +177,7 @@ export default new Vuex.Store({
             return state.compDesc.editing
         },
         highlights(state) {
-            return state.highlights
+            return state.highlights.filter( item => item.editing === state.compDesc.editing)
         },
         highlightsRow(state) {
             return id => {

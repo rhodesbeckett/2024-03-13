@@ -14,7 +14,7 @@ import { mapMutations,mapActions,mapGetters } from 'vuex'
 export default {
     props: ['id','part'],
     methods: {
-        ...mapMutations(['newRow']),
+        ...mapMutations(['newRow',]),
         ...mapActions(['setHighlights']),
         updateValue(event) {
             this.$store.commit(`updateHighlightsRow${this.part}`,{"id":this.id,"value":parseInt(event.target.value)})
@@ -41,6 +41,7 @@ export default {
             if (this.part == "ToAdd") {
                 if (this.checkRow(this.id) == true) {
                     if(this.checkAllRows()) {
+                        this.highlightsRow(this.id).editing = this.editing
                         this.newRow()
                         this.setHighlights()
                     }
@@ -50,7 +51,7 @@ export default {
         
     },
     computed: {
-        ...mapGetters(['highlightsRow','highlights']),
+        ...mapGetters(['highlightsRow','highlights','editing']),
         getValue() {
             if (this.part == "Min") {
                 return this.highlightsRow(this.id).min

@@ -32,7 +32,7 @@ export default {
        InputHighlightSecond
     },
     methods: {
-      ...mapMutations(['deleteRow']),
+      ...mapMutations(['deleteRow','newRow']),
       ...mapActions(['setHighlights','getHighlights','getCompDesc']),
     },
     computed: {
@@ -48,6 +48,15 @@ export default {
         return ;
       }
     },
+    watch: {
+      highlights: {
+        handler: function(val) {
+          if (val.length == 0) {
+            this.newRow()
+          }
+        }
+      }
+    }
     
 }
 </script>
