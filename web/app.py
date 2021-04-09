@@ -103,7 +103,6 @@ def cut(ID):
 def render(ID):
     model.set_id(ID)
     model.test_all()
-    model.make_txt_file()
     model.render()
     return jsonify({'render': True})
 
@@ -134,6 +133,15 @@ def updateCut():
     requests.post(url,data)
     return jsonify({"msg":"success"})
 
+@app.route('/mergeVideos/<ID>',methods=['GET'])
+def mergeVideos(ID):
+    model.set_id(ID)
+    if model.can_merge():
+        model.make_merge_txt_file()
+        model.merge()
+        return jsonify({"msg":True})
+    else:
+        return jsonify({"msg":False})
 
 
 def get_value(request,key):

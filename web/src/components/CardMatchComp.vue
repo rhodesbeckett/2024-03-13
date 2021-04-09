@@ -4,13 +4,14 @@
         <h3 class="halfTime">Editing:</h3>
         <RadioBtnHalfTime class="radio1" :radioClick="radioClick" :halfTime="1" :matchCompID="comp._id.$oid"/>
         <RadioBtnHalfTime class="radio2" :radioClick="radioClick" :halfTime="2" :matchCompID="comp._id.$oid"/>
-        <a class="button btnMerge">Merge halfTime</a>
+        <a class="button btnMerge" @click="mergeVideos(comp._id.$oid)">Merge halfTime</a>
     </span>
 </template>
 
 <script>
 import RadioBtnHalfTime from '../components/RadioBtnHalfTime.vue'
 import { mapMutations,mapActions } from 'vuex'
+import axios from 'axios'
 
 export default {
     props: ['comp'],
@@ -34,6 +35,13 @@ export default {
                 }
                 this.setCompDesc({"showMessage": function () {}})
             },1000) 
+        },
+        mergeVideos(ID) {
+            axios.get(`http://localhost:5000/mergeVideos/${ID}`).then(
+                (res) => {
+                    console.log(res)
+                }
+            )
         }
     }
 }

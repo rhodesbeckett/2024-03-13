@@ -123,18 +123,26 @@ class Model(object):
 
     def cut_all(self):
         self.test_all()
-        self.progress_part = 100 / len(self.highlights)
+        self.progress_part = self.get_progress_part()
+        with open(f'{self.highlights_location}/mylist.txt','w') as txt_file:
+            for row in self.highlights:
+                if row["editing"] == self.mc["editing"]:
+                    self.cut_one(row)
+                    txt_file.write(f'file \'video{self.video_id}\'\n')
+            self.reset_to_0("cut")
+
+    def get_progress_part(self):
+        length = 0
         for row in self.highlights:
             if row["editing"] == self.mc["editing"]:
-                self.cut_one(row)
-        self.reset_to_0("cut")
-
+                length += 1
+        return 100 / length
 
     def cut_one(self,row):
         start = self.get_seconds_start(row)
         end = start + row['toAdd']
-        video_id = f'_{start}{end}.mp4'
-        name = f'{self.highlights_location}/video{video_id}'
+        self.video_id = f'_{start}{end}.mp4'
+        name = f'{self.highlights_location}/video{self.video_id}'
         fajl = VideoFileClip(self.mc["src"])
         new = fajl.subclip(start,end)
         new.write_videofile(name,logger= None)
@@ -145,36 +153,21 @@ class Model(object):
         self.highlights_location = f'highlights/{self.mc["title"]}'
         if self.mc['title'] not in os.listdir("highlights"):
             os.mkdir(self.highlights_location)
-    
-    def sorting_dir(self):
-        def sorting_by(x):
-            return (x[5:])
-        videos = os.listdir(self.highlights_location)
-        sorted_videos = sorted(videos, key = sorting_by)
-        sorted_videos.remove("mylist.txt")
-        return sorted_videos
-    
-    def make_txt_file(self):
-        self.txt_file_name = f'{self.highlights_location}/mylist.txt'
-        txt_file = open( self.txt_file_name,"w")
-        videos = self.sorting_dir()
-        for i in videos:
-            line = f'file \'{i}\'\n'
-            txt_file.write(line)
-        txt_file.close()
-    
+
     def render(self):
-        self.progress_part = 100 / len(self.highlights)
+        self.progress_part = self.get_progress_part()
         output_name = f'{self.highlights_location}/{self.mc["editing"]}.mp4'
+        txt_file_name = f'{self.highlights_location}/mylist.txt'
         if (os.path.exists(output_name)):
             os.unlink(output_name)
-        command = f'ffmpeg -f concat -safe 0 -i "{self.txt_file_name}" -c copy "{output_name}"'
+        command = f'ffmpeg -f concat -safe 0 -i "{txt_file_name}" -c copy "{output_name}"'
         subprocess.call(command,shell= True)
         self.update_render_progress(100.0)
+        
         self.reset_to_0("render")
 
     def reset_to_0(self,process):
-        time.sleep(2)
+        time.sleep(5)
         if process == "cut":
             self.update_cut_progress(0.0)
         elif process == "render":
@@ -184,6 +177,7 @@ class Model(object):
         pass
 
     def update_cut_progress(self,progress):
+        print(progress)
         url = f'http://localhost:5000/update/{self.matchID}/cutProgress'
         data = {"cutProgress":progress}
         requests.post(url,data)
@@ -191,4 +185,25 @@ class Model(object):
     def update_render_progress(self,progress):
         url = f'http://localhost:5000/update/{self.matchID}/renderProgress'
         data = {"renderProgress":progress}
-        requests.post(url,data)      
+        requests.post(url,data)
+
+    def can_merge(self):
+        self.create_video_location()
+        if "firstHalf.mp4" and "secondHalf.mp4" in os.listdir(self.highlights_location):
+            return True
+        else:
+            return False
+    
+    def make_merge_txt_file(self):
+        with open(f'{self.highlights_location}/final.txt',"w") as txt_file:
+            txt_file.writelines("file 'firstHalf.mp4'\n")
+            txt_file.writelines("file 'secondHalf.mp4'\n")
+    
+    def merge(self):
+        txt_file = f'{self.highlights_location}/final.txt'
+        output_name = f'{self.highlights_location}/final.mp4'
+        if os.path.exists(output_name):
+            os.unlink(output_name)
+        command = f'ffmpeg -f concat -safe 0 -i "{txt_file}" -c copy "{output_name}"'
+        print(command)
+        subprocess.call(command,shell= True)
