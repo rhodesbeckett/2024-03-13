@@ -2,7 +2,7 @@
     <div>
         <div class="columns is-centered is-multiline">
             <div class="column" style="align-self:center;flex:none;">
-                <a class="add-btn" @click="setMatchID('')"><i class="fas fa-plus-circle"></i></a>
+                <a class="add-btn" @click="setMatchID()"><i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
         
@@ -27,7 +27,9 @@ export default {
         }
     },
     methods: {
-
+        setMatchID() {
+            this.createMC()
+        },
         getAllComps() {
             const path = 'http://localhost:5000/getAll'
             axios.get(path)
