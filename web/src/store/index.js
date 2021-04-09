@@ -112,13 +112,16 @@ export default new Vuex.Store({
                 this.commit('newCompDesc',compDesc)
             })
         },
-        getHighlights() {
+        getHighlights(store) {
             const path = `http://localhost:5000/getHighlights/${Vue.$cookies.get("mcID")}`
             axios.get(path)
             .then((res) => {
                 let highlightRows = JSON.parse(res.data.highlights)
                 if (highlightRows.length > 0) {
                     this.commit('newHighlights',highlightRows)
+                }
+                else if(highlightRows.length == 0 && store.state.highlights.length == 0 ) {
+                    this.commit('newRow')
                 }
             })
         },

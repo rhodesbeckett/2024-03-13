@@ -165,7 +165,7 @@ class Model(object):
     
     def render(self):
         self.progress_part = 100 / len(self.highlights)
-        output_name = f'{self.highlights_location}/output.mp4'
+        output_name = f'{self.highlights_location}/{self.mc["editing"]}.mp4'
         if (os.path.exists(output_name)):
             os.unlink(output_name)
         command = f'ffmpeg -f concat -safe 0 -i "{self.txt_file_name}" -c copy "{output_name}"'
