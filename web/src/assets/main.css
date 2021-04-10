@@ -53,6 +53,10 @@
     color: black;
 }
 
+.add-btn:hover {
+    cursor:pointer;
+}
+
 .comp-choices {
     font-size: 1.05em;
 }
@@ -85,6 +89,10 @@
 .message-server--not-visible {
     transform: scale(1.0);
     opacity: 0.0;
+}
+
+.message-server--merge {
+    width: 50vh;
 }
 
 .message-container {

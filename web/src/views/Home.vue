@@ -1,12 +1,15 @@
 <template>
     <div>
+        
         <div class="columns is-centered is-multiline">
             <div class="column" style="align-self:center;flex:none;">
                 <a class="add-btn" @click="setMatchID()"><i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
         
+        
         <transition-group class="columns is-centered is-multiline" tag="div" name="matchComp">
+            
             <div v-for="comp in matchComps" :key="comp._id.$oid" class="column is-7">
                 <CardMatchComp :comp="comp" />
             </div>
@@ -17,6 +20,7 @@
 <script>
 import axios from 'axios'
 import CardMatchComp from '../components/CardMatchComp.vue'
+
 
 export default {
     name: "Home",
@@ -55,7 +59,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
     @keyframes matchComp {
         0%{

@@ -1,10 +1,13 @@
 <template>
     <span class="matchComp-row">
+        
         <h1 class="title compTitle" @click="setMatchID(comp._id.$oid)">{{ comp.compDesc.title }}</h1>
         <h3 class="halfTime">Editing:</h3>
         <RadioBtnHalfTime class="radio1" :radioClick="radioClick" :halfTime="1" :matchCompID="comp._id.$oid"/>
         <RadioBtnHalfTime class="radio2" :radioClick="radioClick" :halfTime="2" :matchCompID="comp._id.$oid"/>
         <a class="button btnMerge" @click="mergeVideos(comp._id.$oid)">Merge halfTime</a>
+        <div class="message-server message-server--centered message-server--not-visible message-server--merge" ref="messageServer">
+        </div>
     </span>
 </template>
 
@@ -12,9 +15,16 @@
 import RadioBtnHalfTime from '../components/RadioBtnHalfTime.vue'
 import { mapMutations,mapActions } from 'vuex'
 import axios from 'axios'
+import gsap from 'gsap'
 
 export default {
     props: ['comp'],
+    data() {
+        return {
+            mergeTrue:"Merging will start..",
+            mergeFalse:"One halftime is missing. Action aborted."
+        }
+    },
     components: {RadioBtnHalfTime},
     methods: {
         ...mapMutations(['updateIsChosen','updateEditing']),
@@ -39,8 +49,22 @@ export default {
         mergeVideos(ID) {
             axios.get(`http://localhost:5000/mergeVideos/${ID}`).then(
                 (res) => {
-                    console.log(res)
+                    if(res.data.msg == false) {
+                        this.showMessage(this.$refs.messageServer,this.mergeFalse)
+                    }
+                    else if(res.data.msg == true) {
+                        this.showMessage(this.$refs.messageServer,this.mergeTrue)
+                    }
                 }
+            )
+        },
+        showMessage(element,text) {
+            element.textContent = text
+            setTimeout(
+                function() {
+                    let elemAnim = gsap.to(element,{duration:1.5,opacity:1.0})
+                    setTimeout( function () { elemAnim.reverse() },1500)
+                },1000
             )
         }
     }
