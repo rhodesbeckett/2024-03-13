@@ -1,0 +1,162 @@
+{   
+    "FrameTest": {
+        "layout": "grid",
+        "methods": [],
+        "master": "NotebookTest",
+        "config": {},
+        "grid": {}
+    },
+    "LabelMatch": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "methods": [],
+      "config": {"text": "MATCH"},
+      "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+      "newRow": false
+      },
+    "LabelMessageMatch": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "methods": [],
+      "config": {"text":"   " },
+      "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+      "newRow": false
+      },
+    "LabelFirstHalf": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "config": {"text":"First half" },
+      "grid": {"padx":[5,0],"pady":0,"sticky":"W"},
+      "newRow": true
+      },
+    "LabelMessageFirstHalf": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red"},
+      "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+      "newRow": false
+      },
+    "LabelSecondHalf": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Second half"},
+      "grid": {"padx":[5,0],"sticky":"W"},
+      "newRow": true
+      },
+    "LabelMessageSecondHalf": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red"},
+      "grid": {"padx":[0,0],"columnspan":3,"sticky":"E"},
+      "newRow": false
+      },
+    "LabelTimeStamp": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Enter timestamp for testing:"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+      },
+  
+    "Frame2": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {},
+      "grid": {"sticky":"W"},
+      "newRow": true
+      },
+    "EntryTimeStampMin": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config" : {"width": 2,"bg":"white"},
+      "grid": {"padx":[5,2],"pady":7,"sticky":"W"},
+      "newRow": false
+    },
+    "LabelColon": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": ":"},
+      "grid": {"padx":[0,5],"pady":5,"sticky":"W"},
+      "newRow": false
+    },
+    "EntryTimeStampSec": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"width": 2,"bg":"white"},
+      "grid": {"padx":[2,5],"pady":2,"sticky":"W"},
+      "newRow": false
+    },
+    "HalfTimeTestLabel": {
+      "master": "Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Halftime:"},
+      "grid": {"sticky": "W"},
+      "newRow": false
+    },
+    "RadiobuttonFirst": {
+      "master": "Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "1"},
+      "grid": {"padx":2,"sticky": "W"},
+      "newRow": false
+    },
+    "RadiobuttonSecond": {
+      "master": "Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "2"},
+      "grid": {"padx":2,"sticky": "W"},
+      "newRow": false
+    },
+  
+    "ButtonCheck": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Check"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+    },
+    "SeparatorVertical": {
+      "master": "FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"orient": "vertical"},
+      "grid": {"rowspan": 10,"row":0,"column": 5 ,"sticky": "NS"},
+      "newRow": false
+    },
+    "LabelTestPhoto": {
+      "master": "FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": ""},
+      "grid": {"rowspan":10,"padx": 10,"pady": 10,"row":0,"column": 7,"sticky": "NW"},
+      "newRow": false
+    },
+    "LabelHighlights": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Highlights:"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+    },
+    "LabelHighlightsMessage": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red"},
+      "grid": {"padx":[5,0],"columnspan":2,"sticky":"E"},
+      "newRow": false
+    }
+}

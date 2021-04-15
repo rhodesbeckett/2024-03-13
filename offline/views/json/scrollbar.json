@@ -1,14 +1,14 @@
 {
-  "Frame0": {
-    "master": "FrameContainer",
+  "FrameContainer": {
+    "master": "NotebookTest",
     "layout": "grid",
-    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "grid": {},
     "config": {},
     "methods": [],
     "newRow": false
   },
   "Canvas": {
-    "master": "Frame0",
+    "master": "FrameContainer",
     "layout": "pack",
     "pack": {"side":"left", "fill":"both", "expand":true},
     "config": {"borderwidth": 1},
@@ -16,7 +16,7 @@
     "newRow": false
   },
   "Scrollbar": {
-    "master": "Frame0",
+    "master": "FrameContainer",
     "layout": "pack",
     "pack": {"side":"right", "fill":"y"},
     "config": {"orient": "vertical"},
@@ -24,10 +24,10 @@
     "newRow": false
   },
   "Frame2": {
-    "master": "Canvas",
     "layout": "grid",
-    "grid": {"row": 0,"column": 0,"sticky": "NSEW"},
+    "methods": [],
+    "master": "Canvas",
     "config": {},
-    "methods": []
+    "grid": {}
   }
 }

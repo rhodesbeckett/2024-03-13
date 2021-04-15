@@ -1,0 +1,42 @@
+{
+    "FrameComp": {
+        "layout": "grid",
+        "methods": [],
+        "master": "FrameHome",
+        "config": {"borderwidth":5,"relief":"ridge"},
+        "grid": {"pady":[10,5]},
+        "newRow": true
+    },
+    "LabelTitle": {
+        "master":"FrameComp",
+        "layout": "grid",
+        "methods": [],
+        "config": {"text": "TITLE"},
+        "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+        "newRow": true
+    },
+    "LabelHalftime": {
+        "master":"FrameComp",
+        "layout": "grid",
+        "methods": [],
+        "config": {"text": "HALFTIME:"},
+        "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+        "newRow": true
+    },
+    "RadiobuttonFirst": {
+        "master":"FrameComp",
+        "layout": "grid",
+        "methods": [],
+        "config": {"text": "1"},
+        "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+        "newRow": false
+    },
+    "RadiobuttonSecond": {
+        "master":"FrameComp",
+        "layout": "grid",
+        "methods": [],
+        "config": {"text": "2"},
+        "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+        "newRow": false
+    }
+}

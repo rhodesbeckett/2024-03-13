@@ -1,0 +1,30 @@
+{
+    "FrameRender": {
+        "layout": "grid",
+        "methods": [],
+        "master": "NotebookTest",
+        "config": {},
+        "grid": {}
+    },
+    "ButtonCut": {
+        "layout": "grid",
+        "methods": [],
+        "master": "FrameRender",
+        "config": {
+            "text": "RENDER"
+        },
+        "grid": {}
+    },
+    "ProgressbarCut": {
+        "layout": "grid",
+        "methods": [],
+        "master": "FrameRender",
+        "config": {
+            "orient":"horizontal",
+            "value":50
+        },
+        "grid": {
+            
+        }
+    }
+}

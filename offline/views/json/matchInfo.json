@@ -1,0 +1,197 @@
+{
+    "FrameMatchInfo": {
+      "layout": "grid",
+      "methods": [],
+      "master": "NotebookTest",
+      "config": {},
+      "grid": {}
+    },
+    "LabelBackground": {
+      "master": "FrameMatchInfo",
+      "layout": "place",
+      "place": {"x": 0,"y": 0,"relwidth": 1,"relheight": 1},
+      "config": {},
+      "methods": [],
+      "newRow": false
+    },
+    "LabelTitle": {
+      "master": "FrameMatchInfo",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "text": "TITLE:"
+      },
+      "grid": {
+        "padx": 15,
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": false
+    },
+    "FrameEntryTitle":{
+      "master": "FrameMatchInfo",
+      "layout":"grid",
+      "grid":{"columnspan":3},
+      "config":{},
+      "methods":[],
+      "newRow": false
+    },
+    "EntryTitle": {
+      "master": "FrameEntryTitle",
+      "layout": "grid",
+      "methods": [],
+      "config": {"bg":"white"},
+      "grid": {
+        "padx": [5,2],
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": false
+    },
+    "ButtonMatch": {
+      "layout": "grid",
+      "methods": [],
+      "master": "FrameMatchInfo",
+      "config": {
+        "text": "MATCH"
+      },
+      "grid": {
+        "padx": 15,
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": true
+    },
+    "Frame2": {
+      "master": "FrameMatchInfo",
+      "layout": "grid",
+      "methods": [],
+      "config": {},
+      "grid": {
+        "sticky": "W","columnspan":2
+      },
+      "newRow": true
+    },
+    "LabelFirstHalf": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "text": "FIRST HALF:"
+      },
+      "grid": {
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "EntryFirstHalfMin": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "width": 2,"bg":"white"
+      },
+      "grid": {
+        "padx": [
+          5,
+          2
+        ],
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "LabelFirstHalfColon": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "text": ":"
+      },
+      "grid": {
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "EntryFirstHalfSec": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "width": 2,"bg":"white"
+      },
+      "grid": {
+        "padx": [
+          5,
+          2
+        ],
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "LabelSecondHalf": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "text": "SECOND HALF:"
+      },
+      "grid": {
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": true
+    },
+    "EntrySecondHalfMin": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "width": 2,"bg":"white"
+      },
+      "grid": {
+        "padx": [
+          5,
+          2
+        ],
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "LabelSecondHalfColon": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "text": ":"
+      },
+      "grid": {
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    },
+    "EntrySecondHalfSec": {
+      "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {
+        "width": 2,"bg":"white"}
+      ,
+      "grid": {
+        "padx": [
+          5,
+          2
+        ],
+        "pady": 5,
+        "sticky": "E"
+      },
+      "newRow": false
+    }
+    
+  }
+  

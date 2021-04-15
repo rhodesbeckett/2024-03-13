@@ -1,95 +1,39 @@
 from easy_tk import EasyTkObject
-from views.MainFrame import MainFrame
-from views.TestFrame import TestFrame
-from views.HighlightsFrame import HighlightsFrame
-from views.ChoiceFrame import ChoiceFrame
-
-from models import factory_models
-from controllers import *
-import threading
-
+from tkinter.ttk import Notebook
+from tkinter import Frame,HORIZONTAL
+from views.FrameMatchInfo import FrameMatchInfo
+from views.FrameEditor import FrameEditor
+from views.FrameTest import FrameTest
+from views.FrameCut import FrameCut
+from views.FrameRender import FrameRender
+from views.FrameHome import FrameHome
 
 class Root(EasyTkObject):
-
+    
     def __init__(self):
         super(Root, self).__init__()
         self.create_root()
-        widget = self.set_container()
-        root = self.get_easy_root()
-        self.set_all_frames(root, widget)
         self.geometry = "895x351"
+        notebook = self.set_notebook()
+        self.set_all_frames(notebook)
 
-    def set_container(self):
-        self.add_just_one("views/json/frame_container.json", "FrameContainer")
-        child = self.get("FrameContainer", False)
+    def set_notebook(self):
+        self.import_modules([Notebook,])
+        self.add_just_one('views/json/notebook.json','NotebookTest')
+        child = self.get('NotebookTest',False)
         master = self.easy.create_master(child.obj)
-        self.easy.all_masters.setdefault("FrameContainer", master)
-        return {"TkChild": child, "TkMaster": master, "name": "FrameContainer"}
+        return {'TkChild':child,'TkMaster':master,"name":'NotebookTest'}
 
-    def set_all_controllers(self, models):
-        self.testing = Testing(models)
-        self.cutting = Cutting(models)
-        self.rendering = Rendering(models)
+    def set_all_frames(self,notebook):
+        self.easy.widgets_on_screen()
+        for frame in (FrameHome,FrameMatchInfo,FrameEditor,FrameTest,FrameCut,FrameRender,):
+            frame = frame()
+            frame.adding_complete_widgets(self.get_easy_root(),notebook)
+            frame.easy.methods = {}
+            frame.create_widgets()
+            notebook['TkChild'].get().add(frame.get(frame.name),text=frame.tab_text)
 
     def get_easy_root(self):
         child = self.get("root", False)
         master = self.easy.create_master(child.get())
         return {"TkChild": child, "TkMaster": master, "name": "root"}
-
-    def set_all_frames(self, root, widget):
-        self.prozori = {}
-        models = factory_models()
-        self.set_all_controllers(models)
-
-        for frame in (MainFrame, TestFrame, HighlightsFrame, ChoiceFrame):
-            self.page_name = frame.__name__
-            frame = frame(self)
-            frame.adding_complete_widgets(root,widget)
-            self.prozori[self.page_name] = frame
-            frame.easy.methods = {}
-            frame.set_models(models)
-            frame.create_widgets()
-
-        self.easy.widgets_on_screen()
-        self.switch_window("ChoiceFrame")
-        self.get("root").resizable(False, False)
-
-    def set_font(self, easy_all, widgets):
-        for i in easy_all:
-            for j in widgets:
-                try:
-                    if isinstance(easy_all.get(i).get(), j):
-                        easy_all.get(i).get()["font"] = ('Minion Pro SmBd', 18, '')
-                        break
-                except:
-                    continue
-
-    def render(self):
-        if self.rendering.is_ready():
-            """ self.rendering.make_txt_file() """
-            t_render = threading.Thread(target=self.rendering.render())
-            t_render.start()
-            self.testing.counter = 0
-            self.cutting.cutted = False
-        else:
-            print("ne moze")
-
-    def cut(self):
-        if self.testing.counter == 3:
-            t_cut = threading.Thread(target=lambda: self.cutting.cut_all())
-            t_cut.start()
-        else:
-            print("ne moze")
-
-    def refresh_testing(self):
-        self.testing.counter = 0
-
-    def test_picture(self):
-        self.testing.test_photo(self.prozori[self.page_name])
-
-    def switch_window(self, name):
-        self.page_name = name
-        window = self.prozori.get(name)
-        window.tkraise()
-        if name == "TestFrame":
-            self.testing.test_all(window)

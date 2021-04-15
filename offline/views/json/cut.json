@@ -1,0 +1,30 @@
+{
+    "FrameCut": {
+        "layout": "grid",
+        "methods": [],
+        "master": "NotebookTest",
+        "config": {},
+        "grid": {}
+    },
+    "ButtonCut": {
+        "layout": "grid",
+        "methods": [],
+        "master": "FrameCut",
+        "config": {
+            "text": "CUT"
+        },
+        "grid": {}
+    },
+    "ProgressbarCut": {
+        "layout": "grid",
+        "methods": [],
+        "master": "FrameCut",
+        "config": {
+            "orient":"horizontal",
+            "value":50
+        },
+        "grid": {
+            
+        }
+    }
+}
