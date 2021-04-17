@@ -17,7 +17,7 @@ export default {
         ...mapMutations(['newRow',]),
         ...mapActions(['setHighlights']),
         updateValue(event) {
-            this.$store.commit(`updateHighlightsRow${this.part}`,{"id":this.id,"value":parseInt(event.target.value)})
+            this.$store.commit(`updateHighlightsRow${this.part}`,{"id":this.id,"value":this.toInt(event.target.value)})
         },
         checkRow(id) {
             let row = this.highlightsRow(id)
@@ -46,6 +46,14 @@ export default {
                         this.setHighlights()
                     }
                 }
+            }
+        },
+        toInt(value) {
+            if (value == "") {
+                return null
+            }
+            else {
+                return parseInt(value)
             }
         }
         
