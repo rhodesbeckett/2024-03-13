@@ -2,6 +2,7 @@ from easy_tk import EasyTkObject
 from views.ViewDecorator import widget_decorator
 from tkinter import Label,Button,Entry
 from tkinter.ttk import Progressbar
+
 class BaseView(EasyTkObject):
     frame_path = ""
 
@@ -10,6 +11,9 @@ class BaseView(EasyTkObject):
         self.dimensions = ""
         self.frame_to_raise = ""
         self.name = type(self).__name__
+    
+    def set_controller(self,controller):
+        self.controller = controller
     
     def adding_complete_widgets(self,root,widget):
         self.easy.add_complete_widget(root)

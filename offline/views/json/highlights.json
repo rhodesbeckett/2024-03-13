@@ -7,11 +7,11 @@
         "grid": {"padx": [5,2],"pady": 5},
         "newRow": true
     },
-    "EntryStart": {
+    "TimeInputStart": {
         "master": "Frame2",
         "layout":"grid",
         "methods": [],
-        "config": {"width": 2,"bg":"white"},
+        "config": {"width": 3,"bg":"white"},
         "grid": {"padx": [5,2],"pady": 5},
         "newRow": false
     },
@@ -23,7 +23,7 @@
         "grid": {"pady": 5},
         "newRow": false
     },
-    "EntrySecStart": {
+    "TimeInputSecStart": {
         "master": "Frame2",
         "layout":"grid",
         "methods": [],
@@ -39,7 +39,7 @@
         "grid": {"pady": 5},
         "newRow": false
     },
-    "EntrySecEnd": {
+    "TimeInputSecEnd": {
         "master": "Frame2",
         "layout":"grid",
         "methods": [],

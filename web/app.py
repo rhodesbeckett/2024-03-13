@@ -6,6 +6,8 @@ import json
 from bson.objectid import ObjectId
 import requests
 from model import Model
+import os
+import sys
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["videosdb"]
@@ -13,6 +15,8 @@ collection = mydb["matchCompilations"]
 
 app = Flask(__name__)
 model = Model(collection)
+directoryChanged = False
+
 """ mongo = PyMongo(app) """
 
 CORS(app,resources={r'/*': {'origins': '*'}})
@@ -118,6 +122,7 @@ def get_render_progress(ID):
 
 @app.route('/getAll',methods=["GET"])
 def get_all():
+    print(os.listdir())
     lista = collection.find({})
     return jsonify({"allComps":dumps(lista)})
 
@@ -143,6 +148,10 @@ def mergeVideos(ID):
     else:
         return jsonify({"msg":False})
 
+@app.route('/testiranje')
+def testiranje():
+    change_dir(sys.argv[1])
+    return jsonify({"msg":True})
 
 def get_value(request,key):
     if key == "canCut":
@@ -158,5 +167,13 @@ def get_value(request,key):
     else:
         return request.get_json(force=True)
 
+def change_dir(dir):
+    global directoryChanged
+    if dir == "offline" and directoryChanged == False:
+        os.chdir("../offline")
+        directoryChanged = True
+
 if __name__ == "__main__":
     app.run(debug=True)
+
+    

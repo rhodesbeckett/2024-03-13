@@ -14,6 +14,7 @@ class Root(EasyTkObject):
         super(Root, self).__init__()
         self.create_root()
         self.geometry = "895x351"
+        self.tabs = {}
         notebook = self.set_notebook()
         self.set_all_frames(notebook)
 
@@ -21,19 +22,20 @@ class Root(EasyTkObject):
         self.import_modules([Notebook,])
         self.add_just_one('views/json/notebook.json','NotebookTest')
         child = self.get('NotebookTest',False)
-        master = self.easy.create_master(child.obj)
+        master = self.easy.create_master(child.obj,'NotebookTest')
         return {'TkChild':child,'TkMaster':master,"name":'NotebookTest'}
 
     def set_all_frames(self,notebook):
         self.easy.widgets_on_screen()
         for frame in (FrameHome,FrameMatchInfo,FrameEditor,FrameTest,FrameCut,FrameRender,):
             frame = frame()
+            frame.set_controller(self)
             frame.adding_complete_widgets(self.get_easy_root(),notebook)
-            frame.easy.methods = {}
             frame.create_widgets()
             notebook['TkChild'].get().add(frame.get(frame.name),text=frame.tab_text)
+            self.tabs[type(frame).__name__] = frame
 
     def get_easy_root(self):
         child = self.get("root", False)
-        master = self.easy.create_master(child.get())
+        master = self.easy.create_master(child.get(),'root')
         return {"TkChild": child, "TkMaster": master, "name": "root"}

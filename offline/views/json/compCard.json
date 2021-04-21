@@ -1,41 +1,41 @@
 {
-    "FrameComp": {
+    "FrameCompID": {
         "layout": "grid",
         "methods": [],
         "master": "FrameHome",
         "config": {"borderwidth":5,"relief":"ridge"},
-        "grid": {"pady":[10,5]},
+        "grid": {"pady":[10,5],"sticky":"W"},
         "newRow": true
     },
-    "LabelTitle": {
-        "master":"FrameComp",
+    "LabelTitleID": {
+        "master":"FrameCompID",
         "layout": "grid",
         "methods": [],
         "config": {"text": "TITLE"},
         "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
         "newRow": true
     },
-    "LabelHalftime": {
-        "master":"FrameComp",
+    "LabelHalftimeID": {
+        "master":"FrameCompID",
         "layout": "grid",
         "methods": [],
         "config": {"text": "HALFTIME:"},
         "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
         "newRow": true
     },
-    "RadiobuttonFirst": {
-        "master":"FrameComp",
+    "RadiobuttonFirstID": {
+        "master":"FrameCompID",
         "layout": "grid",
         "methods": [],
-        "config": {"text": "1"},
+        "config": {"text": "1","value":"firstHalf","variable":"var:string_varID","command":"var:clickRadio1"},
         "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
         "newRow": false
     },
-    "RadiobuttonSecond": {
-        "master":"FrameComp",
+    "RadiobuttonSecondID": {
+        "master":"FrameCompID",
         "layout": "grid",
         "methods": [],
-        "config": {"text": "2"},
+        "config": {"text": "2","value":"secondHalf","variable":"var:string_varID","command":"var:clickRadio2"},
         "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
         "newRow": false
     }
