@@ -48,12 +48,12 @@
       },
       "newRow": false
     },
-    "ButtonMatch": {
+    "LabelMatch": {
+      "master": "FrameMatchInfo",
       "layout": "grid",
       "methods": [],
-      "master": "FrameMatchInfo",
       "config": {
-        "text": "MATCH"
+        "text": "MATCH:"
       },
       "grid": {
         "padx": 15,
@@ -61,6 +61,18 @@
         "sticky": "W"
       },
       "newRow": true
+    },
+    "EntryMatch": {
+      "master": "FrameMatchInfo",
+      "layout": "grid",
+      "methods": [],
+      "config": {"bg":"white"},
+      "grid": {
+        "padx": [5,2],
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": false
     },
     "Frame2": {
       "master": "FrameMatchInfo",
@@ -72,8 +84,20 @@
       },
       "newRow": true
     },
-    "LabelFirstHalf": {
+    "FrameFirstHalf": {
       "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {},
+      "grid": {
+        "padx": 15,
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": false
+    },
+    "LabelFirstHalf": {
+      "master": "FrameFirstHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -85,8 +109,8 @@
       },
       "newRow": false
     },
-    "EntryFirstHalfMin": {
-      "master": "Frame2",
+    "TimeInputFirstHalfMin": {
+      "master": "FrameFirstHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -103,7 +127,7 @@
       "newRow": false
     },
     "LabelFirstHalfColon": {
-      "master": "Frame2",
+      "master": "FrameFirstHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -115,8 +139,8 @@
       },
       "newRow": false
     },
-    "EntryFirstHalfSec": {
-      "master": "Frame2",
+    "TimeInputFirstHalfSec": {
+      "master": "FrameFirstHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -132,8 +156,20 @@
       },
       "newRow": false
     },
-    "LabelSecondHalf": {
+    "FrameSecondHalf": {
       "master": "Frame2",
+      "layout": "grid",
+      "methods": [],
+      "config": {},
+      "grid": {
+        "padx": 15,
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": true
+    },
+    "LabelSecondHalf": {
+      "master": "FrameSecondHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -145,8 +181,8 @@
       },
       "newRow": true
     },
-    "EntrySecondHalfMin": {
-      "master": "Frame2",
+    "TimeInputSecondHalfMin": {
+      "master": "FrameSecondHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -163,7 +199,7 @@
       "newRow": false
     },
     "LabelSecondHalfColon": {
-      "master": "Frame2",
+      "master": "FrameSecondHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -175,8 +211,8 @@
       },
       "newRow": false
     },
-    "EntrySecondHalfSec": {
-      "master": "Frame2",
+    "TimeInputSecondHalfSec": {
+      "master": "FrameSecondHalf",
       "layout": "grid",
       "methods": [],
       "config": {
@@ -191,6 +227,20 @@
         "sticky": "E"
       },
       "newRow": false
+    },
+    "ButtonSave": {
+      "layout": "grid",
+      "methods": [],
+      "master": "FrameMatchInfo",
+      "config": {
+        "text": "SAVE","command":"var:saveBtn"
+      },
+      "grid": {
+        "padx": 15,
+        "pady": 5,
+        "sticky": "W"
+      },
+      "newRow": true
     }
     
   }

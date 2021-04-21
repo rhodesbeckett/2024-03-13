@@ -32,10 +32,3 @@ class FrameEditor(BaseView):
         self.open_file("views/json/highlights.json")
         #changes
         self.reading_from_json()
-
-    def change_halftime(self,ID,halftime):
-        print(ID)
-        print(halftime)
-
-    def change_fields(self):
-        pass

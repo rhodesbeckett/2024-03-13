@@ -31,5 +31,5 @@ class FrameHome(BaseView):
     
     def switch_to_editor(self,ID,halftime):
         self.get("NotebookTest").select(1)
-        self.controller.tabs['FrameEditor'].change_halftime(ID,halftime)
-        self.controller.tabs['FrameEditor'].change_fields()
+        self.controller.tabs['FrameMatchInfo'].download_match_comp(ID,halftime)
+        self.controller.tabs['FrameMatchInfo'].change_fields()
