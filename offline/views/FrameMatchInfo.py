@@ -27,6 +27,7 @@ class FrameMatchInfo(BaseView):
     def change_fields(self):
         self.change_title()
         self.change_src()
+        self.add_model_to_row()
         self.change_halftime()
         self.show_halftime()
 
@@ -42,18 +43,21 @@ class FrameMatchInfo(BaseView):
     def change_halftime(self):
         for entry in ['TimeInputFirstHalfMin','TimeInputFirstHalfSec','TimeInputSecondHalfMin','TimeInputSecondHalfSec']:
             self.get(entry).delete(0,'end')
+        
         self.get('TimeInputFirstHalfMin').insert(0,self.comp_desc['time']['firstHalf']['min'])
         self.get('TimeInputFirstHalfSec').insert(0,self.comp_desc['time']['firstHalf']['sec'])
         self.get('TimeInputSecondHalfMin').insert(0,self.comp_desc['time']['secondHalf']['min'])
         self.get('TimeInputSecondHalfSec').insert(0,self.comp_desc['time']['secondHalf']['sec'])
+        
+    def add_model_to_row(self):
+        self.get('TimeInputFirstHalfMin').set_model(self.comp_desc['time']['firstHalf'],'min')
+        self.get('TimeInputFirstHalfSec').set_model(self.comp_desc['time']['firstHalf'],'sec')
+        self.get('TimeInputSecondHalfMin').set_model(self.comp_desc['time']['secondHalf'],'min')
+        self.get('TimeInputSecondHalfSec').set_model(self.comp_desc['time']['secondHalf'],'sec')
 
     def save_match_info(self):
         self.comp_desc['title'] = self.get('EntryTitle').get()
         """ self.comp_desc['src'] = "" """
-        self.comp_desc['time']['firstHalf']['min'] = self.get('TimeInputFirstHalfMin').get()
-        self.comp_desc['time']['firstHalf']['sec'] = self.get('TimeInputFirstHalfSec').get()
-        self.comp_desc['time']['secondHalf']['min'] = self.get('TimeInputSecondHalfMin').get()
-        self.comp_desc['time']['secondHalf']['sec'] = self.get('TimeInputSecondHalfSec').get()
         requests.post(f'http://localhost:5000/update/{self.ID}/compDesc',json.dumps(self.comp_desc))
 
     def show_halftime(self):

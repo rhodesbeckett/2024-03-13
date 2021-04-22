@@ -1,57 +1,64 @@
-{
-    "LabelStart": {
+{   "FrameID":  {
+        "layout": "grid",
+        "methods": [],
         "master": "Frame2",
+        "config": {},
+        "grid": {},
+        "newRow": true
+    },
+    "LabelStart": {
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"text": "start"},
+        "config": {"text": "start","font":["Minion Pro SmBd",18]},
         "grid": {"padx": [5,2],"pady": 5},
         "newRow": true
     },
-    "TimeInputStart": {
-        "master": "Frame2",
+    "TimeInputMinID": {
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"width": 3,"bg":"white"},
+        "config": {"width": 3,"bg":"white","font":["Minion Pro SmBd",18]},
         "grid": {"padx": [5,2],"pady": 5},
         "newRow": false
     },
     "LabelColon": {
-        "master": "Frame2",
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"text": ":"},
+        "config": {"text": ":","font":["Minion Pro SmBd",18]},
         "grid": {"pady": 5},
         "newRow": false
     },
-    "TimeInputSecStart": {
-        "master": "Frame2",
+    "TimeInputSecID": {
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"width": 2,"bg":"white"},
+        "config": {"width": 2,"bg":"white","font":["Minion Pro SmBd",18]},
         "grid": {"padx": [2,5],"pady": 5},
         "newRow": false
     },
     "LabelPlus": {
-        "master": "Frame2",
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"text": "+"},
+        "config": {"text": "+","font":["Minion Pro SmBd",18]},
         "grid": {"pady": 5},
         "newRow": false
     },
-    "TimeInputSecEnd": {
-        "master": "Frame2",
+    "TimeInputToAddID": {
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"width": 2,"bg":"white"},
+        "config": {"width": 2,"bg":"white","font":["Minion Pro SmBd",18]},
         "grid": {"padx": [5,20],"pady": 5},
         "newRow": false
     },
-    "ButtonDelete": {
-        "master": "Frame2",
+    "ButtonDeleteID": {
+        "master": "FrameID",
         "layout":"grid",
         "methods": [],
-        "config": {"text": "DELETE"},
+        "config": {"text": "DELETE","font":["Minion Pro SmBd",18]},
         "grid": {"padx": [10,10],"columnspan": 4},
         "newRow": false
     }

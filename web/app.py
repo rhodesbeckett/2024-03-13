@@ -122,7 +122,6 @@ def get_render_progress(ID):
 
 @app.route('/getAll',methods=["GET"])
 def get_all():
-    print(os.listdir())
     lista = collection.find({})
     return jsonify({"allComps":dumps(lista)})
 

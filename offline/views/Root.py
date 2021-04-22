@@ -34,8 +34,22 @@ class Root(EasyTkObject):
             frame.create_widgets()
             notebook['TkChild'].get().add(frame.get(frame.name),text=frame.tab_text)
             self.tabs[type(frame).__name__] = frame
+        self.get('NotebookTest').bind('<<NotebookTabChanged>>',self.tab_changed)
 
     def get_easy_root(self):
         child = self.get("root", False)
         master = self.easy.create_master(child.get(),'root')
         return {"TkChild": child, "TkMaster": master, "name": "root"}
+    
+    def tab_changed(self,event):
+        selection = event.widget.select()
+        tab = event.widget.tab(selection, "text")
+
+    def switch_to_editor(self,ID,halftime):
+        self.get("NotebookTest").select(1)
+        self.tabs['FrameMatchInfo'].download_match_comp(ID,halftime)
+        self.tabs['FrameMatchInfo'].change_fields()
+
+        self.tabs['FrameEditor'].download_highlights(ID,halftime)
+        self.tabs['FrameEditor'].change_fields()
+        self.tabs['FrameEditor'].filter_halftime()
