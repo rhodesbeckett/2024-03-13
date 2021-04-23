@@ -12,11 +12,9 @@ class FrameHome(BaseView):
         self.tab_text = "Home"
         self.query_get_all = "http://localhost:5000/getAll"
     
-    
     def frame_part(self):
         res = requests.get(self.query_get_all)
         self.all_comps = json.loads( res.json()['allComps'] )
-        """ print(self.all_comps) """
         for comp in self.all_comps:
             self.add_comp(comp)
 

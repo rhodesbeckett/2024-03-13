@@ -19,11 +19,8 @@ class BaseView(EasyTkObject):
         self.easy.add_complete_widget(root)
         self.easy.add_complete_widget(widget)
 
-    def set_models(self, models):
-        self.match = models["Match"]
-        self.half_time = models["AllHalfTime"]
-        self.videos = models["Videos"]
-        self.all_highlights = models["AllHighlights"]
+    def set_model(self, model):
+        self.model = model
 
     def method_part(self):
         pass

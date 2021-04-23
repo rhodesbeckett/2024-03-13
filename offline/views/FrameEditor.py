@@ -14,31 +14,24 @@ class FrameEditor(BaseView):
         self.tab_text = "Editor"
         self.name = "FrameContainer"
         self.window_scrollbar = WindowScrollbar(self)
-        self.ID = ""
-        self.halftime = ""
-        self.highlights = []
     
     def method_part(self):
         self.import_methods({"set_scrollbar":self.window_scrollbar.set_scrollbar})
         self.import_modules([TimeInput,])
 
-    def download_highlights(self,ID,halftime):
-        self.ID = ID
-        self.halftime = halftime
-        res = requests.get(f'http://localhost:5000/getHighlights/{ID}')
-        self.highlights = json.loads( res.json()['highlights'] )
+    def download_highlights(self):
+        self.model.get_highlights()
 
     def change_fields(self):
-        for row in self.highlights:
+        for row in self.model['highlights']:
             self.add_row(row)
 
     def filter_halftime(self):
-        for row in self.highlights:
-            if row['editing'] == self.halftime:
+        for row in self.model['highlights']:
+            if row['editing'] == self.model['compDesc']['editing']:
                 self.get(f'Frame{row["id"]}').grid()
             else:
                 self.get(f'Frame{row["id"]}').grid_remove()
-
 
     def frame_part(self):
         super().frame_part()
@@ -50,9 +43,7 @@ class FrameEditor(BaseView):
         self.add_model_to_row(row)
         self.insert_in_row(row)
         self.add_listeners(row)
-
-        self.get(f'TimeInputMin{row["id"]}').focus()
-        
+        self.get(f'TimeInputMin{row["id"]}').focus()      
     
     def add_model_to_row(self,row):
         self.get(f'TimeInputMin{row["id"]}').set_model(row,"min")
@@ -67,22 +58,22 @@ class FrameEditor(BaseView):
         for i in list(self.easy.all_widgets.keys()):
             if i.endswith(str(row['id'])):
                 self.easy.remove_widget(i)
-        self.highlights.remove(row)
-        requests.post(f'http://localhost:5000/update/{self.ID}/highlights',json.dumps(self.highlights))
+        self.model.remove_row(row)
+        self.model.post_highlights()
 
     def tab_pressed(self):
-        for i in self.highlights:
-            if i['editing'] == self.halftime:
+        for i in self.model['highlights']:
+            if i['editing'] == self.model['compDesc']['editing']:
                 if i['min'] and i['sec'] and i['toAdd'] not in [None,""]:
                     can_add = True
                 else:
                     can_add = False
                     break
         if can_add == True:
-            row = {'min':None,'sec':None,'toAdd':None,'editing':self.halftime,'id':random.randint(1,10000)}
-            self.highlights.append(row)
+            row = {'min':None,'sec':None,'toAdd':None,'editing':self.model['compDesc']['editing'],'id':self.model.new_id()}
+            self.model['highlights'].append(row)
             self.add_row(row)
-            requests.post(f'http://localhost:5000/update/{self.ID}/highlights',json.dumps(self.highlights))
+            self.model.post_highlights()
 
     def insert_in_row(self,row):
         self.get(f'TimeInputMin{row["id"]}').insert(0,row['min'])

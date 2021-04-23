@@ -7,6 +7,7 @@ from views.FrameTest import FrameTest
 from views.FrameCut import FrameCut
 from views.FrameRender import FrameRender
 from views.FrameHome import FrameHome
+from models import factory_model
 
 class Root(EasyTkObject):
     
@@ -15,8 +16,10 @@ class Root(EasyTkObject):
         self.create_root()
         self.geometry = "895x351"
         self.tabs = {}
+        self.model = factory_model()
         notebook = self.set_notebook()
         self.set_all_frames(notebook)
+
 
     def set_notebook(self):
         self.import_modules([Notebook,])
@@ -30,6 +33,7 @@ class Root(EasyTkObject):
         for frame in (FrameHome,FrameMatchInfo,FrameEditor,FrameTest,FrameCut,FrameRender,):
             frame = frame()
             frame.set_controller(self)
+            frame.set_model(self.model)
             frame.adding_complete_widgets(self.get_easy_root(),notebook)
             frame.create_widgets()
             notebook['TkChild'].get().add(frame.get(frame.name),text=frame.tab_text)
@@ -50,6 +54,6 @@ class Root(EasyTkObject):
         self.tabs['FrameMatchInfo'].download_match_comp(ID,halftime)
         self.tabs['FrameMatchInfo'].change_fields()
 
-        self.tabs['FrameEditor'].download_highlights(ID,halftime)
+        self.tabs['FrameEditor'].download_highlights()
         self.tabs['FrameEditor'].change_fields()
         self.tabs['FrameEditor'].filter_halftime()
