@@ -19,19 +19,36 @@ class FrameEditor(BaseView):
         self.import_methods({"set_scrollbar":self.window_scrollbar.set_scrollbar})
         self.import_modules([TimeInput,])
 
-    def download_highlights(self):
-        self.model.get_highlights()
+    def download_highlights(self,ID):
+        if self.model['id'] == None or self.model['id'] != ID:
+            self.clear_screen()
+            self.model.update_id(ID)
+            self.model.get_highlights()
+            self.model['toRemove'] = True
+        else:
+            self.model['toRemove'] = False
+            print(False)
+    
+    def clear_screen(self):
+        for row in self.model['highlights']:
+            self.easy.remove_widget(f'Frame{row["id"]}')
+
 
     def change_fields(self):
-        for row in self.model['highlights']:
-            self.add_row(row)
+        if self.model['toRemove'] == True:
+            for row in self.model['highlights']:
+                self.add_row(row)
 
     def filter_halftime(self):
+        counter = 0
         for row in self.model['highlights']:
             if row['editing'] == self.model['compDesc']['editing']:
                 self.get(f'Frame{row["id"]}').grid()
+                counter += 1
             else:
                 self.get(f'Frame{row["id"]}').grid_remove()
+        if counter == 0:
+            self.tab_pressed(can_add=True)
 
     def frame_part(self):
         super().frame_part()
@@ -61,7 +78,7 @@ class FrameEditor(BaseView):
         self.model.remove_row(row)
         self.model.post_highlights()
 
-    def tab_pressed(self):
+    def tab_pressed(self,can_add=True):
         for i in self.model['highlights']:
             if i['editing'] == self.model['compDesc']['editing']:
                 if i['min'] and i['sec'] and i['toAdd'] not in [None,""]:

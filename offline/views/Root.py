@@ -51,9 +51,10 @@ class Root(EasyTkObject):
 
     def switch_to_editor(self,ID,halftime):
         self.get("NotebookTest").select(1)
+        self.tabs['FrameEditor'].download_highlights(ID)
+
         self.tabs['FrameMatchInfo'].download_match_comp(ID,halftime)
         self.tabs['FrameMatchInfo'].change_fields()
-
-        self.tabs['FrameEditor'].download_highlights()
+        
         self.tabs['FrameEditor'].change_fields()
         self.tabs['FrameEditor'].filter_halftime()

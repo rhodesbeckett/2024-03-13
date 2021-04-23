@@ -26,7 +26,8 @@ class Model(dict):
         self['canRender'] = False
         self['cutProgress'] = 0
         self['renderProgress'] = 0
-        self['id'] = None
+        self['id'] = None,
+        self['toRemove'] = False
     
     #add/update/remove
 
@@ -52,6 +53,12 @@ class Model(dict):
     def remove_row(self,row):
         self['highlights'].remove(row)
 
+    def update_id(self,id):
+        self['id'] = id
+    
+    def update_to_remove(self,to_remove):
+        self['toRemove'] = to_remove
+        
     #post
 
     def post_mc(self):
