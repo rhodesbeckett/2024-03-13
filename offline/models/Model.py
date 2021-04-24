@@ -17,7 +17,7 @@ class Model(dict):
             }
         }
         self['highlights'] = []
-        self['testing'] = {
+        self['test'] = {
                 "src":False,
                 "halfTime":False,
                 "highlights":False
@@ -26,7 +26,7 @@ class Model(dict):
         self['canRender'] = False
         self['cutProgress'] = 0
         self['renderProgress'] = 0
-        self['id'] = None,
+        self['id'] = None
         self['toRemove'] = False
     
     #add/update/remove
@@ -39,6 +39,13 @@ class Model(dict):
     def get_highlights(self):
         res = requests.get(f'http://localhost:5000/getHighlights/{self["id"]}')
         self['highlights'] = json.loads( res.json()['highlights'] )
+
+    def get_testing(self):
+        res = requests.get(f'http://localhost:5000/getTesting/{self["id"]}')
+        self['testing'] = json.loads( res.json()['testing'] )
+    
+    def test_img(self,test_data):
+        res = requests.get(f'http://localhost:5000/getPhoto/{test_data["min"]}/{test_data["sec"]}')
     
     def update_editing(self,halftime):
         self['compDesc']['editing'] = halftime

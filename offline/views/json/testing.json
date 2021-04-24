@@ -6,7 +6,7 @@
         "config": {},
         "grid": {}
     },
-    "LabelMatch": {
+    "LabelSrc": {
       "master":"FrameTest",
       "layout": "grid",
       "methods": [],
@@ -14,22 +14,22 @@
       "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
       "newRow": false
       },
-    "LabelMessageMatch": {
+    "LabelResponseSrc": {
       "master":"FrameTest",
       "layout": "grid",
       "methods": [],
-      "config": {"text":"   " },
+      "config": {"text":"   ","bg": "red" },
       "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
       "newRow": false
       },
-    "LabelFirstHalf": {
+    "LabelHalftime": {
       "master":"FrameTest",
       "layout": "grid",
-      "config": {"text":"First half" },
+      "config": {"text":"HALFTIME:" },
       "grid": {"padx":[5,0],"pady":0,"sticky":"W"},
       "newRow": true
       },
-    "LabelMessageFirstHalf": {
+    "LabelResponseHalftime": {
       "master":"FrameTest",
       "layout":"grid",
       "methods": [],
@@ -37,23 +37,7 @@
       "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
       "newRow": false
       },
-    "LabelSecondHalf": {
-      "master":"FrameTest",
-      "layout":"grid",
-      "methods": [],
-      "config": {"text": "Second half"},
-      "grid": {"padx":[5,0],"sticky":"W"},
-      "newRow": true
-      },
-    "LabelMessageSecondHalf": {
-      "master":"FrameTest",
-      "layout":"grid",
-      "methods": [],
-      "config": {"text":"   ","bg": "red"},
-      "grid": {"padx":[0,0],"columnspan":3,"sticky":"E"},
-      "newRow": false
-      },
-    "LabelTimeStamp": {
+      "LabelTimeStamp": {
       "master":"FrameTest",
       "layout":"grid",
       "methods": [],
@@ -70,7 +54,7 @@
       "grid": {"sticky":"W"},
       "newRow": true
       },
-    "EntryTimeStampMin": {
+    "TimeInputMin": {
       "master":"Frame2",
       "layout":"grid",
       "methods": [],
@@ -86,7 +70,7 @@
       "grid": {"padx":[0,5],"pady":5,"sticky":"W"},
       "newRow": false
     },
-    "EntryTimeStampSec": {
+    "TimeInputSec": {
       "master":"Frame2",
       "layout":"grid",
       "methods": [],
@@ -94,36 +78,11 @@
       "grid": {"padx":[2,5],"pady":2,"sticky":"W"},
       "newRow": false
     },
-    "HalfTimeTestLabel": {
-      "master": "Frame2",
-      "layout":"grid",
-      "methods": [],
-      "config": {"text": "Halftime:"},
-      "grid": {"sticky": "W"},
-      "newRow": false
-    },
-    "RadiobuttonFirst": {
-      "master": "Frame2",
-      "layout":"grid",
-      "methods": [],
-      "config": {"text": "1"},
-      "grid": {"padx":2,"sticky": "W"},
-      "newRow": false
-    },
-    "RadiobuttonSecond": {
-      "master": "Frame2",
-      "layout":"grid",
-      "methods": [],
-      "config": {"text": "2"},
-      "grid": {"padx":2,"sticky": "W"},
-      "newRow": false
-    },
-  
     "ButtonCheck": {
       "master":"Frame2",
       "layout":"grid",
       "methods": [],
-      "config": {"text": "Check"},
+      "config": {"text": "Check","command":"var:test_img"},
       "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
       "newRow": true
     },
@@ -147,11 +106,11 @@
       "master":"FrameTest",
       "layout":"grid",
       "methods": [],
-      "config": {"text": "Highlights:"},
+      "config": {"text": "HIGHLIGHTS"},
       "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
       "newRow": true
     },
-    "LabelHighlightsMessage": {
+    "LabelResponseHighlights": {
       "master":"FrameTest",
       "layout":"grid",
       "methods": [],

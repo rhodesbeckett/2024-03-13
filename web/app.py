@@ -76,11 +76,11 @@ def get_highlights(ID):
     result = collection.find_one({"_id":ObjectId(ID),})
     return jsonify({"highlights":dumps(result["highlights"])})
 
-@app.route('/getTest/<ID>')
+@app.route('/getTesting/<ID>')
 def get_test(ID):
     model.set_id(ID)
     model.test_all()
-    return jsonify({"test":model.testResponse})
+    return jsonify({"testing":dumps(model.testResponse)})
 
     """ result = collection.find_one({"_id":ObjectId(ID),}) """
     """ return jsonify({"test":dumps(result["testing"])}) """

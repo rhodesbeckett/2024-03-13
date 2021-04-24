@@ -48,6 +48,8 @@ class Root(EasyTkObject):
     def tab_changed(self,event):
         selection = event.widget.select()
         tab = event.widget.tab(selection, "text")
+        if tab == "Testing":
+            self.tabs['FrameTest'].download_testing()
 
     def switch_to_editor(self,ID,halftime):
         self.get("NotebookTest").select(1)
