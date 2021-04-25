@@ -147,7 +147,7 @@ def mergeVideos(ID):
     else:
         return jsonify({"msg":False})
 
-@app.route('/testiranje')
+@app.route('/changeDir')
 def testiranje():
     change_dir(sys.argv[1])
     return jsonify({"msg":True})
@@ -169,7 +169,7 @@ def get_value(request,key):
 def change_dir(dir):
     global directoryChanged
     if dir == "offline" and directoryChanged == False:
-        os.chdir("../offline")
+        os.chdir(f'../offline')
         directoryChanged = True
 
 if __name__ == "__main__":

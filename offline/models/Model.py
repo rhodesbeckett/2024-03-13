@@ -28,6 +28,7 @@ class Model(dict):
         self['renderProgress'] = 0
         self['id'] = None
         self['toRemove'] = False
+        self.change_dir()
     
     #add/update/remove
 
@@ -46,6 +47,7 @@ class Model(dict):
     
     def test_img(self,test_data):
         res = requests.get(f'http://localhost:5000/getPhoto/{test_data["min"]}/{test_data["sec"]}')
+        return res.json()['imgSrc']
     
     def update_editing(self,halftime):
         self['compDesc']['editing'] = halftime
@@ -83,4 +85,6 @@ class Model(dict):
             ID = random.randint(1,10000)
             if ID not in ids:
                 return ID
-
+    
+    def change_dir(self):
+        requests.get('http://localhost:5000/changeDir')
