@@ -126,10 +126,10 @@ export default new Vuex.Store({
             })
         },
         getTesting(store,vueMethod) {
-            const path = `http://localhost:5000/getTest/${Vue.$cookies.get("mcID")}`
+            const path = `http://localhost:5000/getTesting/${Vue.$cookies.get("mcID")}`
             axios.get(path)
             .then((res) => {
-                    this.commit('newTesting',res.data.test)
+                    this.commit('newTesting',JSON.parse(res.data.testing))
                     vueMethod()
                 }
             )

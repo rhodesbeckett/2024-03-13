@@ -88,3 +88,4 @@ class Model(dict):
     
     def change_dir(self):
         requests.get('http://localhost:5000/changeDir')
+    

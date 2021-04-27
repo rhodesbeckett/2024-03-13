@@ -38,5 +38,13 @@
         "config": {"text": "2","value":"secondHalf","variable":"var:string_varID","command":"var:clickRadio2"},
         "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
         "newRow": false
+    },
+    "ButtonMergeVideos": {
+        "master":"FrameCompID",
+        "layout":"grid",
+        "methods": [],
+        "config": {"text":"MERGE HALFTIME","command":"var:mergeBtn"},
+        "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+        "newRow": true
     }
 }
