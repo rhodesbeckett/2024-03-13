@@ -40,7 +40,8 @@ export default {
             let path = `http://localhost:5000/getCanCut/${this.$cookie.get('mcID')}`
             axios.get(path).
             then( (res) => {
-                this.canCut = (res.data.canCut == 'true')
+                console.log(res.data)
+                this.canCut = (res.data.canCut == true)
             })
         },
         cut() {

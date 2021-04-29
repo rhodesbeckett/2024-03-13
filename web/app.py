@@ -6,6 +6,8 @@ import json
 from bson.objectid import ObjectId
 import requests
 from model import Model
+import os
+import sys
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["videosdb"]
@@ -13,6 +15,8 @@ collection = mydb["matchCompilations"]
 
 app = Flask(__name__)
 model = Model(collection)
+directoryChanged = False
+
 """ mongo = PyMongo(app) """
 
 CORS(app,resources={r'/*': {'origins': '*'}})
@@ -72,11 +76,11 @@ def get_highlights(ID):
     result = collection.find_one({"_id":ObjectId(ID),})
     return jsonify({"highlights":dumps(result["highlights"])})
 
-@app.route('/getTest/<ID>')
+@app.route('/getTesting/<ID>')
 def get_test(ID):
     model.set_id(ID)
     model.test_all()
-    return jsonify({"test":model.testResponse})
+    return jsonify({"testing":dumps(model.testResponse)})
 
     """ result = collection.find_one({"_id":ObjectId(ID),}) """
     """ return jsonify({"test":dumps(result["testing"])}) """
@@ -91,7 +95,7 @@ def get_photo(minute,second):
 @app.route('/getCanCut/<ID>',methods=["GET"])
 def get_can_cut(ID):
     result = collection.find_one({"_id":ObjectId(ID),})
-    return jsonify({"canCut":dumps(result["canCut"])})
+    return jsonify({"canCut":result["canCut"]})
 
 @app.route('/cut/<ID>',methods=["GET"])
 def cut(ID):
@@ -143,6 +147,10 @@ def mergeVideos(ID):
     else:
         return jsonify({"msg":False})
 
+@app.route('/changeDir')
+def testiranje():
+    change_dir(sys.argv[1])
+    return jsonify({"msg":True})
 
 def get_value(request,key):
     if key == "canCut":
@@ -158,5 +166,13 @@ def get_value(request,key):
     else:
         return request.get_json(force=True)
 
+def change_dir(dir):
+    global directoryChanged
+    if dir == "offline" and directoryChanged == False:
+        os.chdir(f'../offline')
+        directoryChanged = True
+
 if __name__ == "__main__":
     app.run(debug=True)
+
+    

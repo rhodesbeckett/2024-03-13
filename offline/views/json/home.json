@@ -1,0 +1,10 @@
+{
+    "FrameHome": {
+        "layout": "grid",
+        "methods": [],
+        "master": "NotebookTest",
+        "config": {},
+        "grid":{},
+        "pack": {"fill":"both","expand":1}
+    }
+}

@@ -1,0 +1,121 @@
+{   
+    "FrameTest": {
+        "layout": "grid",
+        "methods": [],
+        "master": "NotebookTest",
+        "config": {},
+        "grid": {}
+    },
+    "LabelSrc": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "methods": [],
+      "config": {"text": "MATCH"},
+      "grid": {"padx":[5,0],"pady":5,"sticky":"W"},
+      "newRow": false
+      },
+    "LabelResponseSrc": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red" },
+      "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+      "newRow": false
+      },
+    "LabelHalftime": {
+      "master":"FrameTest",
+      "layout": "grid",
+      "config": {"text":"HALFTIME:" },
+      "grid": {"padx":[5,0],"pady":0,"sticky":"W"},
+      "newRow": true
+      },
+    "LabelResponseHalftime": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red"},
+      "grid": {"padx":[0,0],"pady":0,"columnspan":3,"sticky":"E"},
+      "newRow": false
+      },
+      "LabelTimeStamp": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Enter timestamp for testing:"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+      },
+  
+    "Frame2": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {},
+      "grid": {"sticky":"W"},
+      "newRow": true
+      },
+    "TimeInputMin": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config" : {"width": 2,"bg":"white"},
+      "grid": {"padx":[5,2],"pady":7,"sticky":"W"},
+      "newRow": false
+    },
+    "LabelColon": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": ":"},
+      "grid": {"padx":[0,5],"pady":5,"sticky":"W"},
+      "newRow": false
+    },
+    "TimeInputSec": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"width": 2,"bg":"white"},
+      "grid": {"padx":[2,5],"pady":2,"sticky":"W"},
+      "newRow": false
+    },
+    "ButtonCheck": {
+      "master":"Frame2",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "Check","command":"var:test_img"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+    },
+    "SeparatorVertical": {
+      "master": "FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"orient": "vertical"},
+      "grid": {"rowspan": 10,"row":0,"column": 5 ,"sticky": "NS"},
+      "newRow": false
+    },
+    "LabelTestPhoto": {
+      "master": "FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": ""},
+      "grid": {"rowspan":10,"padx": 10,"pady": 10,"row":0,"column": 7,"sticky": "NW"},
+      "newRow": false
+    },
+    "LabelHighlights": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text": "HIGHLIGHTS"},
+      "grid": {"padx":[5,0],"columnspan":3,"sticky":"W"},
+      "newRow": true
+    },
+    "LabelResponseHighlights": {
+      "master":"FrameTest",
+      "layout":"grid",
+      "methods": [],
+      "config": {"text":"   ","bg": "red"},
+      "grid": {"padx":[5,0],"columnspan":2,"sticky":"E"},
+      "newRow": false
+    }
+}
