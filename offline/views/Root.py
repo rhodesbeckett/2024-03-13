@@ -57,6 +57,8 @@ class Root(EasyTkObject):
         if tab == "Testing":
             self.tabs['FrameTest'].download_testing()
             self.root.geometry("1040x396")
+        elif tab in ("Cat","Render"):
+            self.tabs["FrameCut"].get_can_cut()
         else:
             self.change_geometry()
 

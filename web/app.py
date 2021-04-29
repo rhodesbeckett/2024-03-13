@@ -95,7 +95,7 @@ def get_photo(minute,second):
 @app.route('/getCanCut/<ID>',methods=["GET"])
 def get_can_cut(ID):
     result = collection.find_one({"_id":ObjectId(ID),})
-    return jsonify({"canCut":dumps(result["canCut"])})
+    return jsonify({"canCut":result["canCut"]})
 
 @app.route('/cut/<ID>',methods=["GET"])
 def cut(ID):

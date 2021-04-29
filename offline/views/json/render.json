@@ -11,7 +11,7 @@
         "methods": [],
         "master": "FrameRender",
         "config": {
-            "text": "RENDER"
+            "text": "RENDER","command":"var:render"
         },
         "grid": {}
     },

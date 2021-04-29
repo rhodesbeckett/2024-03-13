@@ -11,7 +11,7 @@
         "methods": [],
         "master": "FrameCut",
         "config": {
-            "text": "CUT"
+            "text": "CUT","command":"var:cut"
         },
         "grid": {}
     },
