@@ -2,7 +2,7 @@
     "FrameCompID": {
         "layout": "grid",
         "methods": [],
-        "master": "FrameHome",
+        "master": "Frame2",
         "config": {"borderwidth":5,"relief":"ridge"},
         "grid": {"pady":[10,5],"sticky":"W"},
         "newRow": true

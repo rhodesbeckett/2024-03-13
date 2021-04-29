@@ -19,6 +19,7 @@ class Root(EasyTkObject):
         self.model = factory_model()
         notebook = self.set_notebook()
         self.set_all_frames(notebook)
+        self.change_geometry()
 
 
     def set_notebook(self):
@@ -27,6 +28,10 @@ class Root(EasyTkObject):
         child = self.get('NotebookTest',False)
         master = self.easy.create_master(child.obj,'NotebookTest')
         return {'TkChild':child,'TkMaster':master,"name":'NotebookTest'}
+
+    def change_geometry(self):
+        self.root.geometry("446x423")
+        self.root.update()
 
     def set_all_frames(self,notebook):
         self.easy.widgets_on_screen()
@@ -39,6 +44,7 @@ class Root(EasyTkObject):
             notebook['TkChild'].get().add(frame.get(frame.name),text=frame.tab_text)
             self.tabs[type(frame).__name__] = frame
         self.get('NotebookTest').bind('<<NotebookTabChanged>>',self.tab_changed)
+        
 
     def get_easy_root(self):
         child = self.get("root", False)
@@ -50,6 +56,9 @@ class Root(EasyTkObject):
         tab = event.widget.tab(selection, "text")
         if tab == "Testing":
             self.tabs['FrameTest'].download_testing()
+            self.root.geometry("1040x396")
+        else:
+            self.change_geometry()
 
     def switch_to_editor(self,ID,halftime):
         self.get("NotebookTest").select(1)

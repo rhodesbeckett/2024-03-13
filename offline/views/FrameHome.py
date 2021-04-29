@@ -2,15 +2,21 @@ from views.BaseView import BaseView
 import requests
 import json
 from tkinter import StringVar
+from easy_tk import WindowScrollbar
 
 class FrameHome(BaseView):
     
     def __init__(self):
         super(FrameHome,self).__init__()
-        self.frame_path = "views/json/home.json"
-        self.json_frame = "FrameHome"
+        self.frame_path = "views/json/scrollbar.json"
+        self.json_frame = "Frame2"
         self.tab_text = "Home"
         self.query_get_all = "http://localhost:5000/getAll"
+        self.window_scrollbar = WindowScrollbar(self)
+        self.name = "FrameContainer"
+
+    def method_part(self):
+        self.import_methods({"set_scrollbar":self.window_scrollbar.set_scrollbar})
     
     def frame_part(self):
         super().frame_part()
