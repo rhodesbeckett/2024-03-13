@@ -1,23 +1,11 @@
-import {
-  RouteLocationNormalized,
-  NavigationGuardNext,
-  createRouter,
-  createWebHistory,
-} from "vue-router";
-import store from "../store";
-const routes = [
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Home from "../views/Home.vue";
+
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Home.vue"),
-  },
-  {
-    path: "/matchCompInfo",
-    name: "matchCompInfo",
-    component: import(
-      /* webpackChunkName: "matchInfo" */ "../views/MatchInfo.vue"
-    ),
+    component: Home,
   },
   {
     path: "/about",
@@ -27,38 +15,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
-    path: "/editor",
-    name: "Editor",
-    beforeEnter(
-      to: RouteLocationNormalized,
-      from: RouteLocationNormalized,
-      next: NavigationGuardNext
-    ) {
-      if (from.name == null) {
-        // eslint-disable-next-line
-        store.dispatch("getCompDesc");
-      }
-      /* else {
-        console.log(router.app)
-      } */
-      next();
-    },
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Editor.vue"),
-  },
-  {
-    path: "/testing",
-    name: "Testing",
-    component: () =>
-      import(/* wepbackChunkName: "about" */ "../views/Testing.vue"),
-  },
-  {
-    path: "/cut-and-render",
-    name: "CR",
-    component: () =>
-      import(/* wepbackChunkName: "about" */ "../views/CutAndRender.vue"),
   },
 ];
 

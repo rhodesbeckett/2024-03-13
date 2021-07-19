@@ -1,92 +1,21 @@
 <template>
   <section class="section">
     <div class="container">
-      <nav
-        class="navbar navbar--routing"
-        role="navigation"
-        aria-label="main navigation"
-      >
-        <div class="navbar-brand">
-          <router-link class="navbar-item" to="/">
-            <img src="@/assets/pyfootball.png" width="112" height="28" />
-          </router-link>
-
-          <a
-            role="button"
-            class="navbar-burger"
-            @click="toggleHamburger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div class="navbar-menu" ref="navbarMenu">
-          <div class="navbar-start">
-            <!-- navbar items -->
-          </div>
-
-          <div class="navbar-end navbar-yes navbar-not-visible" ref="navbarEnd">
-            <div class="navbar-item">
-              <router-link to="/matchCompInfo" class="button">
-                <span class="icon">
-                  <i class="fas fa-info-circle" aria-hidden="true"></i>
-                </span>
-                <span>Match information</span>
-              </router-link>
-            </div>
-            <div class="navbar-item">
-              <router-link to="/editor" class="button">
-                <span class="icon">
-                  <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
-                </span>
-                <span>Highlights</span>
-              </router-link>
-            </div>
-            <div class="navbar-item">
-              <router-link to="/testing" class="button">
-                <span class="icon">
-                  <i class="fas fa-border-style" aria-hidden="true"></i>
-                </span>
-                <span>Testing</span>
-              </router-link>
-            </div>
-            <div class="navbar-item">
-              <router-link to="/cut-and-render" class="button">
-                <span class="icon">
-                  <i class="fas fa-video" aria-hidden="true"></i>
-                </span>
-                <span>Cut and render</span>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <transition name="zoom" mode="out-in">
-        <router-view />
-      </transition>
+      <HeaderNav />
+      <router-view v-slot="{ Component }">
+        <transition name="zoom" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-
+import { defineComponent } from "vue";
+import HeaderNav from "./components/HeaderNav.vue";
 export default defineComponent({
-  methods: {
-    toggleHamburger(): void {
-      this.$refs.navbarMenu.classList.toggle("visible-hamburger");
-      let navbarEnd = this.$refs.navbarEnd;
-      setTimeout(function () {
-        navbarEnd.classList.toggle("navbar-not-visible");
-        navbarEnd.classList.toggle("navbar-visible");
-      }, 200);
-    },
-  },
+  components: { HeaderNav },
 });
 </script>
 

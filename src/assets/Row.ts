@@ -3,7 +3,7 @@ export default class Row {
   sec = null;
   toAdd = null;
 
-  check() {
+  check(): boolean | undefined {
     if (
       Number.isInteger(this.min) &&
       Number.isInteger(this.sec) &&

@@ -2,9 +2,5 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { VueCookieNext } from "vue-cookie-next";
-import VueCompositionAPI from "@vue/composition-api";
-const app = createApp(App);
-app.use(VueCookieNext);
-app.use(VueCompositionAPI);
-app.use(store).use(router).mount("#app");
+
+createApp(App).use(store).use(router).mount("#app");
