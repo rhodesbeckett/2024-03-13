@@ -1,6 +1,9 @@
 import { MutationTree } from "vuex";
 import { CompDescState, Halftime } from "./types";
 export const mutations: MutationTree<CompDescState> = {
+  NEW_COMP_DESC(state, payload: CompDescState) {
+    state = payload;
+  },
   UPDATE_TITLE(state, payload: string) {
     state.title = payload;
   },

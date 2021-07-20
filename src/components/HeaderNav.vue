@@ -39,7 +39,7 @@ export default defineComponent({
     return {
       items: [
         {
-          url: "/matchCompInfo",
+          url: "/matchInfo",
           iconClass: "fas fa-info-circle",
           text: "Match information",
         },
