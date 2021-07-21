@@ -40,7 +40,6 @@ export default defineComponent({
     getAllComps() {
       const query = "getAll";
       GET(query).then((res) => {
-        console.log(res);
         this.matchComps = JSON.parse(res.data.allComps);
       });
     },

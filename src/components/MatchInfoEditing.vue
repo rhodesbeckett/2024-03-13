@@ -10,7 +10,7 @@ import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 
 export default defineComponent({
-  computed: { ...mapGetters(["isChosen", "editing"]) }
+  computed: { ...mapGetters(["isChosen", "editing"]) },
 });
 </script>
 
