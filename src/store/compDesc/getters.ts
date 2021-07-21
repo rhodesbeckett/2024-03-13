@@ -15,4 +15,16 @@ export const getters: GetterTree<CompDescState, RootState> = {
   editing(state) {
     return state.editing;
   },
+  firstHalfMin(state) {
+    return state.time.firstHalf.min;
+  },
+  secondHalfMin(state) {
+    return state.time.secondHalf.min;
+  },
+  firstHalfSec(state) {
+    return state.time.firstHalf.sec;
+  },
+  secondHalfSec(state) {
+    return state.time.secondHalf.sec;
+  },
 };

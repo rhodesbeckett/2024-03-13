@@ -10,6 +10,9 @@ export const mutations: MutationTree<CompDescState> = {
   UPDATE_EDITING(state, payload: string) {
     state.editing = payload;
   },
+  UPDATE_SRC(state, payload: string) {
+    state.src = payload;
+  },
   UPDATE_IS_CHOSEN(state, payload: boolean) {
     state.time.isChosen = payload;
   },
