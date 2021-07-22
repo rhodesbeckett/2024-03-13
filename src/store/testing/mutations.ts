@@ -1,9 +1,8 @@
 import { MutationTree } from "vuex";
-import { TestingState } from "@/store/testing/types";
+import { Testing, TestingI } from "@/store/testing/types";
 
-export const mutations: MutationTree<TestingState> = {
-  NEW_TESTING(state, testing: TestingState): void {
-    state = testing;
-    console.log(state);
+export const mutations: MutationTree<Testing> = {
+  NEW_TESTING(state, testing: TestingI): void {
+    state.testing = testing;
   },
 };

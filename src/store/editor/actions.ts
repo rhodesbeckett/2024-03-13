@@ -1,12 +1,12 @@
 import { ActionTree } from "vuex";
 import { RootState } from "@/store/types";
 import { HighlightRow } from "@/store/editor/types";
-import { Editor } from '@/store/editor/types'
+import { Editor } from "@/store/editor/types";
 import { COOKIE } from "@/plugins/cookie";
 import GET, { POST } from "@/plugins/axios";
 
 export const actions: ActionTree<Editor, RootState> = {
-  getHighlights({ commit, state , rootGetters}) {
+  getHighlights({ commit, state, rootGetters }) {
     const query = `getHighlights/${COOKIE()}`;
     GET(query).then((res) => {
       const highlightRows = JSON.parse(res.data.highlights);
@@ -18,7 +18,7 @@ export const actions: ActionTree<Editor, RootState> = {
     });
   },
 
-  setHighlights({state}) {
+  setHighlights({ state }) {
     const query = `update/${COOKIE()}/highlights`;
     POST(query, state.highlights).then((res) => {
       if (res.data.msg == "success") {

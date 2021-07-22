@@ -1,6 +1,6 @@
 import { GetterTree } from "vuex";
 import { RootState } from "@/store/types";
-import { MatchInfo} from "./types";
+import { MatchInfo } from "./types";
 
 export const getters: GetterTree<MatchInfo, RootState> = {
   title(state) {

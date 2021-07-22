@@ -1,6 +1,6 @@
-// matchInfo 
-export interface MatchInfo{
-compDesc: CompDesc
+// matchInfo
+export interface MatchInfo {
+  compDesc: CompDesc;
 }
 export interface CompDesc {
   title: string;

@@ -1,22 +1,22 @@
 import { GetterTree } from "vuex";
-import { TestingState } from "@/store/testing/types";
+import { Testing, TestingI } from "@/store/testing/types";
 import { RootState } from "@/store/types";
 
-export const getters: GetterTree<TestingState, RootState> = {
+export const getters: GetterTree<Testing, RootState> = {
   testSrc(state): boolean {
-    return state.src;
+    return state.testing.src;
   },
   testHalftime(state): boolean {
-    return state.halfTime;
+    return state.testing.halfTime;
   },
   testHighlights(state): boolean {
-    return state.highlights;
+    return state.testing.highlights;
   },
   updatedTesting(state): boolean {
     if (
-      state.src == true &&
-      state.halfTime == true &&
-      state.highlights == true
+      state.testing.src == true &&
+      state.testing.halfTime == true &&
+      state.testing.highlights == true
     ) {
       return true;
     } else {

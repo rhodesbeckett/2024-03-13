@@ -5,10 +5,8 @@ import GET from "@/plugins/axios";
 import { POST } from "@/plugins/axios";
 import { COOKIE } from "@/plugins/cookie";
 
-
 export const actions: ActionTree<MatchInfo, RootState> = {
   setCompDesc(state, payload) {
-    
     const query = `update/${COOKIE()}/compDesc`;
     POST(query, state.state.compDesc).then((res) => {
       if (res.data.msg) {

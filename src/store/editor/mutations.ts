@@ -1,10 +1,10 @@
 import { MutationTree } from "vuex";
 import { HighlightRow } from "@/store/editor/types";
-import { Editor } from '@/store/editor/types'
+import { Editor } from "@/store/editor/types";
 
 export const mutations: MutationTree<Editor> = {
   NEW_HIGHLIGHTS(state, payload: HighlightRow[]) {
-    state.highlights = payload
+    state.highlights = payload;
   },
   UPDATE_HIGHLIGHTS_ROW_MIN(state, payload: { id: string; value: number }) {
     const highlightsRow: HighlightRow | undefined = state.highlights.find(
@@ -41,6 +41,8 @@ export const mutations: MutationTree<Editor> = {
     });
   },
   DELETE_ROW(state, id: string) {
-    state.highlights = state.highlights.filter( item => { if(item.id != id) return item })
+    state.highlights = state.highlights.filter((item) => {
+      if (item.id != id) return item;
+    });
   },
 };

@@ -29,7 +29,6 @@ const routes: Array<RouteRecordRaw> = [
       from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      console.log(to, from, next);
       NEXT_PAGE(next);
     },
   },
@@ -43,7 +42,6 @@ const routes: Array<RouteRecordRaw> = [
       from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      console.log(to, from, next);
       NEXT_PAGE(next);
     },
   },
@@ -57,7 +55,6 @@ const routes: Array<RouteRecordRaw> = [
       from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      console.log(to, from, next);
       NEXT_PAGE(next);
     },
   },
@@ -72,7 +69,6 @@ const routes: Array<RouteRecordRaw> = [
       from: RouteLocationNormalized,
       next: NavigationGuardNext
     ) => {
-      console.log(to, from, next);
       NEXT_PAGE(next);
     },
   },
