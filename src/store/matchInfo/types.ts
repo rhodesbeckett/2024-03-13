@@ -1,5 +1,8 @@
-// compDesc
-export interface CompDescState {
+// matchInfo 
+export interface MatchInfo{
+compDesc: CompDesc
+}
+export interface CompDesc {
   title: string;
   src: string;
   editing: string;

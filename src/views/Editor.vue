@@ -7,14 +7,14 @@
     >
       <div
         class="columns highlight-row is-centered"
-        v-for="(row,index) in highlights"
-        :key="(row.id,index)"
+        v-for="row in highlights"
+        :key="row.id"
         style="align-items: center"
       >
         <EditorInputMin :ID="row.id" part="Min" />
         <EditorInputSec :ID="row.id" part="Sec" />
         <EditorInputToAdd :ID="row.id" part="ToAdd" />
-        <EditorButtonDelete :ID="index" />
+        <EditorButtonDelete :ID="row.id" />
       </div>
     </transition-group>
   </div>

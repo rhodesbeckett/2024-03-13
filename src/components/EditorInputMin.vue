@@ -23,7 +23,11 @@ export default defineComponent({
     const { getMin, updateMin } = useEditorInput(props.ID, props.part);
     return { getMin, updateMin };
   },
-  computed: { test():number { return this.getMin()}}
+  computed: {
+    test(): number {
+      return this.getMin();
+    },
+  },
 });
 </script>
 

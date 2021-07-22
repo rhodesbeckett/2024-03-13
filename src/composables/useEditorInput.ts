@@ -4,7 +4,7 @@ export default function useEditorInput(
   ID: string | undefined,
   inputType: string | undefined
 ): any {
-  function getMin():number {
+  function getMin(): number {
     return store.getters.highlightsRow(ID).min;
   }
   function getSec() {

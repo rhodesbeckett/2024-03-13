@@ -16,7 +16,7 @@
 import { defineComponent } from "vue";
 import { mapActions, mapMutations } from "vuex";
 export default defineComponent({
-  props: { ID: Number},
+  props: { ID: String},
   methods: {
     ...mapMutations(["DELETE_ROW"]),
     ...mapActions(["setHighlights"]),

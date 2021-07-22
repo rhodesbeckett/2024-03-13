@@ -1,6 +1,6 @@
 import { Store, StoreOptions } from "vuex";
-import { compDesc } from "./compDesc/index";
-import { highlights } from "@/store/highlights/index";
+import { compDesc } from "./matchInfo/index";
+import { highlights } from "@/store/editor/index";
 import { testing } from "@/store/testing/index";
 import { RootState } from "./types";
 

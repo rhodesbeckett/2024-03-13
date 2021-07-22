@@ -23,7 +23,7 @@ export default defineComponent({
   setup(props) {
     const { getToAdd, updateToAdd } = useEditorInput(props.ID, props.part);
     const { newRowTab } = useNewRow(props.ID);
-    return { getToAdd, updateToAdd,newRowTab };
+    return { getToAdd, updateToAdd, newRowTab };
   },
 });
 </script>

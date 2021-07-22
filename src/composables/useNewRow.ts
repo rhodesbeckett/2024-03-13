@@ -1,7 +1,7 @@
 import store from "@/store";
 
 export default function useNewRow(ID: string | undefined): any {
-  function checkRow(ID: string|undefined): boolean {
+  function checkRow(ID: string | undefined): boolean {
     const row = store.getters.highlightsRow(ID);
     if (
       Number.isInteger(row.min) &&
@@ -30,7 +30,7 @@ export default function useNewRow(ID: string | undefined): any {
     if (checkRow(ID) == true) {
       if (checkAllRows()) {
         store.getters.highlightsRow(ID).editing = getEditing();
-        store.commit("NEW_ROW",getEditing());
+        store.commit("NEW_ROW", getEditing());
         store.dispatch("setHighlights");
       }
     }

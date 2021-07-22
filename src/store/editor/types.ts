@@ -5,3 +5,6 @@ export interface HighlightRow {
   id: string;
   editing: string;
 }
+export interface Editor {
+  highlights: HighlightRow[]
+}
