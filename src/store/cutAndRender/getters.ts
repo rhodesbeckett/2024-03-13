@@ -7,7 +7,7 @@ export const getters: GetterTree<CutAndRender, RootState> = {
     return state.cutAndRender.cutProgress;
   },
   renderProgress(state) {
-    return state.cutAndRender.cutProgress;
+    return state.cutAndRender.renderProgress;
   },
   canCut(state) {
     return state.cutAndRender.canCut;

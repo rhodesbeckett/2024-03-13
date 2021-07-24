@@ -59,6 +59,7 @@ export const actions: ActionTree<CutAndRender, RootState> = {
       state.cutAndRender.canRender == true &&
       state.cutAndRender.currentProcess == ""
     ) {
+
       const query = `render/${COOKIE()}`;
       GET(query).then((res) => {
         if (res.data.msg) {
@@ -66,6 +67,5 @@ export const actions: ActionTree<CutAndRender, RootState> = {
         }
       });
     }
-    console.log(commit, state);
   },
 };

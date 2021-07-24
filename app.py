@@ -96,6 +96,12 @@ def get_photo(minute,second):
 def get_can_cut(ID):
     result = collection.find_one({"_id":ObjectId(ID),})
     return jsonify({"canCut":result["canCut"]})
+    
+@app.route('/getCanRender/<ID>',methods=["GET"])
+def get_can_render(ID):
+    result = collection.find_one({"_id":ObjectId(ID),})
+    return jsonify({"canRender":result["canRender"]})
+ 
 
 @app.route('/cut/<ID>',methods=["GET"])
 def cut(ID):
@@ -105,6 +111,7 @@ def cut(ID):
 
 @app.route('/render/<ID>', methods= ["GET"])
 def render(ID):
+    print('helloo')
     model.set_id(ID)
     model.test_all()
     model.render()

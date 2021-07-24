@@ -30,7 +30,7 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions(["getTesting"]),
+    ...mapActions(["getTesting"]), 
     updateDOM() {
       if (this.updatedTesting == true) {
         this.showMessage();
@@ -40,7 +40,9 @@ export default defineComponent({
   computed: { ...mapGetters(["updatedTesting"]) },
 
   created() {
-    const parameters = { updateDOM: this.updateDOM };
+    const parameters = {
+      updateDOM: this.updateDOM,
+    };
     this.getTesting(parameters);
   },
 });

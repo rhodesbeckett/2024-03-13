@@ -35,6 +35,9 @@
 import { defineComponent } from "vue";
 import RadioButtonHalfTime from "@/components/RadioButtonHalfTime.vue";
 import useCompHelpers from "@/composables/useCompHelpers";
+import GET from "@/plugins/axios";
+import { COOKIE } from "@/plugins/cookie";
+import gsap from "gsap";
 export default defineComponent({
   setup() {
     const { setMatchID } = useCompHelpers();
@@ -43,10 +46,24 @@ export default defineComponent({
   components: { RadioButtonHalfTime },
   methods: {
     mergeVideos(ID: string) {
-      console.log(ID);
+      GET(`mergeVideos/${COOKIE()}`).then((res) => {
+        console.log(res.data.msg);
+        if (res.data.msg == false) {
+          this.showMessage(".message-server", this.mergeFalse);
+        } else if (res.data.msg == true) {
+          this.showMessage(".message-server", this.mergeTrue);
+        }
+      });
     },
-    showMessage(element: Element, text: string) {
-      element.textContent = text;
+    showMessage(element: string, text: string) {
+      const domElement = document.querySelector(element);
+      if (domElement) domElement.textContent = text;
+      setTimeout(function () {
+        let elemAnim = gsap.to(element, { duration: 1.5, opacity: 1.0 });
+        setTimeout(function () {
+          elemAnim.reverse();
+        }, 1500);
+      }, 1000);
     },
   },
 
