@@ -1,6 +1,5 @@
 import { ActionTree } from "vuex";
 import { RootState } from "@/store/types";
-import { HighlightRow } from "@/store/editor/types";
 import { Editor } from "@/store/editor/types";
 import { COOKIE } from "@/plugins/cookie";
 import GET, { POST } from "@/plugins/axios";

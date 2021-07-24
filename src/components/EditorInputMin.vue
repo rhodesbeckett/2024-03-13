@@ -20,7 +20,7 @@ import useEditorInput from "@/composables/useEditorInput";
 export default defineComponent({
   props: { ID: String, part: String },
   setup(props) {
-    const { getMin, updateMin } = useEditorInput(props.ID, props.part);
+    const { getMin, updateMin } = useEditorInput(props.ID);
     return { getMin, updateMin };
   },
   computed: {

@@ -28,8 +28,8 @@ import useCompHelpers from "@/composables/useCompHelpers";
 
 export default defineComponent({
   name: "Home",
-  setup(props) {
-    const { setMatchID } = useCompHelpers("home");
+  setup() {
+    const { setMatchID } = useCompHelpers();
     return { setMatchID };
   },
   data() {

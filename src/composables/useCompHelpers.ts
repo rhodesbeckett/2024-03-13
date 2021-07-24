@@ -2,7 +2,7 @@ import { useRouter } from "vue-router";
 import { SET_COOKIE } from "@/plugins/cookie";
 import store from "@/store/index";
 
-export default function useCompHelpers(page: string): any {
+export default function useCompHelpers(): any {
   const router = useRouter();
 
   function radioClick(halfTime: number, matchCompID: string) {

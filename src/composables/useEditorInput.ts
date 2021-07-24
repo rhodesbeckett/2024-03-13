@@ -1,9 +1,6 @@
 import store from "@/store/index";
 
-export default function useEditorInput(
-  ID: string | undefined,
-  inputType: string | undefined
-): any {
+export default function useEditorInput(ID: string | undefined): any {
   function getMin(): number {
     return store.getters.highlightsRow(ID).min;
   }

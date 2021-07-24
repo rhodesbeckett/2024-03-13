@@ -21,7 +21,7 @@ import useNewRow from "@/composables/useNewRow";
 export default defineComponent({
   props: { ID: String, part: String },
   setup(props) {
-    const { getToAdd, updateToAdd } = useEditorInput(props.ID, props.part);
+    const { getToAdd, updateToAdd } = useEditorInput(props.ID);
     const { newRowTab } = useNewRow(props.ID);
     return { getToAdd, updateToAdd, newRowTab };
   },

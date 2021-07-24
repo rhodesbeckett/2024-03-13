@@ -1,7 +1,7 @@
 <template>
   <a
     class="button is-success checkBtn"
-    @click="getTestingPictureSrc"
+    @click="this.getTestingPictureSrc"
     style="grid-area: checkBtn"
     >Check
   </a>

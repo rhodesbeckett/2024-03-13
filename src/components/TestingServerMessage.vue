@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-import GET from "@/plugins/axios";
 import gsap from "gsap";
 import { defineComponent, ref } from "vue";
 import { mapActions, mapGetters } from "vuex";

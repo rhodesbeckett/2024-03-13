@@ -1,23 +1,23 @@
 import { ActionTree } from "vuex";
 import { RootState } from "@/store/types";
 import { COOKIE } from "@/plugins/cookie";
-import GET, { POST } from "@/plugins/axios";
+import GET from "@/plugins/axios";
 import { CutAndRender } from "./types";
 
 export const actions: ActionTree<CutAndRender, RootState> = {
-  getCanCut({ commit, state }) {
+  getCanCut({ commit }) {
     const query = `getCanCut/${COOKIE()}`;
     GET(query).then((res) => {
       commit("UPDATE_CAN_CUT", res.data.canCut);
     });
   },
-  getCanRender({ commit, state }) {
+  getCanRender({ commit }) {
     const query = `getCanRender/${COOKIE()}`;
     GET(query).then((res) => {
       commit("UPDATE_CAN_RENDER", res.data.canRender);
     });
   },
-  getCutProgress({ commit, state }) {
+  getCutProgress({ commit }) {
     const cutInterval = setInterval(() => {
       GET(`getCutProgress/${COOKIE()}`).then((res) => {
         commit("UPDATE_CUT_PROGRESS", res.data.cutProgress);
@@ -43,7 +43,7 @@ export const actions: ActionTree<CutAndRender, RootState> = {
     }
     console.log(commit, state);
   },
-  getRenderProgress({ commit, state }) {
+  getRenderProgress({ commit }) {
     const cutInterval = setInterval(() => {
       GET(`getRenderProgress/${COOKIE()}`).then((res) => {
         commit("UPDATE_RENDER_PROGRESS", res.data.renderProgress);

@@ -13,13 +13,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapMutations, mapActions } from "vuex";
 import useCompHelpers from "@/composables/useCompHelpers";
 
 export default defineComponent({
   props: { halftime: Number, matchCompID: String },
-  setup(props) {
-    const { radioClick, setMatchID } = useCompHelpers("radio");
+  setup() {
+    const { radioClick, setMatchID } = useCompHelpers();
     return { radioClick, setMatchID };
   },
   computed: {

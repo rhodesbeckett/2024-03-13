@@ -1,5 +1,5 @@
 import { GetterTree } from "vuex";
-import { Testing, TestingI } from "@/store/testing/types";
+import { Testing } from "@/store/testing/types";
 import { RootState } from "@/store/types";
 
 export const getters: GetterTree<Testing, RootState> = {

@@ -37,7 +37,7 @@ import RadioButtonHalfTime from "@/components/RadioButtonHalfTime.vue";
 import useCompHelpers from "@/composables/useCompHelpers";
 export default defineComponent({
   setup() {
-    const { setMatchID } = useCompHelpers("card");
+    const { setMatchID } = useCompHelpers();
     return { setMatchID };
   },
   components: { RadioButtonHalfTime },

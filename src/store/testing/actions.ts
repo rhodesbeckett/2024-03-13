@@ -1,6 +1,6 @@
 import { ActionTree } from "vuex";
 import { RootState } from "@/store/types";
-import { Testing, TestingI } from "@/store/testing/types";
+import { Testing } from "@/store/testing/types";
 import { COOKIE } from "@/plugins/cookie";
 import GET from "@/plugins/axios";
 
