@@ -20,7 +20,6 @@ export default defineComponent({
 </script>
 
 <style>
-@import "./assets/bulma.min.css";
 @import "./assets/main.css";
 
 .visible-hamburger {
