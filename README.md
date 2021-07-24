@@ -28,6 +28,8 @@ There are two versions. One you can run in your browser and other as offline sof
 ### Offline version
 
 ```
+git clone --single-branch --branch college https://github.com/uros-5/football-video-editor-python.git
+cd offline
 pip3 install -r requirements.txt
 python3 main.py
 ```
