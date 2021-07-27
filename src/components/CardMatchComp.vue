@@ -47,7 +47,6 @@ export default defineComponent({
   methods: {
     mergeVideos(ID: string) {
       GET(`mergeVideos/${COOKIE()}`).then((res) => {
-        console.log(res.data.msg);
         if (res.data.msg == false) {
           this.showMessage(".message-server", this.mergeFalse);
         } else if (res.data.msg == true) {

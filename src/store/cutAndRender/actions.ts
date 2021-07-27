@@ -41,7 +41,6 @@ export const actions: ActionTree<CutAndRender, RootState> = {
         }
       });
     }
-    console.log(commit, state);
   },
   getRenderProgress({ commit }) {
     const cutInterval = setInterval(() => {

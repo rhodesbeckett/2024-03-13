@@ -176,15 +176,18 @@ class Model(object):
     def get_dir_sorted(self):
         pass
 
+    def update_testing(self):
+        url = f'http://localhost:5000/update/{self.matchID}/testing'
+        requests.post(url,json.dumps(self.testResponse))
+
     def update_cut_progress(self,progress):
-        print(progress)
-        url = f'http://localhost:5000/update/{self.matchID}/cutProgress'
-        data = {"cutProgress":progress}
+        url = f'http://localhost:5000/update/{self.matchID}/cutAndRender.cutProgress'
+        data = {"cutAndRender.cutProgress":progress}
         requests.post(url,data)
     
     def update_render_progress(self,progress):
-        url = f'http://localhost:5000/update/{self.matchID}/renderProgress'
-        data = {"renderProgress":progress}
+        url = f'http://localhost:5000/update/{self.matchID}/cutAndRender.renderProgress'
+        data = {"cutAndRender.renderProgress":progress}
         requests.post(url,data)
 
     def can_merge(self):
