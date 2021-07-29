@@ -1,9 +1,9 @@
 <template>
   <div class="columns is-centered is-multiline final-container">
-    <CutAndRenderCutButton/>
-    <CutAndRenderCutProgress/>
-    <CutAndRenderRenderButton/>
-    <CutAndRenderRenderProgress/>
+    <CutAndRenderCutButton />
+    <CutAndRenderCutProgress />
+    <CutAndRenderRenderButton />
+    <CutAndRenderRenderProgress />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default defineComponent({
     CutAndRenderRenderButton,
     CutAndRenderRenderProgress,
   },
-  methods: { ...mapActions(["getCanCut","getCanRender"]) },
+  methods: { ...mapActions(["getCanCut", "getCanRender"]) },
   created() {
     this.getCanCut();
     this.getCanRender();

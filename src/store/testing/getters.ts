@@ -7,7 +7,7 @@ export const getters: GetterTree<Testing, RootState> = {
     return state.testing.src;
   },
   testHalftime(state): boolean {
-    return state.testing.halfTime;
+    return state.testing.halftime;
   },
   testHighlights(state): boolean {
     return state.testing.highlights;
@@ -15,7 +15,7 @@ export const getters: GetterTree<Testing, RootState> = {
   updatedTesting(state): boolean {
     if (
       state.testing.src == true &&
-      state.testing.halfTime == true &&
+      state.testing.halftime == true &&
       state.testing.highlights == true
     ) {
       return true;

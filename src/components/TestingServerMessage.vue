@@ -30,7 +30,7 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions(["getTesting"]), 
+    ...mapActions(["getTesting"]),
     updateDOM() {
       if (this.updatedTesting == true) {
         this.showMessage();

@@ -6,7 +6,7 @@ import GET, { POST } from "@/plugins/axios";
 
 export const actions: ActionTree<Testing, RootState> = {
   getTesting({ commit }, payload: any) {
-    const query = `getTesting/${COOKIE()}`;
+    const query = `test/${COOKIE()}`;
     GET(query).then((res) => {
       const parsed = JSON.parse(res.data.testing);
       commit("NEW_TESTING", parsed);
@@ -15,15 +15,15 @@ export const actions: ActionTree<Testing, RootState> = {
       this.dispatch("updateCanRender", canCut(parsed));
     });
   },
-  updateCanCut({state},payload) {
+  updateCanCut({ state }, payload) {
     const query = `update/${COOKIE()}/cutAndRender.canCut`;
     POST(query, payload).then((res) => {
       console.log(res);
     });
   },
-  updateCanRender({state},payload) {
+  updateCanRender({ state }, payload) {
     const query = `update/${COOKIE()}/cutAndRender.canRender`;
-    POST(query,  payload).then((res) => {
+    POST(query, payload).then((res) => {
       console.log(res);
     });
   },
@@ -36,7 +36,7 @@ export const actions: ActionTree<Testing, RootState> = {
 };
 
 function canCut(data: TestingI): boolean {
-  if (data.halfTime == true && data.highlights == true && data.src == true) {
+  if (data.halftime == true && data.highlights == true && data.src == true) {
     return true;
   } else {
     return false;

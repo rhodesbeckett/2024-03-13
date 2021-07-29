@@ -6,6 +6,6 @@ export interface Testing {
 
 export interface TestingI {
   src: boolean;
-  halfTime: boolean;
+  halftime: boolean;
   highlights: boolean;
 }

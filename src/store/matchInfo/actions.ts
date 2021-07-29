@@ -16,7 +16,7 @@ export const actions: ActionTree<MatchInfo, RootState> = {
     });
   },
   getCompDesc() {
-    const query = `getMC/${COOKIE()}`;
+    const query = `get/${COOKIE()}/compDesc`;
     GET(query).then((res) => {
       const compDesc = JSON.parse(`${res.data.compDesc}`);
       this.commit("NEW_COMP_DESC", compDesc);

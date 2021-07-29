@@ -6,20 +6,20 @@ import { CutAndRender } from "./types";
 
 export const actions: ActionTree<CutAndRender, RootState> = {
   getCanCut({ commit }) {
-    const query = `getCanCut/${COOKIE()}`;
+    const query = `get/${COOKIE()}/cutAndRender.canCut`;
     GET(query).then((res) => {
-      commit("UPDATE_CAN_CUT", res.data.canCut);
+      commit("UPDATE_CAN_CUT", JSON.parse(res.data.canCut));
     });
   },
   getCanRender({ commit }) {
-    const query = `getCanRender/${COOKIE()}`;
+    const query = `get/${COOKIE()}/cutAndRender.canRender`;
     GET(query).then((res) => {
-      commit("UPDATE_CAN_RENDER", res.data.canRender);
+      commit("UPDATE_CAN_RENDER", JSON.parse(res.data.canRender));
     });
   },
   getCutProgress({ commit }) {
     const cutInterval = setInterval(() => {
-      GET(`getCutProgress/${COOKIE()}`).then((res) => {
+      GET(`get/${COOKIE()}/cutAndRender.cutProgress`).then((res) => {
         commit("UPDATE_CUT_PROGRESS", res.data.cutProgress);
         if (res.data.cutProgress == 100.0) {
           clearInterval(cutInterval);
@@ -44,7 +44,7 @@ export const actions: ActionTree<CutAndRender, RootState> = {
   },
   getRenderProgress({ commit }) {
     const cutInterval = setInterval(() => {
-      GET(`getRenderProgress/${COOKIE()}`).then((res) => {
+      GET(`get/${COOKIE()}/cutAndRender.renderProgress`).then((res) => {
         commit("UPDATE_RENDER_PROGRESS", res.data.renderProgress);
         if (res.data.cutProgress == 100.0) {
           clearInterval(cutInterval);
@@ -58,7 +58,6 @@ export const actions: ActionTree<CutAndRender, RootState> = {
       state.cutAndRender.canRender == true &&
       state.cutAndRender.currentProcess == ""
     ) {
-
       const query = `render/${COOKIE()}`;
       GET(query).then((res) => {
         if (res.data.msg) {

@@ -6,7 +6,7 @@ import GET, { POST } from "@/plugins/axios";
 
 export const actions: ActionTree<Editor, RootState> = {
   getHighlights({ commit, state, rootGetters }) {
-    const query = `getHighlights/${COOKIE()}`;
+    const query = `get/${COOKIE()}/highlights`;
     GET(query).then((res) => {
       const highlightRows = JSON.parse(res.data.highlights);
       if (highlightRows.length > 0) {

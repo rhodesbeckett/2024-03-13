@@ -1,6 +1,13 @@
 <template>
   <div class="column is-2">
-    <a class="button is-success is-medium" @click="render();getRenderProgress();">Render</a>
+    <a
+      class="button is-success is-medium"
+      @click="
+        render();
+        getRenderProgress();
+      "
+      >Render</a
+    >
   </div>
   <div class="column is-10"></div>
 </template>
@@ -10,7 +17,7 @@ import { defineComponent } from "vue";
 import { mapActions } from "vuex";
 
 export default defineComponent({
-  methods: { ...mapActions(["render","getRenderProgress"]) },
+  methods: { ...mapActions(["render", "getRenderProgress"]) },
 });
 </script>
 

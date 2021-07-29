@@ -6,7 +6,7 @@ import { actions } from "@/store/testing/actions";
 import { mutations } from "@/store/testing/mutations";
 const state: Testing = {
   testing: {
-    halfTime: false,
+    halftime: false,
     src: false,
     highlights: false,
   },

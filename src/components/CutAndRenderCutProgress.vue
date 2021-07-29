@@ -15,7 +15,7 @@ import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 
 export default defineComponent({
-  computed: { ...mapGetters(["cutProgress","canRender"]) },
+  computed: { ...mapGetters(["cutProgress", "canRender"]) },
 });
 </script>
 
