@@ -1,13 +1,13 @@
 from controller.Video import Video
 from cv2 import cv2
-import requests
-import json
+from bson.objectid import ObjectId
 
 
 class Testing(Video):
 
-    def __init__(self, ID):
+    def __init__(self, collection, ID):
         self.set_id(ID)
+        self.collection = collection
         self.counter = 0
         self.test_response = {}
 
@@ -16,7 +16,7 @@ class Testing(Video):
         self.test_response = {'src': False,
                               'halftime': False, 'highlights': False}
         for i in [self.check_match, self.check_halftime, self.check_highlights]:
-            previous_counter = self.counter 
+            previous_counter = self.counter
             i()
             if self.counter <= previous_counter:
                 break
@@ -67,5 +67,5 @@ class Testing(Video):
         return False
 
     def update_testing(self):
-        url = f'http://localhost:5000/update/{self.matchID}/testing'
-        requests.post(url, json.dumps(self.test_response))
+        new_property = {"$set": {"testing": self.test_response}}
+        self.collection.update_one({"_id": ObjectId(self.matchID)}, new_property)

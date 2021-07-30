@@ -1,15 +1,10 @@
-import pymongo
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["videosdb"]
-collection = mydb["matchCompilations"]
-
 
 class Model():
-    def __init__(self):
-        pass
+    def __init__(self, collection):
+        self.collection = collection
 
     def insert(self):
         matchComp = {
@@ -36,22 +31,22 @@ class Model():
                 "renderProgress": 0
             }
         }
-        return collection.insert_one(matchComp)
+        return self.collection.insert_one(matchComp)
 
     def get(self, ID, key):
-        comp = collection.find_one({"_id": ObjectId(ID)})
+        comp = self.collection.find_one({"_id": ObjectId(ID)})
         return get_data(comp, key)
 
     def get_all(self):
-        comps = collection.find({})
+        comps = self.collection.find({})
         return {"allComps": dumps(comps)}
 
     def delete_all(self):
-        collection.delete_many({})
+        self.collection.delete_many({})
 
     def update(self, request, ID, key):
         new_property = {"$set": {key: get_property(request, ID, key)}}
-        collection.update_one({"_id": ObjectId(ID)}, new_property)
+        self.collection.update_one({"_id": ObjectId(ID)}, new_property)
 
     # controller part
 

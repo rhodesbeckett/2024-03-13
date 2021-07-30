@@ -1,11 +1,14 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from bson.json_util import dumps
+from model import factory_collection
 from model.Model import Model
 from controller.Controller import Controller
+
 app = Flask(__name__)
-model = Model()
-controller = Controller()
+collection = factory_collection()
+model = Model(collection)
+controller = Controller(collection)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 

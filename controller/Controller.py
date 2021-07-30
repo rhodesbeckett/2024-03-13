@@ -6,17 +6,20 @@ from controller.TestingPicture import TestingPicture
 
 
 class Controller():
+    def __init__(self, collection):
+        self.collection = collection
+
     def test(self, ID):
-        testing = Testing(ID)
+        testing = Testing(self.collection, ID)
         testing.test_all()
         return testing.test_response
 
     def cut(self, ID):
-        cutting = Cutting(ID)
+        cutting = Cutting(self.collection, ID)
         cutting.cut_all()
 
     def render(self, ID):
-        rendering = Rendering(ID)
+        rendering = Rendering(self.collection, ID)
         rendering.render()
 
     def merge_videos(self, ID):

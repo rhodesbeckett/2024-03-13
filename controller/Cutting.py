@@ -2,16 +2,18 @@ from controller.Video import Video
 import json
 import requests
 from moviepy.video.io.VideoFileClip import VideoFileClip
+from bson.objectid import ObjectId
 
 
 class Cutting(Video):
-    def __init__(self, ID):
+    def __init__(self, collection, ID):
+        self.collection = collection
         self.set_id(ID)
 
     def set_id(self, ID):
         super().set_id(ID)
-        self.canCut = json.loads(requests.get(
-            f'http://localhost:5000/get/{ID}/cutAndRender.canCut').json()['canCut'])
+        self.canCut = self.collection.find_one({"_id": ObjectId(ID)})[
+            'cutAndRender']['canCut']
         self.highlights_location = f'highlights/{self.mc["title"]}'
 
     def cut_all(self):
@@ -38,6 +40,6 @@ class Cutting(Video):
         self.update_cut_progress(progress)
 
     def update_cut_progress(self, progress):
-        url = f'http://localhost:5000/update/{self.matchID}/cutAndRender.cutProgress'
         data = {"cutAndRender.cutProgress": progress}
-        requests.post(url, data)
+        self.collection.update_one(
+            {"_id": ObjectId(self.matchID)}, {"$set": data})

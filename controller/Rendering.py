@@ -2,16 +2,17 @@ from controller.Video import Video
 import requests
 import os
 import subprocess
+from bson.objectid import ObjectId
 
 
 class Rendering(Video):
-    def __init__(self, ID):
+    def __init__(self, collection, ID):
+        self.collection = collection
         self.set_id(ID)
 
     def update_render_progress(self, progress):
-        url = f'http://localhost:5000/update/{self.matchID}/cutAndRender.renderProgress'
         data = {"cutAndRender.renderProgress": progress}
-        requests.post(url, data)
+        self.collection.update_one({"_id": ObjectId(self.matchID)}, data)
 
     def render(self):
         self.create_video_location()
