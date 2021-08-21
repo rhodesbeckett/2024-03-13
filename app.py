@@ -4,7 +4,7 @@ from bson.json_util import dumps
 from model import factory_collection
 from model.Model import Model
 from controller.Controller import Controller
-
+from controller.helpers import check_url
 app = Flask(__name__)
 collection = factory_collection()
 model = Model(collection)
@@ -29,7 +29,6 @@ def deleteAll():
     model.delete_all()
     return jsonify({'msg': "success"})
 
-
 @app.route('/update/<ID>/<key>', methods=['POST'])
 def update(ID, key):
     model.update(request, ID, key)
@@ -37,6 +36,7 @@ def update(ID, key):
 
 
 @app.route('/get/<ID>/<key>', methods=['GET'])
+@check_url
 def get(ID, key):
     result = model.get(ID, key)
     return jsonify(result)
