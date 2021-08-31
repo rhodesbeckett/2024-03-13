@@ -12,10 +12,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapMutations } from "vuex";
+import { EventEditor } from "@/composables/EventEditor";
 export default defineComponent({
   methods: {
     ...mapMutations(["UPDATE_SRC"]),
-    updateSrc(event: { target: { value: string } }) {
+    updateSrc(event: EventEditor) {
       this.UPDATE_SRC(event.target.value);
     },
   },

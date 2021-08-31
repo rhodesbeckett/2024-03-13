@@ -22,7 +22,4 @@ export const actions: ActionTree<MatchInfo, RootState> = {
       this.commit("NEW_COMP_DESC", compDesc);
     });
   },
-  getTitle(): string {
-    return "test";
-  },
 };

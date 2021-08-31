@@ -1,4 +1,5 @@
 import store from "@/store/index";
+import { EventEditor } from "@/composables/EventEditor";
 
 export default function useEditorInput(ID: string | undefined): any {
   function getMin(): number {
@@ -11,19 +12,19 @@ export default function useEditorInput(ID: string | undefined): any {
     return store.getters.highlightsRow(ID).toAdd;
   }
 
-  function updateMin(event: { target: { value: string } }) {
+  function updateMin(event: EventEditor) {
     store.commit("UPDATE_HIGHLIGHTS_ROW_MIN", {
       id: ID,
       value: toInt(event.target.value),
     });
   }
-  function updateSec(event: { target: { value: string } }) {
+  function updateSec(event: EventEditor) {
     store.commit("UPDATE_HIGHLIGHTS_ROW_SEC", {
       id: ID,
       value: toInt(event.target.value),
     });
   }
-  function updateToAdd(event: { target: { value: string } }) {
+  function updateToAdd(event: EventEditor) {
     store.commit("UPDATE_HIGHLIGHTS_ROW_TO_ADD", {
       id: ID,
       value: toInt(event.target.value),

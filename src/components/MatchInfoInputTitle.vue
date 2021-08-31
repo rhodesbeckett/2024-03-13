@@ -11,11 +11,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapMutations } from "vuex";
-
+import { EventEditor } from "@/composables/EventEditor";
 export default defineComponent({
   methods: {
     ...mapMutations(["UPDATE_TITLE"]),
-    changeTitle(event: { target: { value: string } }) {
+    changeTitle(event: EventEditor) {
       this.UPDATE_TITLE(event.target.value);
     },
   },

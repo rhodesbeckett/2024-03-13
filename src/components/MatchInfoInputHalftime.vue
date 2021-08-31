@@ -28,6 +28,7 @@
 import { mapGetters } from "vuex";
 import store from "@/store";
 import { defineComponent } from "vue";
+import { EventEditor } from "@/composables/EventEditor";
 
 export default defineComponent({
   props: { editing: String },
@@ -63,13 +64,13 @@ export default defineComponent({
     },
   },
   methods: {
-    updateMinute(event: { target: { value: string } }) {
+    updateMinute(event: EventEditor) {
       store.commit(
         `UPDATE_${this.getHalftime}_MIN`,
         parseInt(event.target.value)
       );
     },
-    updateSecond(event: { target: { value: string } }) {
+    updateSecond(event: EventEditor) {
       store.commit(
         `UPDATE_${this.getHalftime}_SEC`,
         parseInt(event.target.value)

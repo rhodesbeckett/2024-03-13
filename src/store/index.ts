@@ -4,7 +4,6 @@ import { highlights } from "@/store/editor/index";
 import { testing } from "@/store/testing/index";
 import { testingPicture } from "@/store/testingPicture/index";
 import { cutAndRender } from "@/store/cutAndRender/index";
-
 import { RootState } from "./types";
 
 const store: StoreOptions<RootState> = {
