@@ -27,12 +27,13 @@ def get_all():
 @app.route('/deleteAll', methods=['GET'])
 def deleteAll():
     model.delete_all()
-    return jsonify({'msg': "success"})
+    return jsonify({'msg': "All comps are deleted"})
+
 
 @app.route('/update/<ID>/<key>', methods=['POST'])
 def update(ID, key):
     model.update(request, ID, key)
-    return jsonify({'msg': 'success'})
+    return jsonify({'msg': 'Comp is updated'})
 
 
 @app.route('/get/<ID>/<key>', methods=['GET'])
@@ -57,19 +58,19 @@ def get_photo(ID, minute, second):
 @app.route('/cut/<ID>', methods=['GET'])
 def cut(ID):
     controller.cut(ID)
-    return jsonify({'msg': 'success'})
+    return jsonify({'msg': 'Highlights are cutted'})
 
 
 @app.route('/render/<ID>', methods=['GET'])
 def render(ID):
     controller.render(ID)
-    return jsonify({'msg': "success"})
+    return jsonify({'msg': "Halftime is rendered"})
 
 
 @app.route('/mergeVideos/<ID>', methods=['GET'])
 def merge_videos(ID):
     controller.merge_videos(ID)
-    return jsonify({"msg": "success"})
+    return jsonify({"msg": "Both halftimes are rendered"})
 
 
 if __name__ == "__main__":
