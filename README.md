@@ -18,6 +18,10 @@ There are two versions. One you can run in your browser and other as offline sof
 8. Enjoy!  
 
 
+### Video demonstration
+
+[![Video](example.png)](https://drive.google.com/drive/folders/1tHNHXy2myN_HzBPb9eRvhNYz0LSOQmVF)
+
 ### Requirements
 
 1. Python
